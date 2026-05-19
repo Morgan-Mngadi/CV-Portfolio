@@ -116,7 +116,6 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <img src={logoSrc} alt="Morgan Mngadi logo" className="h-14 w-14 object-contain drop-shadow-[0_0_12px_rgba(0,255,128,0.8)]" />
-            <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase">Morgan Mngadi</span>
           </div>
           <div className="flex items-center gap-6">
             <a href="#experience" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Work</a>
