@@ -159,8 +159,8 @@ export default function Home() {
           <motion.div variants={stagger} className="lg:w-64 py-16 lg:pl-10 flex flex-col justify-between gap-8">
             {[
               { label: "Years active", value: "3+" },
-              { label: "Agencies", value: "2" },
-              { label: "Industries served", value: "6+" },
+              { label: "Clients worked with", value: "10+" },
+              { label: "Industries served", value: "7+" },
               { label: "Award honours", value: "2×" },
             ].map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="flex flex-col">
@@ -192,6 +192,59 @@ export default function Home() {
           </div>
         </motion.section>
 
+        {/* ─── INDUSTRIES ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+            02 / Industries
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
+            <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed lg:pt-1">
+              Delivered SEO across 7 distinct verticals — from regulated financial services to humanitarian organisations and enterprise telecoms.
+            </motion.p>
+            <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              {[
+                { name: "Finance", desc: "Regulatory-aware SEO for financial services clients" },
+                { name: "Tertiary Education", desc: "Lead-driven organic strategies for universities and colleges" },
+                { name: "Humanitarian", desc: "Purpose-led SEO for NGO and non-profit organisations" },
+                { name: "Courier & Logistics", desc: "Local and national visibility for courier brands" },
+                { name: "Hospitality", desc: "Discovery and booking-focused SEO for hospitality groups" },
+                { name: "Automotive", desc: "High-competition SEO in the automotive sector" },
+                { name: "Telecommunications", desc: "Enterprise-level SEO for a major telecoms group" },
+              ].map((industry) => (
+                <motion.div
+                  key={industry.name}
+                  variants={fadeUp}
+                  title={industry.desc}
+                  className="group relative p-4 bg-card border border-border hover:border-primary transition-colors cursor-default"
+                >
+                  <div className="absolute top-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                  <span className="text-sm font-medium block leading-tight">{industry.name}</span>
+                  <span className="text-xs text-muted-foreground font-mono mt-1.5 block leading-snug opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute inset-x-4 top-10 bottom-4 overflow-hidden">{industry.desc}</span>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Client count callout */}
+          <motion.div
+            variants={fadeUp}
+            className="border border-border bg-card p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+          >
+            <span className="text-5xl font-medium text-primary tabular-nums shrink-0">10+</span>
+            <div>
+              <p className="font-medium">Clients worked with</p>
+              <p className="text-sm text-muted-foreground font-mono mt-0.5">Across agency and enterprise engagements — from growing brands to FTSE-listed corporates</p>
+            </div>
+          </motion.div>
+        </motion.section>
+
         {/* ─── EXPERIENCE ─── */}
         <motion.section
           id="experience"
@@ -202,7 +255,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            02 / Experience
+            03 / Experience
           </motion.div>
 
           <div className="flex flex-col divide-y divide-border">
@@ -259,7 +312,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            03 / Project
+            04 / Project
           </motion.div>
 
           <motion.a
@@ -311,7 +364,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            04 / Tooling & Stack
+            05 / Tooling & Stack
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-border border border-border">
@@ -361,7 +414,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                05 / Contact
+                06 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let's build systems<br />that scale visibility.
