@@ -114,8 +114,8 @@ export default function Home() {
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <img src={logoSrc} alt="Morgan Mngadi logo" className="h-7 w-7 object-contain" />
+          <div className="flex items-center gap-3">
+            <img src={logoSrc} alt="Morgan Mngadi logo" className="h-14 w-14 object-contain drop-shadow-[0_0_12px_rgba(0,255,128,0.8)]" />
             <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase">Morgan Mngadi</span>
           </div>
           <div className="flex items-center gap-6">
@@ -161,7 +161,7 @@ export default function Home() {
           <motion.div variants={stagger} className="lg:w-64 py-16 lg:pl-10 flex flex-col justify-between gap-8">
             {[
               { label: "Years active", value: "3+" },
-              { label: "Clients worked with", value: "10+" },
+              { label: "Clients worked with", value: "15+" },
               { label: "Industries served", value: "14+" },
               { label: "Award honours", value: "2×" },
             ].map((stat) => (
@@ -245,7 +245,7 @@ export default function Home() {
             variants={fadeUp}
             className="border border-border bg-card p-6 flex flex-col sm:flex-row items-start sm:items-center gap-4"
           >
-            <span className="text-5xl font-medium text-primary tabular-nums shrink-0">10+</span>
+            <span className="text-5xl font-medium text-primary tabular-nums shrink-0">15+</span>
             <div>
               <p className="font-medium">Clients worked with</p>
               <p className="text-sm text-muted-foreground font-mono mt-0.5">Across agency and enterprise engagements — from growing brands to FTSE-listed corporates</p>
