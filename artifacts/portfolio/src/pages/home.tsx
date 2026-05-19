@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Mail, Phone, MapPin, Award, ExternalLink } from "lucide-react";
+import { Link } from "wouter";
 import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
 import {
   SiGoogleanalytics,
@@ -322,12 +323,10 @@ export default function Home() {
             04 / Project
           </motion.div>
 
-          <motion.a
+          <Link href="/projects/commuteza">
+          <motion.div
             variants={fadeUp}
-            href="https://commuteza.co.za/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group block relative overflow-hidden border border-border hover:border-primary transition-all duration-500 bg-card"
+            className="group block relative overflow-hidden border border-border hover:border-primary transition-all duration-500 bg-card cursor-pointer"
             data-testid="link-commuteza"
           >
             {/* Accent corner */}
@@ -338,11 +337,11 @@ export default function Home() {
               <div>
                 <div className="flex items-center gap-3 mb-3">
                   <h3 className="text-2xl md:text-3xl font-medium group-hover:text-primary transition-colors">CommuteZA</h3>
-                  <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                 </div>
                 <p className="font-mono text-sm text-muted-foreground mb-6">Routing Web App for South African Commuters · Jan 2026 – Present</p>
                 <p className="text-muted-foreground leading-relaxed max-w-2xl mb-8">
-                  Self-initiated project built to deepen technical SEO and systems understanding from the ground up. Implements a headless CMS architecture to manage metadata, structured data, redirect logic and URL structuring with full control over rendering behaviour. Refining SSR approach to ensure optimal crawlability and indexation.
+                  Self-initiated project built to deepen SEO and systems understanding from the ground up. Implements a headless CMS architecture to manage metadata, structured data, redirect logic and URL structuring with full control over rendering behaviour. Refining SSR approach to ensure optimal crawlability and indexation.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {["Headless CMS", "Server-side Rendering", "Structured Data", "Technical SEO", "Redirect Logic"].map((t) => (
@@ -354,11 +353,12 @@ export default function Home() {
               </div>
               <div className="md:text-right">
                 <span className="font-mono text-xs text-primary border border-primary/30 bg-primary/5 px-3 py-1.5 inline-block">
-                  Live ↗
+                  View project →
                 </span>
               </div>
             </div>
-          </motion.a>
+          </motion.div>
+          </Link>
         </motion.section>
 
         {/* ─── TOOLS ─── */}
