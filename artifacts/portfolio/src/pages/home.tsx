@@ -1,335 +1,411 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Mail, MapPin, Phone, Code, Target, Database, BarChart3 } from "lucide-react";
-import { 
-  SiGooglesearchconsole, 
-  SiGoogleanalytics, 
-  SiGoogletagmanager, 
-  SiSemrush, 
-  SiWordpress, 
-  SiWebflow, 
+import { ArrowUpRight, Mail, Phone, MapPin, Award, ExternalLink } from "lucide-react";
+import {
+  SiGoogleanalytics,
+  SiGoogletagmanager,
+  SiGooglesearchconsole,
+  SiSemrush,
+  SiWordpress,
+  SiWebflow,
   SiUmbraco,
   SiOpenai,
 } from "react-icons/si";
 
-const FADE_UP = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } }
+const fadeUp = {
+  hidden: { opacity: 0, y: 24 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const STAGGER = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+const stagger = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.08 } },
 };
+
+const DAILY_TOOLS = [
+  { name: "Google Analytics 4", icon: <SiGoogleanalytics /> },
+  { name: "Google Tag Manager", icon: <SiGoogletagmanager /> },
+  { name: "Google Search Console", icon: <SiGooglesearchconsole /> },
+  { name: "SEMrush", icon: <SiSemrush /> },
+  { name: "Screaming Frog", icon: null },
+  { name: "Looker Studio", icon: null },
+  { name: "PageSpeed Insights", icon: null },
+  { name: "Bing Webmaster Tools", icon: null },
+  { name: "Keyword Planner", icon: null },
+  { name: "Google Trends", icon: null },
+];
+
+const CMS_TOOLS = [
+  { name: "WordPress", icon: <SiWordpress /> },
+  { name: "Webflow", icon: <SiWebflow /> },
+  { name: "Umbraco", icon: <SiUmbraco /> },
+  { name: "Pimcore", icon: null },
+  { name: "Headless CMS", icon: null },
+];
+
+const AI_TOOLS = [
+  { name: "ChatGPT", icon: <SiOpenai /> },
+  { name: "Gemini", icon: null },
+  { name: "Copilot", icon: null },
+  { name: "Perplexity AI", icon: null },
+];
+
+const LOCAL_SEO = [
+  { name: "Google Business Profiles", icon: null },
+  { name: "Bing Places", icon: null },
+];
+
+const EXPERIENCE = [
+  {
+    company: "Accenture Song",
+    role: "SEO Specialist",
+    period: "Jan 2026 – Present",
+    location: "Midrand, JHB",
+    current: true,
+    description:
+      "Contributing to SEO delivery for enterprise-level clients in the telecommunications sector. Supporting technical audits, metadata implementation review, and performance reporting through GA4 and Search Console within a cross-functional team.",
+    tags: ["Technical Audits", "Enterprise", "GA4", "Telecoms"],
+  },
+  {
+    company: "Flume Digital Marketing",
+    role: "Junior SEO Specialist",
+    period: "Nov 2023 – Dec 2025",
+    location: "Bryanston, JHB",
+    current: false,
+    description:
+      "Managed SEO implementation across finance, education, humanitarian, courier, hospitality and automotive verticals. Delivered technical audits, on-page optimisation, structured data deployment and CMS implementation. Represented the agency at the Assegais — awarded two honours.",
+    tags: ["Multi-industry", "Structured Data", "WordPress", "Webflow"],
+    award: "2× Assegais 2024",
+  },
+  {
+    company: "IMS Ad Agency",
+    role: "SEO & Analytics Associate",
+    period: "Mar 2023 – Sep 2023",
+    location: "Lonehill, JHB",
+    current: false,
+    description:
+      "Built a foundation in SEO and analytics across multiple client accounts. Keyword research, on-page optimisation, technical audits and performance reporting using GSC, SEMrush and Looker Studio.",
+    tags: ["SEO Foundations", "Analytics", "Reporting"],
+  },
+];
+
+function ToolPill({ name, icon }: { name: string; icon: React.ReactNode }) {
+  return (
+    <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-card border border-border text-xs font-mono text-muted-foreground hover:border-primary hover:text-foreground transition-colors whitespace-nowrap">
+      {icon && <span className="text-primary opacity-80">{icon}</span>}
+      {name}
+    </span>
+  );
+}
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-primary selection:text-primary-foreground">
-      {/* Grid Pattern Background */}
-      <div className="fixed inset-0 pointer-events-none z-[-1] opacity-[0.03]"
+    <div className="min-h-screen bg-background text-foreground">
+      {/* Subtle grid background */}
+      <div
+        className="fixed inset-0 pointer-events-none z-0"
         style={{
-          backgroundImage: "linear-gradient(to right, hsl(var(--foreground)) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--foreground)) 1px, transparent 1px)",
-          backgroundSize: "40px 40px"
+          backgroundImage:
+            "linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border) / 0.4) 1px, transparent 1px)",
+          backgroundSize: "80px 80px",
         }}
       />
-      
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center mix-blend-difference">
-        <span className="font-mono text-xs font-medium tracking-wider">MM. // SEO</span>
-        <a href="#contact" className="font-mono text-xs uppercase tracking-widest hover:text-primary transition-colors">
-          Contact
-        </a>
+
+      {/* Nav */}
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
+        <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
+          <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
+            Morgan Mngadi
+          </span>
+          <div className="flex items-center gap-6">
+            <a href="#experience" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Work</a>
+            <a href="#tools" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Stack</a>
+            <a href="#contact" className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 hover:bg-primary/90 transition-colors uppercase tracking-widest">Contact</a>
+          </div>
+        </div>
       </nav>
 
-      <main className="px-6 md:px-12 lg:px-24 pt-32 pb-24 max-w-7xl mx-auto flex flex-col gap-32 md:gap-48">
-        
-        {/* 1. HERO SECTION */}
-        <motion.section 
+      <div className="relative z-10 max-w-6xl mx-auto px-6 pt-12">
+
+        {/* ─── HERO ─── */}
+        <motion.section
           initial="hidden"
           animate="visible"
-          variants={STAGGER}
-          className="min-h-[70vh] flex flex-col justify-center"
+          variants={stagger}
+          className="border-b border-border grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-0"
         >
-          <motion.div variants={FADE_UP} className="mb-6 flex items-center gap-3 font-mono text-xs text-primary uppercase tracking-widest">
-            <span className="w-8 h-px bg-primary block"></span>
-            SEO Specialist based in Johannesburg
+          <div className="py-16 lg:py-24 lg:pr-16 border-r border-border">
+            <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6 font-mono text-xs text-primary uppercase tracking-widest">
+              <span className="w-6 h-px bg-primary" />
+              SEO Specialist · Johannesburg, ZA
+            </motion.div>
+            <motion.h1 variants={fadeUp} className="text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[0.9] mb-8">
+              Morgan<br />
+              <span className="text-primary">Mngadi</span>
+            </motion.h1>
+            <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-xl">
+              Technical SEO strategist with agency and enterprise experience. I build scalable visibility — from audits to architecture.
+            </motion.p>
+            <motion.div variants={fadeUp} className="flex gap-3 mt-8">
+              <a href="mailto:morganmngadi@gmail.com" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
+                <Mail className="w-4 h-4" /> Get in touch
+              </a>
+              <a href="https://commuteza.co.za/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-mono text-muted-foreground hover:border-foreground hover:text-foreground transition-colors">
+                View project <ArrowUpRight className="w-4 h-4" />
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Stat sidebar */}
+          <motion.div variants={stagger} className="lg:w-64 py-16 lg:pl-10 flex flex-col justify-between gap-8">
+            {[
+              { label: "Years active", value: "3+" },
+              { label: "Agencies", value: "2" },
+              { label: "Industries served", value: "6+" },
+              { label: "Award honours", value: "2×" },
+            ].map((stat) => (
+              <motion.div key={stat.label} variants={fadeUp} className="flex flex-col">
+                <span className="text-4xl font-medium text-primary tabular-nums">{stat.value}</span>
+                <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest mt-1">{stat.label}</span>
+              </motion.div>
+            ))}
           </motion.div>
-          <motion.h1 variants={FADE_UP} className="text-5xl md:text-7xl lg:text-8xl font-medium tracking-tight mb-8">
-            Morgan <br/> Mngadi
-          </motion.h1>
-          <motion.p variants={FADE_UP} className="max-w-2xl text-xl md:text-2xl text-muted-foreground font-light leading-relaxed">
-            Technical SEO specialist operating at the intersection of systems thinking and organic growth. I build scalable visibility.
-          </motion.p>
         </motion.section>
 
-
-        {/* 2. SUMMARY / MANIFESTO */}
-        <motion.section 
+        {/* ─── ABOUT ─── */}
+        <motion.section
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={FADE_UP}
-          className="border-l border-border pl-8 md:pl-16 relative"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
-          <div className="absolute top-0 -left-[5px] w-[9px] h-[9px] rounded-full bg-primary" />
-          <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-8">01. Summary</h2>
-          <p className="text-2xl md:text-4xl font-medium leading-tight max-w-4xl text-gradient">
-            SEO Specialist with agency and enterprise experience, working across technical audits, on-page optimisation and performance reporting. SEO strategist focused on business impact.
-          </p>
-          <p className="mt-8 text-lg text-muted-foreground max-w-3xl leading-relaxed">
-            Experienced in collaborating with development teams to implement SEO recommendations effectively across multiple CMS platforms. Strong interest in systems-driven SEO and scalable implementation.
-          </p>
-        </motion.section>
-
-        {/* 3. EXPERIENCE */}
-        <motion.section 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={STAGGER}
-          className="flex flex-col gap-12"
-        >
-          <motion.h2 variants={FADE_UP} className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            02. Experience
-          </motion.h2>
-
-          <div className="flex flex-col gap-16 md:gap-24 relative">
-            <div className="absolute top-0 bottom-0 left-[15px] md:left-[19px] w-px bg-border/50 z-[-1]" />
-            
-            {/* Role 1 */}
-            <motion.div variants={FADE_UP} className="flex flex-col md:flex-row gap-6 md:gap-12 relative">
-              <div className="w-8 h-8 rounded-full bg-card border border-border flex items-center justify-center shrink-0 z-10 mt-1">
-                <div className="w-2 h-2 rounded-full bg-primary" />
-              </div>
-              <div className="flex-1">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-4">
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-medium">Accenture Song</h3>
-                    <p className="text-primary font-mono text-sm mt-1">SEO Specialist</p>
-                  </div>
-                  <div className="text-muted-foreground font-mono text-sm mt-2 md:mt-0 text-left md:text-right">
-                    <p>January 2026 – Present</p>
-                    <p>Midrand, Johannesburg</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Currently contributing to SEO delivery for enterprise-level clients within the telecommunications sector. Supporting technical audits, reviewing metadata implementation, and assisting with performance reporting through GA4 and Search Console. Working within a cross-functional environment, collaborating with developers and performance teams to align SEO recommendations with broader digital objectives.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Role 2 */}
-            <motion.div variants={FADE_UP} className="flex flex-col md:flex-row gap-6 md:gap-12 relative">
-              <div className="w-8 h-8 rounded-full bg-card border border-border flex items-center justify-center shrink-0 z-10 mt-1">
-                <div className="w-2 h-2 rounded-full bg-muted-foreground" />
-              </div>
-              <div className="flex-1">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-4">
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-medium">Flume Digital Marketing</h3>
-                    <p className="text-primary font-mono text-sm mt-1">Junior SEO Specialist</p>
-                  </div>
-                  <div className="text-muted-foreground font-mono text-sm mt-2 md:mt-0 text-left md:text-right">
-                    <p>November 2023 – December 2025</p>
-                    <p>Bryanston, Johannesburg</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Managed SEO implementation across multiple industries including finance, tertiary education, humanitarian organisations, courier services, hospitality and automotive. Responsibilities included technical audits, on-page optimisation, CMS implementation (WordPress and Webflow), structured data deployment and ongoing performance reporting through GA4 and Search Console. Worked closely with development and content teams.
-                </p>
-                <div className="inline-flex items-center gap-2 px-3 py-1 bg-card border border-border rounded-full text-xs font-mono">
-                  <Target className="w-3 h-3 text-primary" />
-                  <span>2× Assegais 2024 Honours</span>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Role 3 */}
-            <motion.div variants={FADE_UP} className="flex flex-col md:flex-row gap-6 md:gap-12 relative">
-              <div className="w-8 h-8 rounded-full bg-card border border-border flex items-center justify-center shrink-0 z-10 mt-1">
-                <div className="w-2 h-2 rounded-full bg-muted-foreground" />
-              </div>
-              <div className="flex-1">
-                <div className="flex flex-col md:flex-row md:justify-between md:items-baseline mb-4">
-                  <div>
-                    <h3 className="text-xl md:text-2xl font-medium">IMS Ad Agency</h3>
-                    <p className="text-primary font-mono text-sm mt-1">SEO & Analytics Associate</p>
-                  </div>
-                  <div className="text-muted-foreground font-mono text-sm mt-2 md:mt-0 text-left md:text-right">
-                    <p>March 2023 – September 2023</p>
-                    <p>Lonehill, Johannesburg</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground leading-relaxed">
-                  Developed a strong foundation in SEO and analytics, working across a range of client accounts. Assisted with keyword research, on-page optimisation, technical audits and performance reporting using tools such as Google Search Console, SEMrush and Looker Studio.
-                </p>
-              </div>
-            </motion.div>
+          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            01 / About
+          </motion.div>
+          <div>
+            <motion.p variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-3xl">
+              SEO specialist focused on business impact — combining technical depth with strategic thinking.
+            </motion.p>
+            <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed max-w-2xl">
+              Experienced in collaborating with development teams to implement SEO recommendations effectively across multiple CMS platforms. Strong interest in systems-driven SEO and scalable implementation across agency and enterprise environments.
+            </motion.p>
           </div>
         </motion.section>
 
-
-        {/* 4. PROJECTS */}
-        <motion.section 
+        {/* ─── EXPERIENCE ─── */}
+        <motion.section
+          id="experience"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={STAGGER}
-          className="flex flex-col gap-12"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
         >
-          <motion.h2 variants={FADE_UP} className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            03. Systems & Projects
-          </motion.h2>
+          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+            02 / Experience
+          </motion.div>
 
-          <motion.a 
-            variants={FADE_UP}
+          <div className="flex flex-col divide-y divide-border">
+            {EXPERIENCE.map((exp) => (
+              <motion.div
+                key={exp.company}
+                variants={fadeUp}
+                className="py-10 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:gap-12 group"
+              >
+                {/* Left column */}
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    {exp.current && (
+                      <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    )}
+                    <h3 className="text-lg font-medium">{exp.company}</h3>
+                  </div>
+                  <p className="text-primary font-mono text-sm">{exp.role}</p>
+                  <p className="font-mono text-xs text-muted-foreground">{exp.period}</p>
+                  <div className="flex items-center gap-1 text-xs text-muted-foreground font-mono">
+                    <MapPin className="w-3 h-3" />
+                    {exp.location}
+                  </div>
+                  {exp.award && (
+                    <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2.5 py-1 self-start">
+                      <Award className="w-3 h-3" />
+                      {exp.award}
+                    </div>
+                  )}
+                </div>
+
+                {/* Right column */}
+                <div>
+                  <p className="text-muted-foreground leading-relaxed mb-5">{exp.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {exp.tags.map((tag) => (
+                      <span key={tag} className="text-xs font-mono px-2.5 py-1 bg-card border border-border text-muted-foreground">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* ─── PROJECT ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+            03 / Project
+          </motion.div>
+
+          <motion.a
+            variants={fadeUp}
             href="https://commuteza.co.za/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group block p-8 md:p-12 bg-card border border-border hover:border-primary transition-colors relative overflow-hidden"
+            className="group block relative overflow-hidden border border-border hover:border-primary transition-all duration-500 bg-card"
+            data-testid="link-commuteza"
           >
-            <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 blur-[100px] group-hover:bg-primary/20 transition-all duration-700" />
-            
-            <div className="flex justify-between items-start mb-8">
+            {/* Accent corner */}
+            <div className="absolute top-0 left-0 w-1 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/[0.02] transition-colors duration-500" />
+
+            <div className="relative p-8 md:p-12 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-8 items-start">
               <div>
-                <h3 className="text-2xl md:text-3xl font-medium mb-2 group-hover:text-primary transition-colors flex items-center gap-3">
-                  CommuteZA 
-                  <ArrowUpRight className="w-5 h-5 opacity-50 group-hover:opacity-100 transition-opacity" />
-                </h3>
-                <p className="font-mono text-sm text-muted-foreground">Routing Web App for South African Commuters</p>
+                <div className="flex items-center gap-3 mb-3">
+                  <h3 className="text-2xl md:text-3xl font-medium group-hover:text-primary transition-colors">CommuteZA</h3>
+                  <ExternalLink className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                </div>
+                <p className="font-mono text-sm text-muted-foreground mb-6">Routing Web App for South African Commuters · Jan 2026 – Present</p>
+                <p className="text-muted-foreground leading-relaxed max-w-2xl mb-8">
+                  Self-initiated project built to deepen technical SEO and systems understanding from the ground up. Implements a headless CMS architecture to manage metadata, structured data, redirect logic and URL structuring with full control over rendering behaviour. Refining SSR approach to ensure optimal crawlability and indexation.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {["Headless CMS", "Server-side Rendering", "Structured Data", "Technical SEO", "Redirect Logic"].map((t) => (
+                    <span key={t} className="text-xs font-mono px-2.5 py-1 bg-background border border-border text-muted-foreground">
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <span className="font-mono text-xs text-muted-foreground border border-border px-3 py-1 rounded-full hidden md:inline-block">
-                Jan 2026 - Present
-              </span>
-            </div>
-            
-            <p className="text-muted-foreground leading-relaxed max-w-3xl mb-8">
-              Self-initiated project aimed at strengthening technical SEO and systems understanding by building a platform from the ground up. Implements a headless CMS architecture to manage metadata, structured data, redirect logic and URL structuring with full control over rendering behaviour. Refining server-side rendering approach to ensure optimal crawlability and indexation while balancing performance and user experience.
-            </p>
-            
-            <div className="flex flex-wrap gap-3">
-              <span className="text-xs font-mono bg-background border border-border px-3 py-1 text-muted-foreground">Headless CMS</span>
-              <span className="text-xs font-mono bg-background border border-border px-3 py-1 text-muted-foreground">Server-side Rendering</span>
-              <span className="text-xs font-mono bg-background border border-border px-3 py-1 text-muted-foreground">Technical SEO</span>
+              <div className="md:text-right">
+                <span className="font-mono text-xs text-primary border border-primary/30 bg-primary/5 px-3 py-1.5 inline-block">
+                  Live ↗
+                </span>
+              </div>
             </div>
           </motion.a>
         </motion.section>
 
-
-        {/* 5. TOOLS & STACK */}
-        <motion.section 
+        {/* ─── TOOLS ─── */}
+        <motion.section
+          id="tools"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={STAGGER}
-          className="flex flex-col gap-12"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
         >
-          <motion.h2 variants={FADE_UP} className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            04. Tooling & Stack
-          </motion.h2>
+          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+            04 / Tooling & Stack
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <motion.div variants={FADE_UP} className="p-6 bg-card border border-border flex flex-col gap-6">
-              <div className="w-10 h-10 rounded bg-background border border-border flex items-center justify-center text-primary">
-                <BarChart3 className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-medium mb-3">Daily Operations</h3>
-                <ul className="flex flex-col gap-2 text-sm text-muted-foreground font-mono">
-                  <li>Google Analytics 4</li>
-                  <li>Google Tag Manager</li>
-                  <li>PageSpeed Insights</li>
-                  <li>Search Console</li>
-                  <li>Bing Webmaster</li>
-                  <li>SEMrush</li>
-                  <li>Screaming Frog</li>
-                  <li>Looker Studio</li>
-                  <li>Keyword Planner</li>
-                </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-border border border-border">
+            {/* Daily */}
+            <motion.div variants={fadeUp} className="p-8 md:border-r border-border md:border-b border-b">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-5">Daily Operations</h3>
+              <div className="flex flex-wrap gap-2">
+                {DAILY_TOOLS.map((t) => <ToolPill key={t.name} {...t} />)}
               </div>
             </motion.div>
 
-            <motion.div variants={FADE_UP} className="p-6 bg-card border border-border flex flex-col gap-6">
-              <div className="w-10 h-10 rounded bg-background border border-border flex items-center justify-center text-primary">
-                <Code className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-medium mb-3">CMS Platforms</h3>
-                <ul className="flex flex-col gap-2 text-sm text-muted-foreground font-mono">
-                  <li className="flex items-center gap-2"><SiWordpress className="w-3 h-3"/> WordPress</li>
-                  <li className="flex items-center gap-2"><SiWebflow className="w-3 h-3"/> Webflow</li>
-                  <li className="flex items-center gap-2"><SiUmbraco className="w-3 h-3"/> Umbraco</li>
-                  <li>Pimcore</li>
-                  <li>Headless Architectures</li>
-                </ul>
+            {/* CMS */}
+            <motion.div variants={fadeUp} className="p-8 md:border-b border-b">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-5">CMS Platforms</h3>
+              <div className="flex flex-wrap gap-2">
+                {CMS_TOOLS.map((t) => <ToolPill key={t.name} {...t} />)}
               </div>
             </motion.div>
 
-            <motion.div variants={FADE_UP} className="p-6 bg-card border border-border flex flex-col gap-6">
-              <div className="w-10 h-10 rounded bg-background border border-border flex items-center justify-center text-primary">
-                <Database className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-medium mb-3">Local SEO</h3>
-                <ul className="flex flex-col gap-2 text-sm text-muted-foreground font-mono">
-                  <li>Google Business Profiles</li>
-                  <li>Bing Places</li>
-                </ul>
+            {/* AI */}
+            <motion.div variants={fadeUp} className="p-8 md:border-r border-border">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-5">AI & Workflows</h3>
+              <div className="flex flex-wrap gap-2">
+                {AI_TOOLS.map((t) => <ToolPill key={t.name} {...t} />)}
               </div>
             </motion.div>
 
-            <motion.div variants={FADE_UP} className="p-6 bg-card border border-border flex flex-col gap-6">
-              <div className="w-10 h-10 rounded bg-background border border-border flex items-center justify-center text-primary">
-                <SiOpenai className="w-5 h-5" />
-              </div>
-              <div>
-                <h3 className="font-medium mb-3">AI & Workflows</h3>
-                <ul className="flex flex-col gap-2 text-sm text-muted-foreground font-mono">
-                  <li>ChatGPT</li>
-                  <li>Gemini</li>
-                  <li>Copilot</li>
-                  <li>Perplexity AI</li>
-                </ul>
+            {/* Local */}
+            <motion.div variants={fadeUp} className="p-8">
+              <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-5">Local SEO</h3>
+              <div className="flex flex-wrap gap-2">
+                {LOCAL_SEO.map((t) => <ToolPill key={t.name} {...t} />)}
               </div>
             </motion.div>
           </div>
         </motion.section>
 
-      </main>
-
-      {/* 6. CONTACT / FOOTER */}
-      <footer id="contact" className="border-t border-border mt-12 px-6 py-24 md:py-32 flex flex-col items-center justify-center text-center bg-card">
-        <motion.div 
+        {/* ─── CONTACT ─── */}
+        <motion.section
+          id="contact"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
-          variants={STAGGER}
-          className="max-w-2xl flex flex-col items-center"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="py-20"
         >
-          <motion.h2 variants={FADE_UP} className="text-3xl md:text-5xl font-medium mb-6">
-            Let's build systems that scale visibility.
-          </motion.h2>
-          <motion.p variants={FADE_UP} className="text-muted-foreground mb-12">
-            Available for new opportunities in technical SEO and systems implementation.
-          </motion.p>
-          
-          <motion.div variants={FADE_UP} className="flex flex-col sm:flex-row gap-6 items-center justify-center">
-            <a href="mailto:morganmngadi@gmail.com" className="flex items-center gap-3 px-6 py-3 bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors">
-              <Mail className="w-4 h-4" />
-              morganmngadi@gmail.com
-            </a>
-            <a href="tel:0762878982" className="flex items-center gap-3 px-6 py-3 border border-border hover:border-foreground transition-colors font-mono">
-              <Phone className="w-4 h-4" />
-              (076) 287 8982
-            </a>
-          </motion.div>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
+            <div>
+              <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                05 / Contact
+              </motion.div>
+              <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
+                Let's build systems<br />that scale visibility.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-muted-foreground">
+                Open to new opportunities in technical SEO and systems implementation.
+              </motion.p>
+            </div>
 
-          <motion.div variants={FADE_UP} className="mt-24 pt-8 border-t border-border w-full flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-muted-foreground">
-            <span>© {new Date().getFullYear()} Morgan Mngadi.</span>
-            <span className="flex items-center gap-2"><MapPin className="w-3 h-3" /> Johannesburg, ZA</span>
+            <motion.div variants={stagger} className="flex flex-col gap-3">
+              <motion.a
+                variants={fadeUp}
+                href="mailto:morganmngadi@gmail.com"
+                data-testid="link-email"
+                className="flex items-center gap-3 px-6 py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
+              >
+                <Mail className="w-4 h-4 shrink-0" />
+                morganmngadi@gmail.com
+              </motion.a>
+              <motion.a
+                variants={fadeUp}
+                href="tel:0762878982"
+                data-testid="link-phone"
+                className="flex items-center gap-3 px-6 py-4 border border-border hover:border-foreground transition-colors font-mono text-sm"
+              >
+                <Phone className="w-4 h-4 shrink-0" />
+                (076) 287 8982
+              </motion.a>
+            </motion.div>
+          </div>
+
+          <motion.div
+            variants={fadeUp}
+            className="mt-20 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-muted-foreground"
+          >
+            <span>© {new Date().getFullYear()} Morgan Mngadi</span>
+            <div className="flex items-center gap-2">
+              <MapPin className="w-3 h-3" />
+              Johannesburg, South Africa
+            </div>
           </motion.div>
-        </motion.div>
-      </footer>
+        </motion.section>
+
+      </div>
     </div>
   );
 }
