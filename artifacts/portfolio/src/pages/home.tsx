@@ -144,7 +144,7 @@ export default function Home() {
               <span className="text-primary">Mngadi</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-              Technical SEO strategist with agency and enterprise experience. I build scalable visibility — from audits to architecture.
+              SEO strategist with agency and enterprise experience. I build scalable visibility — from audits to architecture.
             </motion.p>
             <motion.div variants={fadeUp} className="flex gap-3 mt-8">
               <a href="mailto:morganmngadi@gmail.com" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
