@@ -121,6 +121,7 @@ export default function Home() {
           <div className="flex items-center gap-6">
             <a href="#experience" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Work</a>
             <a href="#tools" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Stack</a>
+            <Link href="/blog" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Blog</Link>
             <a href="#contact" className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 hover:bg-primary/90 transition-colors uppercase tracking-widest">Contact</a>
           </div>
         </div>

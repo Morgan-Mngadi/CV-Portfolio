@@ -74,6 +74,7 @@ export default function CommuteZA() {
             <img src={logoSrc} alt="Logo" className="h-14 w-14 object-contain drop-shadow-[0_0_12px_rgba(0,255,128,0.8)]" />
           </div>
           <div className="flex items-center gap-6">
+            <Link href="/blog" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Blog</Link>
             <Link href="/" className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">
               <ArrowLeft className="w-3 h-3" /> Back
             </Link>
