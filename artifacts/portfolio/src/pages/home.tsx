@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Mail, Phone, MapPin, Award, ExternalLink } from "lucide-react";
+import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
 import {
   SiGoogleanalytics,
   SiGoogletagmanager,
@@ -113,9 +114,10 @@ export default function Home() {
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
-          <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase">
-            Morgan Mngadi
-          </span>
+          <div className="flex items-center gap-2.5">
+            <img src={logoSrc} alt="Morgan Mngadi logo" className="h-7 w-7 object-contain" />
+            <span className="font-mono text-xs tracking-widest text-muted-foreground uppercase">Morgan Mngadi</span>
+          </div>
           <div className="flex items-center gap-6">
             <a href="#experience" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Work</a>
             <a href="#tools" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Stack</a>
@@ -160,7 +162,7 @@ export default function Home() {
             {[
               { label: "Years active", value: "3+" },
               { label: "Clients worked with", value: "10+" },
-              { label: "Industries served", value: "7+" },
+              { label: "Industries served", value: "14+" },
               { label: "Award honours", value: "2×" },
             ].map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="flex flex-col">
@@ -206,17 +208,23 @@ export default function Home() {
 
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
             <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed lg:pt-1">
-              Delivered SEO across 7 distinct verticals — from regulated financial services to humanitarian organisations and enterprise telecoms.
+              Delivered SEO across 14 distinct verticals — from regulated financial services to enterprise telecoms, retail, and beyond.
             </motion.p>
             <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {[
                 { name: "Finance", desc: "Regulatory-aware SEO for financial services clients" },
                 { name: "Tertiary Education", desc: "Lead-driven organic strategies for universities and colleges" },
-                { name: "Humanitarian", desc: "Purpose-led SEO for NGO and non-profit organisations" },
+                { name: "Humanitarian / NPO", desc: "Purpose-led SEO for NGO and non-profit organisations" },
                 { name: "Courier & Logistics", desc: "Local and national visibility for courier brands" },
                 { name: "Hospitality", desc: "Discovery and booking-focused SEO for hospitality groups" },
                 { name: "Automotive", desc: "High-competition SEO in the automotive sector" },
                 { name: "Telecommunications", desc: "Enterprise-level SEO for a major telecoms group" },
+                { name: "Industrial Machinery", desc: "B2B SEO for industrial and manufacturing equipment brands" },
+                { name: "Medical", desc: "Trust-first SEO strategies for healthcare and medical providers" },
+                { name: "Entertainment", desc: "Audience-growth SEO for entertainment and media brands" },
+                { name: "Retail", desc: "In-store and online visibility for retail brands" },
+                { name: "Ecommerce", desc: "Product and category SEO driving conversions at scale" },
+                { name: "Technology", desc: "SaaS and tech product SEO with a focus on authority building" },
               ].map((industry) => (
                 <motion.div
                   key={industry.name}
