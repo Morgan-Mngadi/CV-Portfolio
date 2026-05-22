@@ -195,6 +195,52 @@ export default function Home() {
           </div>
         </motion.section>
 
+        {/* ─── CERTIFICATIONS ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
+        >
+          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            02 / Certifications
+          </motion.div>
+          <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {[
+              {
+                name: "Google Analytics 4",
+                issuer: "Google",
+                desc: "Certified in GA4 measurement, event tracking, reporting and audience configuration.",
+                badge: "GA4",
+              },
+              {
+                name: "Google Business Profile",
+                issuer: "Google",
+                desc: "Certified in managing and optimising Google Business Profiles for local search visibility.",
+                badge: "GBP",
+              },
+            ].map((cert) => (
+              <motion.div
+                key={cert.name}
+                variants={fadeUp}
+                className="group relative border border-border bg-card p-6 hover:border-primary transition-colors overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                <div className="flex items-start justify-between gap-4 mb-4">
+                  <div className="w-10 h-10 rounded border border-primary/30 bg-primary/5 flex items-center justify-center shrink-0">
+                    <span className="font-mono text-[10px] font-medium text-primary leading-tight text-center">{cert.badge}</span>
+                  </div>
+                  <span className="font-mono text-xs text-primary border border-primary/30 bg-primary/5 px-2 py-0.5 self-start">Certified</span>
+                </div>
+                <h3 className="font-medium mb-1">{cert.name}</h3>
+                <p className="font-mono text-xs text-muted-foreground mb-3">{cert.issuer}</p>
+                <p className="text-sm text-muted-foreground leading-relaxed">{cert.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.section>
+
         {/* ─── INDUSTRIES ─── */}
         <motion.section
           initial="hidden"
@@ -204,7 +250,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            02 / Industries
+            03 / Industries
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
@@ -321,7 +367,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            04 / Project
+            05 / Project
           </motion.div>
 
           <Link href="/projects/commuteza">
@@ -372,7 +418,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            05 / Tooling & Stack
+            06 / Tooling & Stack
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-border border border-border">
@@ -422,7 +468,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                06 / Contact
+                07 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let's build systems<br />that scale visibility.
