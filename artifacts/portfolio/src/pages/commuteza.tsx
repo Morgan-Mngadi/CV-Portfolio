@@ -71,7 +71,7 @@ export default function CommuteZA() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={logoSrc} alt="Logo" className="h-14 w-14 object-contain drop-shadow-[0_0_12px_rgba(0,255,128,0.8)]" />
+            <img src={logoSrc} alt="Logo" className="h-7 w-7 object-contain opacity-80" />
           </div>
           <div className="flex items-center gap-6">
             <Link href="/blog" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Blog</Link>

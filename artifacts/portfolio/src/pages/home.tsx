@@ -116,7 +116,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={logoSrc} alt="Morgan Mngadi logo" className="h-14 w-14 object-contain drop-shadow-[0_0_12px_rgba(0,255,128,0.8)]" />
+            <img src={logoSrc} alt="Morgan Mngadi logo" className="h-7 w-7 object-contain opacity-80" />
           </div>
           <div className="flex items-center gap-6">
             <a href="#experience" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Work</a>
@@ -137,6 +137,9 @@ export default function Home() {
           className="border-b border-border grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-0"
         >
           <div className="py-16 lg:py-24 lg:pr-16 border-r border-border">
+            <motion.div variants={fadeUp} className="mb-6">
+              <img src={logoSrc} alt="Morgan Mngadi" className="h-12 w-12 object-contain opacity-70" />
+            </motion.div>
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6 font-mono text-xs text-primary uppercase tracking-widest">
               <span className="w-6 h-px bg-primary" />
               SEO Specialist · Johannesburg, ZA
@@ -495,7 +498,10 @@ export default function Home() {
             variants={fadeUp}
             className="mt-20 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-muted-foreground"
           >
-            <span>© {new Date().getFullYear()} Morgan Mngadi</span>
+            <div className="flex items-center gap-3">
+              <img src={logoSrc} alt="" className="h-5 w-5 object-contain opacity-40" />
+              <span>© {new Date().getFullYear()} Morgan Mngadi</span>
+            </div>
             <div className="flex items-center gap-2">
               <MapPin className="w-3 h-3" />
               Johannesburg, South Africa

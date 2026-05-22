@@ -98,7 +98,7 @@ export default function Blog() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
         <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
           <Link href="/">
-            <img src={logoSrc} alt="Logo" className="h-14 w-14 object-contain drop-shadow-[0_0_12px_rgba(0,255,128,0.8)] cursor-pointer" />
+            <img src={logoSrc} alt="Logo" className="h-7 w-7 object-contain opacity-80 cursor-pointer" />
           </Link>
           <div className="flex items-center gap-6">
             <Link href="/" className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">
