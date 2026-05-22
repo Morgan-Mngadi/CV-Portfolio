@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, Mail, Phone, MapPin, Award, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Award, ExternalLink } from "lucide-react";
 import { Link } from "wouter";
 import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
 import {
@@ -487,15 +487,6 @@ export default function Home() {
               >
                 <Mail className="w-4 h-4 shrink-0" />
                 morganmngadi@gmail.com
-              </motion.a>
-              <motion.a
-                variants={fadeUp}
-                href="tel:0762878982"
-                data-testid="link-phone"
-                className="flex items-center gap-3 px-6 py-4 border border-border hover:border-foreground transition-colors font-mono text-sm"
-              >
-                <Phone className="w-4 h-4 shrink-0" />
-                (076) 287 8982
               </motion.a>
             </motion.div>
           </div>
