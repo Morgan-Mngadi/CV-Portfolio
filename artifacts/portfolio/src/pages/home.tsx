@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, Mail, MapPin, Award, ExternalLink } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Award, TrendingUp, Zap, Globe, BarChart3 } from "lucide-react";
 import { Link } from "wouter";
 import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
 import {
@@ -56,37 +56,30 @@ const LOCAL_SEO = [
   { name: "Bing Places", icon: null },
 ];
 
-const EXPERIENCE = [
+const PILLARS = [
   {
-    company: "Accenture Song",
-    role: "SEO Specialist",
-    period: "Jan 2026 – Present",
-    location: "Midrand, JHB",
-    current: true,
-    description:
-      "Contributing to SEO delivery for enterprise-level clients in the telecommunications sector. Supporting technical audits, metadata implementation review, and performance reporting through GA4 and Search Console within a cross-functional team.",
-    tags: ["Technical Audits", "Enterprise", "GA4", "Telecoms"],
+    number: "01",
+    icon: <TrendingUp className="w-5 h-5" />,
+    title: "Organic Growth Strategy",
+    desc: "Intent mapping, content systems, YouTube integration, SERP optimisation, AI Overview structuring.",
   },
   {
-    company: "Flume Digital Marketing",
-    role: "Junior SEO Specialist",
-    period: "Nov 2023 – Dec 2025",
-    location: "Bryanston, JHB",
-    current: false,
-    description:
-      "Managed SEO implementation across finance, education, humanitarian, courier, hospitality and automotive verticals. Delivered technical audits, on-page optimisation, structured data deployment and CMS implementation. Represented the agency at the Assegais — awarded two honours.",
-    tags: ["Multi-industry", "Structured Data", "WordPress", "Webflow"],
-    award: "2× Assegais 2024",
+    number: "02",
+    icon: <Zap className="w-5 h-5" />,
+    title: "Technical Search Infrastructure",
+    desc: "Crawl optimisation, canonicalisation, duplication resolution, schema, indexation control, HTML/CSS/JS collaboration.",
   },
   {
-    company: "IMS Ad Agency",
-    role: "SEO & Analytics Associate",
-    period: "Mar 2023 – Sep 2023",
-    location: "Lonehill, JHB",
-    current: false,
-    description:
-      "Built a foundation in SEO and analytics across multiple client accounts. Keyword research, on-page optimisation, technical audits and performance reporting using GSC, SEMrush and Looker Studio.",
-    tags: ["SEO Foundations", "Analytics", "Reporting"],
+    number: "03",
+    icon: <Globe className="w-5 h-5" />,
+    title: "Local & Authority Systems",
+    desc: "Google Business Profile, Bing Places, entity signals, local schema, brand visibility.",
+  },
+  {
+    number: "04",
+    icon: <BarChart3 className="w-5 h-5" />,
+    title: "Analytics & Revenue Attribution",
+    desc: "GA4 custom events, GTM configuration, organic conversion tracking, eCommerce revenue reporting.",
   },
 ];
 
@@ -119,7 +112,7 @@ export default function Home() {
             <img src={logoSrc} alt="Morgan Mngadi logo" className="h-7 w-7 object-contain opacity-80" />
           </div>
           <div className="flex items-center gap-6">
-            <a href="#experience" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Work</a>
+            <Link href="/about" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">About</Link>
             <a href="#tools" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Stack</a>
             <Link href="/blog" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Blog</Link>
             <a href="#contact" className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 hover:bg-primary/90 transition-colors uppercase tracking-widest">Contact</a>
@@ -192,10 +185,59 @@ export default function Home() {
             <motion.p variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-3xl">
               SEO specialist focused on business impact — combining technical depth with strategic thinking.
             </motion.p>
-            <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed max-w-2xl">
+            <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
               Experienced in collaborating with development teams to implement SEO recommendations effectively across multiple CMS platforms. Strong interest in systems-driven SEO and scalable implementation across agency and enterprise environments.
             </motion.p>
+            <motion.div variants={fadeUp}>
+              <Link href="/about" className="inline-flex items-center gap-2 font-mono text-xs text-primary hover:underline uppercase tracking-widest">
+                Full profile <ArrowUpRight className="w-3 h-3" />
+              </Link>
+            </motion.div>
           </div>
+        </motion.section>
+
+        {/* ─── IMPACT METRICS ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+            02 / Impact Metrics
+          </motion.div>
+
+          <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-border divide-y md:divide-y-0 md:divide-x divide-border">
+            {[
+              {
+                value: "R700,000+",
+                label: "Organic eCommerce Revenue",
+                sub: "Attributed directly to organic search campaigns",
+              },
+              {
+                value: "200,000+",
+                label: "Organic Clicks in 72 Hours",
+                sub: "Peak organic traffic driven within a 72-hour window",
+              },
+              {
+                value: "30 Days",
+                label: "AI Overview Visibility",
+                sub: "Achieved AI Overview presence within 30 days of optimisation",
+              },
+            ].map((metric) => (
+              <motion.div
+                key={metric.label}
+                variants={fadeUp}
+                className="group relative p-8 md:p-10 bg-card hover:bg-primary/5 transition-colors overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 w-full h-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="text-4xl md:text-5xl font-medium text-primary tabular-nums mb-3 tracking-tight">{metric.value}</div>
+                <div className="font-medium mb-2">{metric.label}</div>
+                <div className="font-mono text-xs text-muted-foreground leading-relaxed">{metric.sub}</div>
+              </motion.div>
+            ))}
+          </motion.div>
         </motion.section>
 
         {/* ─── CERTIFICATIONS ─── */}
@@ -207,7 +249,7 @@ export default function Home() {
           className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-            02 / Certifications
+            03 / Certifications
           </motion.div>
           <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
@@ -244,6 +286,49 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
+        {/* ─── 4-PILLAR FRAMEWORK ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
+            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+              04 / Framework
+            </motion.div>
+            <div>
+              <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-3">
+                How I Drive Organic Growth
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed max-w-xl">
+                A four-pillar system built for measurable, compounding results — from search infrastructure to revenue attribution.
+              </motion.p>
+            </div>
+          </div>
+
+          <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {PILLARS.map((pillar) => (
+              <motion.div
+                key={pillar.number}
+                variants={fadeUp}
+                className="group relative border border-border bg-card p-8 hover:border-primary transition-colors overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="w-9 h-9 border border-primary/30 bg-primary/5 flex items-center justify-center shrink-0 text-primary">
+                    {pillar.icon}
+                  </div>
+                  <span className="font-mono text-xs text-muted-foreground self-center">{pillar.number}</span>
+                </div>
+                <h3 className="font-medium text-lg mb-3">{pillar.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed">{pillar.desc}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.section>
+
         {/* ─── INDUSTRIES ─── */}
         <motion.section
           initial="hidden"
@@ -253,7 +338,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            03 / Industries
+            05 / Industries
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
@@ -303,64 +388,6 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
-        {/* ─── EXPERIENCE ─── */}
-        <motion.section
-          id="experience"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          variants={stagger}
-          className="border-b border-border py-16"
-        >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            03 / Experience
-          </motion.div>
-
-          <div className="flex flex-col divide-y divide-border">
-            {EXPERIENCE.map((exp) => (
-              <motion.div
-                key={exp.company}
-                variants={fadeUp}
-                className="py-10 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:gap-12 group"
-              >
-                {/* Left column */}
-                <div className="flex flex-col gap-2">
-                  <div className="flex items-center gap-2">
-                    {exp.current && (
-                      <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                    )}
-                    <h3 className="text-lg font-medium">{exp.company}</h3>
-                  </div>
-                  <p className="text-primary font-mono text-sm">{exp.role}</p>
-                  <p className="font-mono text-xs text-muted-foreground">{exp.period}</p>
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground font-mono">
-                    <MapPin className="w-3 h-3" />
-                    {exp.location}
-                  </div>
-                  {exp.award && (
-                    <div className="inline-flex items-center gap-1.5 mt-2 text-xs font-mono text-primary border border-primary/30 bg-primary/5 px-2.5 py-1 self-start">
-                      <Award className="w-3 h-3" />
-                      {exp.award}
-                    </div>
-                  )}
-                </div>
-
-                {/* Right column */}
-                <div>
-                  <p className="text-muted-foreground leading-relaxed mb-5">{exp.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {exp.tags.map((tag) => (
-                      <span key={tag} className="text-xs font-mono px-2.5 py-1 bg-card border border-border text-muted-foreground">
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.section>
-
         {/* ─── PROJECT ─── */}
         <motion.section
           initial="hidden"
@@ -370,7 +397,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            05 / Project
+            06 / Project
           </motion.div>
 
           <Link href="/projects/commuteza">
@@ -379,7 +406,6 @@ export default function Home() {
             className="group block relative overflow-hidden border border-border hover:border-primary transition-all duration-500 bg-card cursor-pointer"
             data-testid="link-commuteza"
           >
-            {/* Accent corner */}
             <div className="absolute top-0 left-0 w-1 h-full bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/[0.02] transition-colors duration-500" />
 
@@ -421,11 +447,10 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            06 / Tooling & Stack
+            07 / Tooling & Stack
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-border border border-border">
-            {/* Daily */}
             <motion.div variants={fadeUp} className="p-8 md:border-r border-border md:border-b border-b">
               <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-5">Daily Operations</h3>
               <div className="flex flex-wrap gap-2">
@@ -433,7 +458,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* CMS */}
             <motion.div variants={fadeUp} className="p-8 md:border-b border-b">
               <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-5">CMS Platforms</h3>
               <div className="flex flex-wrap gap-2">
@@ -441,7 +465,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* AI */}
             <motion.div variants={fadeUp} className="p-8 md:border-r border-border">
               <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-5">AI & Workflows</h3>
               <div className="flex flex-wrap gap-2">
@@ -449,7 +472,6 @@ export default function Home() {
               </div>
             </motion.div>
 
-            {/* Local */}
             <motion.div variants={fadeUp} className="p-8">
               <h3 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-5">Local SEO</h3>
               <div className="flex flex-wrap gap-2">
@@ -471,7 +493,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                07 / Contact
+                08 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let's build systems<br />that scale visibility.
