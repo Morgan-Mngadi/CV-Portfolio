@@ -179,11 +179,13 @@ export default function About() {
             </div>
 
             {/* Stats row */}
-            <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-8 border-t border-border">
+            <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-x-6 gap-y-6 pt-8 border-t border-border">
               {[
                 { value: "3+", label: "Years active" },
                 { value: "15+", label: "Clients worked with" },
                 { value: "R700k+", label: "Organic eCommerce revenue" },
+                { value: "200k+", label: "Organic clicks in 72 hrs" },
+                { value: "14+", label: "Industries served" },
                 { value: "2×", label: "Award honours" },
               ].map((s) => (
                 <motion.div key={s.label} variants={fadeUp} className="flex flex-col">
@@ -197,13 +199,13 @@ export default function About() {
           {/* Right — photo */}
           <motion.div
             variants={fadeUp}
-            className="relative flex items-end justify-center overflow-hidden bg-card border-l-0 lg:border-l-0"
+            className="relative flex items-start justify-center overflow-hidden pt-16 lg:pt-20"
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10 pointer-events-none" />
             <img
               src="/morgan-photo.png"
               alt="Morgan Mngadi"
-              className="relative z-0 w-full max-w-[320px] lg:max-w-none object-contain object-bottom h-full max-h-[480px]"
+              className="w-full max-w-[280px] lg:max-w-[320px] object-contain object-top"
+              style={{ filter: "grayscale(20%) brightness(0.95)" }}
             />
           </motion.div>
         </motion.section>

@@ -388,6 +388,56 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
+        {/* ─── CLIENTS ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
+            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+              06 / Clients
+            </motion.div>
+            <div>
+              <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-3">
+                Contributed to SEO strategy for brands including:
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-sm text-muted-foreground font-mono">
+                Across agency and enterprise engagements — Flume Digital & Accenture Song.
+              </motion.p>
+            </div>
+          </div>
+
+          <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-px bg-border border border-border">
+            {[
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+              "Client Logo",
+            ].map((_, i) => (
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                className="bg-card flex items-center justify-center p-8 min-h-[100px] group hover:bg-primary/5 transition-colors"
+              >
+                <div className="w-20 h-8 border border-dashed border-border/60 group-hover:border-primary/40 transition-colors flex items-center justify-center">
+                  <span className="font-mono text-[10px] text-muted-foreground/40">LOGO</span>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.section>
+
         {/* ─── PROJECT ─── */}
         <motion.section
           initial="hidden"
@@ -397,7 +447,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            06 / Project
+            07 / Project
           </motion.div>
 
           <Link href="/projects/commuteza">
@@ -447,7 +497,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            07 / Tooling & Stack
+            08 / Tooling & Stack
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-border border border-border">
@@ -493,7 +543,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                08 / Contact
+                09 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let's build systems<br />that scale visibility.
