@@ -8,6 +8,8 @@ import Home from "@/pages/home";
 import About from "@/pages/about";
 import CommuteZA from "@/pages/commuteza";
 import Blog from "@/pages/blog";
+import BlogArticle from "@/pages/blog-article";
+import { ScrollToTop } from "@/components/scroll-to-top";
 
 const queryClient = new QueryClient();
 
@@ -17,13 +19,18 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/projects/commuteza" component={CommuteZA} />
+      <Route path="/blog/:slug" component={BlogArticle} />
       <Route path="/blog" component={Blog} />
       <Route component={NotFound} />
     </Switch>
   );
 }
 
-function App() {
+type AppProps = {
+  ssrPath?: string;
+};
+
+function App({ ssrPath }: AppProps) {
   useEffect(() => {
     document.documentElement.classList.add("dark");
   }, []);
@@ -31,7 +38,8 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")} ssrPath={ssrPath}>
+          <ScrollToTop />
           <Router />
         </WouterRouter>
         <Toaster />

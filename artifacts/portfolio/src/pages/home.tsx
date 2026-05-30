@@ -1,7 +1,11 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, Mail, MapPin, Award, TrendingUp, Zap, Globe, BarChart3 } from "lucide-react";
+import type { Variants } from "framer-motion";
+import { ArrowUpRight, Mail, Award, TrendingUp, Zap, Globe, BarChart3 } from "lucide-react";
 import { Link } from "wouter";
 import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
+import { Seo } from "@/components/seo";
+import { SiteNav } from "@/components/site-nav";
+import { SiteFooter } from "@/components/site-footer";
 import {
   SiGoogleanalytics,
   SiGoogletagmanager,
@@ -13,12 +17,12 @@ import {
   SiOpenai,
 } from "react-icons/si";
 
-const fadeUp = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const stagger = {
+const stagger: Variants = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08 } },
 };
@@ -83,6 +87,19 @@ const PILLARS = [
   },
 ];
 
+const CLIENT_LOGOS = [
+  { name: "Regent Business School", src: "/client-logos/regent-business-school.png" },
+  { name: "PSG", src: "/client-logos/psg.png" },
+  { name: "Lenmed", src: "/client-logos/lenmed.png" },
+  { name: "Doctors Without Borders", src: "/client-logos/doctors-without-borders.png" },
+  { name: "Automark", src: "/client-logos/automark.png" },
+  { name: "Lexus Pre-Owned", src: "/client-logos/lexus-pre-owned.png" },
+  { name: "Computer Mania", src: "/client-logos/computer-mania.png" },
+  { name: "The Capital", src: "/client-logos/the-capital.png" },
+  { name: "Seabourne Logistics", src: "/client-logos/seabourne-logistics.png" },
+  { name: "The Courier Guy", src: "/client-logos/the-courier-guy.png" },
+];
+
 function ToolPill({ name, icon }: { name: string; icon: React.ReactNode }) {
   return (
     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-card border border-border text-xs font-mono text-muted-foreground hover:border-primary hover:text-foreground transition-colors whitespace-nowrap">
@@ -95,6 +112,7 @@ function ToolPill({ name, icon }: { name: string; icon: React.ReactNode }) {
 export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <Seo path="/" />
       {/* Subtle grid background */}
       <div
         className="fixed inset-0 pointer-events-none z-0"
@@ -105,20 +123,7 @@ export default function Home() {
         }}
       />
 
-      {/* Nav */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
-        <div className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <img src={logoSrc} alt="Morgan Mngadi logo" className="h-7 w-7 object-contain opacity-80" />
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href="/about" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">About</Link>
-            <a href="#tools" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Stack</a>
-            <Link href="/blog" className="font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">Blog</Link>
-            <a href="#contact" className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 hover:bg-primary/90 transition-colors uppercase tracking-widest">Contact</a>
-          </div>
-        </div>
-      </nav>
+      <SiteNav />
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 pt-12">
 
@@ -131,7 +136,7 @@ export default function Home() {
         >
           <div className="py-16 lg:py-24 lg:pr-16 border-r border-border">
             <motion.div variants={fadeUp} className="mb-6">
-              <img src={logoSrc} alt="Morgan Mngadi" className="h-12 w-12 object-contain opacity-70" />
+              <img src={logoSrc} alt="Morgan Mngadi" className="h-16 w-16 object-contain opacity-80" />
             </motion.div>
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6 font-mono text-xs text-primary uppercase tracking-widest">
               <span className="w-6 h-px bg-primary" />
@@ -142,7 +147,7 @@ export default function Home() {
               <span className="text-primary">Mngadi</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-              SEO strategist with agency and enterprise experience. I build scalable visibility — from audits to architecture.
+              SEO strategist with agency experience. I build scalable visibility through audits, implementation, and search architecture.
             </motion.p>
             <motion.div variants={fadeUp} className="flex gap-3 mt-8">
               <a href="mailto:morganmngadi@gmail.com" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
@@ -160,7 +165,7 @@ export default function Home() {
               { label: "Years active", value: "3+" },
               { label: "Clients worked with", value: "15+" },
               { label: "Industries served", value: "14+" },
-              { label: "Award honours", value: "2×" },
+              { label: "Award contributions", value: "2×" },
             ].map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="flex flex-col">
                 <span className="text-4xl font-medium text-primary tabular-nums">{stat.value}</span>
@@ -183,10 +188,10 @@ export default function Home() {
           </motion.div>
           <div>
             <motion.p variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-3xl">
-              SEO specialist focused on business impact — combining technical depth with strategic thinking.
+              SEO specialist focused on business impact, combining technical depth with strategic thinking.
             </motion.p>
             <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
-              Experienced in collaborating with development teams to implement SEO recommendations effectively across multiple CMS platforms. Strong interest in systems-driven SEO and scalable implementation across agency and enterprise environments.
+              Experienced in collaborating with development teams to implement SEO recommendations effectively across multiple CMS platforms. Strong interest in systems driven SEO and scalable implementation within agency led client work.
             </motion.p>
             <motion.div variants={fadeUp}>
               <Link href="/about" className="inline-flex items-center gap-2 font-mono text-xs text-primary hover:underline uppercase tracking-widest">
@@ -212,13 +217,13 @@ export default function Home() {
             {[
               {
                 value: "R700,000+",
-                label: "Organic eCommerce Revenue",
+                label: "Organic Ecommerce Revenue",
                 sub: "Attributed directly to organic search campaigns",
               },
               {
                 value: "200,000+",
                 label: "Organic Clicks in 72 Hours",
-                sub: "Peak organic traffic driven within a 72-hour window",
+                sub: "Peak organic traffic driven within a 72 hour window",
               },
               {
                 value: "30 Days",
@@ -286,7 +291,7 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
-        {/* ─── 4-PILLAR FRAMEWORK ─── */}
+        {/* 4 PILLAR FRAMEWORK */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -303,7 +308,7 @@ export default function Home() {
                 How I Drive Organic Growth
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed max-w-xl">
-                A four-pillar system built for measurable, compounding results — from search infrastructure to revenue attribution.
+                A four pillar system built for measurable, compounding results from search infrastructure to revenue attribution.
               </motion.p>
             </div>
           </div>
@@ -343,21 +348,21 @@ export default function Home() {
 
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
             <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed lg:pt-1">
-              Delivered SEO across 14 distinct verticals — from regulated financial services to enterprise telecoms, retail, and beyond.
+              Delivered SEO across 14 distinct verticals, including regulated financial services, telecoms, retail, and beyond.
             </motion.p>
             <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {[
-                { name: "Finance", desc: "Regulatory-aware SEO for financial services clients" },
-                { name: "Tertiary Education", desc: "Lead-driven organic strategies for universities and colleges" },
-                { name: "Humanitarian / NPO", desc: "Purpose-led SEO for NGO and non-profit organisations" },
+                { name: "Finance", desc: "Regulatory aware SEO for financial services clients" },
+                { name: "Tertiary Education", desc: "Lead driven organic strategies for universities and colleges" },
+                { name: "Humanitarian / NPO", desc: "Purpose led SEO for NGO and nonprofit organisations" },
                 { name: "Courier & Logistics", desc: "Local and national visibility for courier brands" },
-                { name: "Hospitality", desc: "Discovery and booking-focused SEO for hospitality groups" },
-                { name: "Automotive", desc: "High-competition SEO in the automotive sector" },
-                { name: "Telecommunications", desc: "Enterprise-level SEO for a major telecoms group" },
+                { name: "Hospitality", desc: "Discovery and booking focused SEO for hospitality groups" },
+                { name: "Automotive", desc: "High competition SEO in the automotive sector" },
+                { name: "Telecommunications", desc: "Enterprise level SEO for a major telecoms group" },
                 { name: "Industrial Machinery", desc: "B2B SEO for industrial and manufacturing equipment brands" },
-                { name: "Medical", desc: "Trust-first SEO strategies for healthcare and medical providers" },
-                { name: "Entertainment", desc: "Audience-growth SEO for entertainment and media brands" },
-                { name: "Retail", desc: "In-store and online visibility for retail brands" },
+                { name: "Medical", desc: "Trust first SEO strategies for healthcare and medical providers" },
+                { name: "Entertainment", desc: "Audience growth SEO for entertainment and media brands" },
+                { name: "Retail", desc: "In store and online visibility for retail brands" },
                 { name: "Ecommerce", desc: "Product and category SEO driving conversions at scale" },
                 { name: "Technology", desc: "SaaS and tech product SEO with a focus on authority building" },
               ].map((industry) => (
@@ -383,7 +388,7 @@ export default function Home() {
             <span className="text-5xl font-medium text-primary tabular-nums shrink-0">15+</span>
             <div>
               <p className="font-medium">Clients worked with</p>
-              <p className="text-sm text-muted-foreground font-mono mt-0.5">Across agency and enterprise engagements — from growing brands to FTSE-listed corporates</p>
+              <p className="text-sm text-muted-foreground font-mono mt-0.5">Across agency led client work for growing brands and established organisations.</p>
             </div>
           </motion.div>
         </motion.section>
@@ -402,37 +407,27 @@ export default function Home() {
             </motion.div>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-3">
-                Contributed to SEO strategy for brands including:
+                Examples of clients I've worked with:
               </motion.h2>
               <motion.p variants={fadeUp} className="text-sm text-muted-foreground font-mono">
-                Across agency and enterprise engagements — Flume Digital & Accenture Song.
+                A sample of client work from agency led SEO projects.
               </motion.p>
             </div>
           </div>
 
-          <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-px bg-border border border-border">
-            {[
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-              "Client Logo",
-            ].map((_, i) => (
+          <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-border border border-border">
+            {CLIENT_LOGOS.map((client) => (
               <motion.div
-                key={i}
+                key={client.name}
                 variants={fadeUp}
-                className="bg-card flex items-center justify-center p-8 min-h-[100px] group hover:bg-primary/5 transition-colors"
+                className="bg-card flex items-center justify-center px-6 py-8 min-h-[120px] group hover:bg-primary/5 transition-colors"
               >
-                <div className="w-20 h-8 border border-dashed border-border/60 group-hover:border-primary/40 transition-colors flex items-center justify-center">
-                  <span className="font-mono text-[10px] text-muted-foreground/40">LOGO</span>
-                </div>
+                <img
+                  src={client.src}
+                  alt={`${client.name} logo`}
+                  className="max-h-14 w-full max-w-[180px] object-contain opacity-80 transition-opacity group-hover:opacity-100"
+                  loading="lazy"
+                />
               </motion.div>
             ))}
           </motion.div>
@@ -465,12 +460,12 @@ export default function Home() {
                   <h3 className="text-2xl md:text-3xl font-medium group-hover:text-primary transition-colors">CommuteZA</h3>
                   <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
                 </div>
-                <p className="font-mono text-sm text-muted-foreground mb-6">Routing Web App for South African Commuters · Jan 2026 – Present</p>
+                <p className="font-mono text-sm text-muted-foreground mb-6">Routing Web App for South African Commuters · Jan 2026 to Present</p>
                 <p className="text-muted-foreground leading-relaxed max-w-2xl mb-8">
-                  Self-initiated project built to deepen SEO and systems understanding from the ground up. Implements a headless CMS architecture to manage metadata, structured data, redirect logic and URL structuring with full control over rendering behaviour. Refining SSR approach to ensure optimal crawlability and indexation.
+                  Self initiated project built to deepen SEO and systems understanding from the ground up. Implements a headless CMS architecture to manage metadata, structured data, redirect logic and URL structuring with full control over rendering behaviour. Currently working on the redirect logic in the CMS and looking to add pricing info.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  {["Headless CMS", "Server-side Rendering", "Structured Data", "Technical SEO", "Redirect Logic"].map((t) => (
+                  {["Headless CMS", "Server side Rendering", "Structured Data", "Technical SEO", "Redirect Logic"].map((t) => (
                     <span key={t} className="text-xs font-mono px-2.5 py-1 bg-background border border-border text-muted-foreground">
                       {t}
                     </span>
@@ -546,14 +541,14 @@ export default function Home() {
                 09 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
-                Let's build systems<br />that scale visibility.
+                Let's turn technical search<br />into measurable growth.
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground">
-                Open to new opportunities in technical SEO and systems implementation.
+                Open to full time and part time Organic Search roles focused on AI visibility, technical SEO implementation, and organic ROI across leads and purchases.
               </motion.p>
             </div>
 
-            <motion.div variants={stagger} className="flex flex-col gap-3">
+            <motion.div variants={stagger} className="flex flex-col sm:flex-row lg:flex-col gap-3">
               <motion.a
                 variants={fadeUp}
                 href="mailto:morganmngadi@gmail.com"
@@ -561,27 +556,24 @@ export default function Home() {
                 className="flex items-center gap-3 px-6 py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
               >
                 <Mail className="w-4 h-4 shrink-0" />
-                morganmngadi@gmail.com
+                Email me
+              </motion.a>
+              <motion.a
+                variants={fadeUp}
+                href="https://www.linkedin.com/in/morgan-mngadi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
+              >
+                <ArrowUpRight className="w-4 h-4 shrink-0" />
+                LinkedIn
               </motion.a>
             </motion.div>
           </div>
-
-          <motion.div
-            variants={fadeUp}
-            className="mt-20 pt-6 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 text-xs font-mono text-muted-foreground"
-          >
-            <div className="flex items-center gap-3">
-              <img src={logoSrc} alt="" className="h-5 w-5 object-contain opacity-40" />
-              <span>© {new Date().getFullYear()} Morgan Mngadi</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <MapPin className="w-3 h-3" />
-              Johannesburg, South Africa
-            </div>
-          </motion.div>
         </motion.section>
 
       </div>
+      <SiteFooter />
     </div>
   );
 }
