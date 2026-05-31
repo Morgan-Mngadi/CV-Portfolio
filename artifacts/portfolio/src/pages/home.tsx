@@ -100,6 +100,27 @@ const CLIENT_LOGOS = [
   { name: "The Courier Guy", src: "/client-logos/the-courier-guy.png" },
 ];
 
+const WORK_WITH_ME = [
+  {
+    title: "Organic Search Retainers",
+    description:
+      "Ongoing monthly support across technical SEO, AI visibility, implementation, and reporting that connects search activity to leads or purchases.",
+    bestFor: "Startups, ecommerce teams, agencies",
+  },
+  {
+    title: "SEO Implementation Support",
+    description:
+      "Execution support for teams that already have a strategy but need help shipping metadata, schema, redirects, CMS updates, and technical fixes.",
+    bestFor: "Agencies and in house teams",
+  },
+  {
+    title: "Reporting and Measurement Setup",
+    description:
+      "GA4, Search Console, and GTM support for teams that need clearer organic performance reporting across visibility, engagement, and revenue.",
+    bestFor: "Marketing teams and founders",
+  },
+];
+
 function ToolPill({ name, icon }: { name: string; icon: React.ReactNode }) {
   return (
     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-card border border-border text-xs font-mono text-muted-foreground hover:border-primary hover:text-foreground transition-colors whitespace-nowrap">
@@ -217,8 +238,8 @@ export default function Home() {
             {[
               {
                 value: "R700,000+",
-                label: "Organic Ecommerce Revenue",
-                sub: "Attributed directly to organic search campaigns",
+                label: "Monthly Organic Ecommerce Revenue",
+                sub: "Monthly revenue impact attributed directly to organic search campaigns",
               },
               {
                 value: "200,000+",
@@ -482,6 +503,55 @@ export default function Home() {
           </Link>
         </motion.section>
 
+        {/* WORK WITH ME */}
+        <motion.section
+          id="work-with-me"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
+            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+              08 / Work With Me
+            </motion.div>
+            <div>
+              <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
+                Organic Search support for teams that need technical change to become measurable impact.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
+                Available for employment, freelance, and contract work across technical SEO implementation, AI visibility, and organic performance reporting.
+              </motion.p>
+            </div>
+          </div>
+
+          <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border border border-border">
+            {WORK_WITH_ME.map((item) => (
+              <motion.div key={item.title} variants={fadeUp} className="bg-card p-6 md:p-8">
+                <h3 className="text-lg font-medium mb-4">{item.title}</h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{item.description}</p>
+                <div className="font-mono text-xs uppercase tracking-widest text-primary">{item.bestFor}</div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-8 flex flex-col sm:flex-row gap-3">
+            <Link
+              href="/work-with-me"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 border border-border text-sm font-mono text-muted-foreground hover:border-primary hover:text-primary transition-colors"
+            >
+              Explore ways to work <ArrowUpRight className="w-4 h-4" />
+            </Link>
+            <a
+              href="mailto:morganmngadi@gmail.com"
+              className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+            >
+              <Mail className="w-4 h-4" /> Email me
+            </a>
+          </motion.div>
+        </motion.section>
+
         {/* ─── TOOLS ─── */}
         <motion.section
           id="tools"
@@ -492,7 +562,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            08 / Tooling & Stack
+            09 / Tooling & Stack
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-border border border-border">
@@ -538,13 +608,13 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                09 / Contact
+                10 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let's turn technical search<br />into measurable growth.
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground">
-                Open to full time and part time Organic Search roles focused on AI visibility, technical SEO implementation, and organic ROI across leads and purchases.
+                Open to employment, freelance, and contract Organic Search work focused on AI visibility, technical SEO implementation, and organic ROI across leads and purchases.
               </motion.p>
             </div>
 

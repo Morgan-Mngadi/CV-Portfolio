@@ -9,6 +9,7 @@ import About from "@/pages/about";
 import CommuteZA from "@/pages/commuteza";
 import Blog from "@/pages/blog";
 import BlogArticle from "@/pages/blog-article";
+import WorkWithMe from "@/pages/work-with-me";
 import { ScrollToTop } from "@/components/scroll-to-top";
 
 const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
+      <Route path="/work-with-me" component={WorkWithMe} />
       <Route path="/projects/commuteza" component={CommuteZA} />
       <Route path="/blog/:slug" component={BlogArticle} />
       <Route path="/blog" component={Blog} />

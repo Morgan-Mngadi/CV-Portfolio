@@ -71,9 +71,9 @@ const HIGHLIGHTS = [
 
 const METRICS = [
   {
-    value: "4,000+",
+    value: "6,000+",
     label: "Search impressions",
-    detail: "Generated over 4,000 search impressions in the first two months from a zero baseline.",
+    detail: "Generated over 6,000 search impressions across Google and Bing in the first two months, with Google contributing over 4,000 impressions.",
   },
   {
     value: "22%",

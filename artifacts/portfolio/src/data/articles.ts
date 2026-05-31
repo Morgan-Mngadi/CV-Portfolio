@@ -3,6 +3,13 @@ export type ArticleSection = {
   heading: string;
   paragraphs: string[];
   bullets?: string[];
+  numberedSteps?: string[];
+  imagePlaceholder?: string;
+  closingParagraphs?: string[];
+  link?: {
+    href: string;
+    label: string;
+  };
 };
 
 export type ArticleFaq = {
@@ -58,6 +65,7 @@ export const ARTICLES: Article[] = [
         heading: "How to report it",
         paragraphs: [
           "A stronger organic report combines search visibility, AI visibility, and commercial outcomes. Google Search Console shows demand and query movement. GA4 shows behaviour after the click. Manual AI checks and third party monitoring can show whether the brand is present in generated answers.",
+          "Tools such as SEMrush and Similarweb can help report on AI visibility data, depending on the markets and features available. GA4 can also support this work through referral traffic, where visits from platforms such as ChatGPT, Perplexity, Copilot, or Gemini may appear as referring sources.",
           "The goal is not to flood a report with more numbers. The goal is to connect visibility to decisions, leads, purchases, and content priorities.",
         ],
       },
@@ -163,7 +171,7 @@ export const ARTICLES: Article[] = [
       "Generative engine optimisation is often framed as a new discipline. In practice, most of the durable work still comes from strong SEO fundamentals.",
     category: "AI Search",
     date: "Jun 2026",
-    readTime: "2 min read",
+    readTime: "4 min read",
     sections: [
       {
         id: "what-geo-gets-wrong",
@@ -190,6 +198,29 @@ export const ARTICLES: Article[] = [
         ],
       },
       {
+        id: "proof-from-commuteza",
+        heading: "Proof from CommuteZA",
+        paragraphs: [
+          "CommuteZA is a useful proof concept because it is still a new website and does not rely on shortcuts. Within 30 days, an article on the site appeared in AI Overviews and was surfaced by Microsoft Copilot.",
+          "The site is also small. It has 11 pages in total, with only two blog articles, so there is not a deep content library or much internal linking supporting the result.",
+          "There are currently no backlinks, no LLMs.txt file, and no fancy AI tricks. The work is grounded in search fundamentals: crawlable pages, clear entities, useful content, structured information, and technical foundations that make the site easier to understand.",
+          "And yet the webpage still achieved meaningful search visibility:",
+        ],
+        bullets: [
+          "Appeared in AI Overviews and Microsoft Copilot.",
+          "No current backlinks.",
+          "No LLMs.txt file or artificial AI visibility tactics.",
+          "The result came from technical SEO fundamentals and clear content structure.",
+        ],
+        closingParagraphs: [
+          "That does not mean links and authority do not matter. It means AI search visibility is not won by chasing a separate GEO playbook. It is often earned by making the existing SEO foundations strong enough for both search engines and AI systems to interpret.",
+        ],
+        link: {
+          href: "/projects/commuteza",
+          label: "View the CommuteZA case study",
+        },
+      },
+      {
         id: "why-the-label-can-be-dangerous",
         heading: "Why the label can be dangerous",
         paragraphs: [
@@ -201,8 +232,18 @@ export const ARTICLES: Article[] = [
         id: "a-practical-way-forward",
         heading: "A practical way forward",
         paragraphs: [
-          "Start with the topics that matter commercially. Strengthen the pages that answer those topics. Make the entities obvious. Add useful supporting content. Then measure whether the brand appears in search results, AI Overviews, answer engines, and downstream conversions.",
-          "That is not a rejection of AI search. It is a more grounded way to prepare for it.",
+          "The practical path is not complicated. Start with the work that helps people and search engines understand the site clearly, then measure whether that work improves visibility and business value.",
+        ],
+        numberedSteps: [
+          "Choose the topics that matter most to the business.",
+          "Improve the pages that answer those topics.",
+          "Make the brand, service, location, and important entities easy to understand.",
+          "Add useful supporting content where users need more context.",
+          "Use internal links to connect related pages and strengthen topic coverage.",
+          "Measure visibility in search results, AI Overviews, answer engines, and downstream conversions.",
+        ],
+        closingParagraphs: [
+          "That is not a rejection of AI search. It is a simpler and more grounded way to prepare for it.",
         ],
       },
     ],
@@ -221,6 +262,214 @@ export const ARTICLES: Article[] = [
         question: "Should businesses create a separate GEO strategy?",
         answer:
           "Most should extend their SEO strategy instead. Add AI visibility checks and answer engine monitoring, but keep the core work grounded in technical SEO, content quality, and authority.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-set-up-gtm-custom-metrics-commuteza",
+    title: "How to Set Up GTM for Custom Metrics Using CommuteZA",
+    excerpt:
+      "A practical guide to planning custom metrics in Google Tag Manager for CommuteZA, from event naming to GA4 validation.",
+    category: "Measurement",
+    date: "Jun 2026",
+    readTime: "3 min read",
+    sections: [
+      {
+        id: "start-with-the-business-question",
+        heading: "Start with the business question",
+        paragraphs: [
+          "Before opening Google Tag Manager, decide what the metric needs to explain. For CommuteZA, a useful custom metric might help answer whether users are interacting with route search, transport filters, location inputs, or pricing information.",
+          "Custom metrics are most useful when they help explain behaviour that normal page views cannot show on their own.",
+        ],
+        imagePlaceholder: "Add a screenshot of the CommuteZA interaction or event map that shows which user actions will be tracked.",
+      },
+      {
+        id: "create-a-clean-event-plan",
+        heading: "Create a clean event plan",
+        paragraphs: [
+          "Keep event names simple and consistent. A messy naming system makes reporting harder later, especially once the data reaches GA4 and Looker Studio.",
+        ],
+        numberedSteps: [
+          "List the user actions worth tracking.",
+          "Choose clear event names such as route_search_started or transport_filter_selected.",
+          "Decide which parameters should travel with the event.",
+          "Document the purpose of each event before building tags.",
+        ],
+      },
+      {
+        id: "build-the-tag-in-gtm",
+        heading: "Build the tag in GTM",
+        paragraphs: [
+          "In GTM, create a GA4 event tag and use the event name from the plan. Add parameters such as transport type, route type, city, or search status only when they will help future reporting.",
+          "Use triggers that match the user action as closely as possible. If the trigger is too broad, the metric becomes noisy. If it is too narrow, important interactions may be missed.",
+        ],
+        imagePlaceholder: "Add a GTM screenshot showing the GA4 event tag, event parameters, and trigger configuration.",
+      },
+      {
+        id: "test-before-publishing",
+        heading: "Test before publishing",
+        paragraphs: [
+          "Use Preview mode in GTM and DebugView in GA4 before publishing the container. Check that the event fires once, carries the right parameters, and only appears when the intended action happens.",
+          "Once published, review the event in GA4 after data has processed. If the metric supports business questions, it can then be added to reports and dashboards.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Should every interaction become a custom metric?",
+        answer:
+          "No. Track the actions that explain user intent, product engagement, or conversion progress. Too many events make reporting harder to use.",
+      },
+      {
+        question: "Why use GTM instead of adding tracking directly to the code?",
+        answer:
+          "GTM gives marketing and measurement teams more control over tracking changes without needing every update to go through a full development cycle.",
+      },
+      {
+        question: "When should a GTM event become a GA4 key event?",
+        answer:
+          "Only when the action represents meaningful progress towards a business goal, such as a lead, route enquiry, purchase, or other high value conversion.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-set-up-measurement-tools-gsc-ga4-microsoft-clarity",
+    title: "How to Set Up Google Search Console, GA4, and Microsoft Clarity",
+    excerpt:
+      "A simple measurement setup for understanding how users find a site, what they do after landing, and where experience issues appear.",
+    category: "Measurement",
+    date: "Jun 2026",
+    readTime: "2 min read",
+    sections: [
+      {
+        id: "why-these-tools-work-together",
+        heading: "Why these tools work together",
+        paragraphs: [
+          "Google Search Console, GA4, and Microsoft Clarity each answer a different question. Search Console shows how people find the site. GA4 shows what they do after they arrive. Clarity helps show where users hesitate, scroll, click, or run into friction.",
+          "Together, they give a better picture of Organic Search performance than any single tool can provide alone.",
+        ],
+      },
+      {
+        id: "set-up-search-console",
+        heading: "Set up Search Console",
+        paragraphs: [
+          "Start with Search Console because it confirms how Google sees the site. Use a domain property where possible, verify ownership, submit the XML sitemap, and check whether important pages are indexed.",
+        ],
+        numberedSteps: [
+          "Create a domain property.",
+          "Verify ownership through DNS or another supported method.",
+          "Submit the sitemap.",
+          "Review indexing, queries, pages, and technical issues.",
+        ],
+        imagePlaceholder: "Add a Search Console screenshot showing the property, sitemap, or performance report.",
+      },
+      {
+        id: "set-up-ga4",
+        heading: "Set up GA4",
+        paragraphs: [
+          "GA4 should track the actions that matter after the click. Install the tag through GTM or directly on the site, confirm page views, and then add important events for leads, purchases, route searches, form submissions, or other business actions.",
+        ],
+        imagePlaceholder: "Add a GA4 screenshot showing realtime events, DebugView, or the events report.",
+      },
+      {
+        id: "set-up-microsoft-clarity",
+        heading: "Set up Microsoft Clarity",
+        paragraphs: [
+          "Clarity helps explain behaviour that numbers alone can hide. Heatmaps and recordings can show whether users are missing calls to action, getting stuck in forms, or struggling with layout issues.",
+          "Use it carefully. The goal is not to watch every session. The goal is to find patterns that improve the user journey and support better conversion decisions.",
+        ],
+        imagePlaceholder: "Add a Microsoft Clarity screenshot showing heatmaps, recordings, or rage click insights.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Which tool should be installed first?",
+        answer:
+          "Search Console and GA4 are usually the starting point. Clarity can follow once the site is live and has enough traffic to review behaviour.",
+      },
+      {
+        question: "Do these tools replace each other?",
+        answer:
+          "No. Search Console, GA4, and Clarity answer different questions, so they work best as a measurement stack.",
+      },
+      {
+        question: "Should dashboards include all three tools?",
+        answer:
+          "Not always. Dashboards should include the data that helps stakeholders understand performance, decisions, and ROI.",
+      },
+    ],
+  },
+  {
+    slug: "how-to-set-up-looker-studio-dashboard-stakeholders",
+    title: "How to Set Up a Looker Studio Dashboard That Impresses Stakeholders",
+    excerpt:
+      "A practical guide to building a premium looking Looker Studio dashboard that makes organic performance easier to understand.",
+    category: "Measurement",
+    date: "Jun 2026",
+    readTime: "3 min read",
+    sections: [
+      {
+        id: "start-with-the-user",
+        heading: "Start with the stakeholder",
+        paragraphs: [
+          "A premium dashboard is not just a nice looking report. It is a report that helps a stakeholder understand what changed, why it changed, and what should happen next.",
+          "Before designing the page, decide who will use it. A founder, SEO manager, paid media lead, and agency client may all need different levels of detail.",
+        ],
+      },
+      {
+        id: "build-a-clear-layout",
+        heading: "Build a clear layout",
+        paragraphs: [
+          "The best dashboards guide the eye. Put headline metrics at the top, filters where users expect them, and deeper tables or charts further down the page.",
+        ],
+        numberedSteps: [
+          "Start with the headline KPI or business question.",
+          "Add filters for segment, channel, page type, or date range.",
+          "Use charts to explain trends and tables to show detail.",
+          "Add short commentary boxes where the data needs interpretation.",
+          "Keep colours, spacing, and typography consistent across the report.",
+        ],
+        imagePlaceholder: "Add a screenshot of the dashboard overview, showing filters, KPI cards, tables, and charts.",
+      },
+      {
+        id: "make-roi-easy-to-see",
+        heading: "Make ROI easy to see",
+        paragraphs: [
+          "Stakeholders care about visibility, but they care even more about business impact. A dashboard should make it easy to connect organic activity to leads, purchases, revenue, or meaningful user actions.",
+          "For SEO, this means combining Search Console visibility with GA4 behaviour and conversion data where possible. The report should not only say traffic went up. It should help explain whether the increase mattered.",
+        ],
+        bullets: [
+          "Show organic revenue, leads, or key events where available.",
+          "Separate branded and non branded search where useful.",
+          "Use commentary to explain the action behind the numbers.",
+          "Avoid vanity metrics unless they support a decision.",
+        ],
+      },
+      {
+        id: "premium-feel",
+        heading: "What creates a premium feel",
+        paragraphs: [
+          "A premium dashboard feels calm, deliberate, and easy to scan. It does not need heavy decoration. It needs clear hierarchy, useful filters, tidy spacing, and charts that answer real questions.",
+          "It is fair to write about premium dashboard design if you focus on business clarity, not only aesthetics. The value is in making performance easier to understand and act on.",
+        ],
+        imagePlaceholder: "Add a screenshot or recreated sample of a polished dashboard page with anonymised data.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Can an SEO dashboard look premium without custom design software?",
+        answer:
+          "Yes. Strong layout, consistent colours, clear typography, and good commentary can make Looker Studio feel professional without extra design tools.",
+      },
+      {
+        question: "What should be above the fold in a dashboard?",
+        answer:
+          "The most important KPI, the key filters, and a quick view of performance direction should be visible first.",
+      },
+      {
+        question: "Should dashboard screenshots use real client data?",
+        answer:
+          "Only if you have permission. Otherwise, anonymise the data or recreate the layout with sample information.",
       },
     ],
   },

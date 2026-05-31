@@ -7,6 +7,7 @@ const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Case Study", href: "/projects/commuteza" },
+  { label: "Work", href: "/work-with-me" },
   { label: "Blog", href: "/blog" },
 ];
 

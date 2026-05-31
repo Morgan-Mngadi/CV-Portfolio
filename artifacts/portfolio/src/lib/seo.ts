@@ -105,7 +105,7 @@ export const seoByPath: Record<string, SeoConfig> = {
   "/": {
     title: "Morgan Mngadi | Organic Search and Technical SEO Specialist",
     description:
-      "Organic Search and Technical SEO specialist open to full time and part time roles focused on AI visibility, technical implementation, and measurable organic ROI.",
+      "Organic Search and Technical SEO specialist available for employment, freelance, and contract work focused on AI visibility, technical implementation, and measurable organic ROI.",
     path: "/",
     type: "profile",
     schema: [personSchema, websiteSchema],
@@ -117,6 +117,70 @@ export const seoByPath: Record<string, SeoConfig> = {
     path: "/about",
     type: "profile",
     schema: [personSchema],
+  },
+  "/work-with-me": {
+    title: "SEO Consultant | Organic Search Consulting and Implementation",
+    description:
+      "SEO consultant for employment, freelance, and contract work across Organic Search, technical SEO implementation, AI visibility, reporting, and measurable organic ROI.",
+    path: "/work-with-me",
+    type: "website",
+    schema: [
+      personSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "@id": `${SITE_URL}/work-with-me#service`,
+        name: "SEO consultant for Organic Search consulting and implementation",
+        provider: {
+          "@id": `${SITE_URL}/#person`,
+        },
+        areaServed: ["South Africa", "United Kingdom", "European Union"],
+        serviceType: ["SEO Consulting", "Technical SEO", "Organic Search", "AI Search Visibility", "SEO Reporting"],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/work-with-me#faq`,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "Why are retainers quoted individually?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Every business has a different level of SEO maturity, technical debt, CMS complexity, reporting setup, and commercial target. A tailored quote keeps the retainer aligned to the size of the business and the amount of work required.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What affects the scope of a retainer?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "The main factors are the number of pages or templates, the CMS and development workflow, whether reporting is already reliable, how much implementation support is needed, and whether the focus is leads, ecommerce revenue, AI visibility, or all three.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Can the work start with a smaller project before a retainer?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Some teams may start with a focused audit, reporting setup, or implementation sprint before moving into monthly support. That can make the ongoing scope clearer and easier to prioritise.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Do you work with both agencies and direct clients?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Morgan supports agencies that need implementation capacity and direct clients that need Organic Search work tied to measurable outcomes.",
+            },
+          },
+        ],
+      },
+    ],
   },
   "/projects/commuteza": {
     title: "CommuteZA Case Study | Technical SEO, AI Visibility and Search Systems",

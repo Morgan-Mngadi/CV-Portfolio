@@ -5,6 +5,7 @@ import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.
 const FOOTER_LINKS = [
   { label: "About", href: "/about" },
   { label: "Case Study", href: "/projects/commuteza" },
+  { label: "Work With Me", href: "/work-with-me" },
   { label: "Blog", href: "/blog" },
 ];
 

@@ -104,6 +104,42 @@ export default function BlogArticle() {
                       ))}
                     </ul>
                   )}
+                  {section.numberedSteps && (
+                    <ol className="mt-6 flex flex-col gap-3">
+                      {section.numberedSteps.map((item, index) => (
+                        <li key={item} className="grid grid-cols-[2rem_1fr] gap-3 text-sm text-muted-foreground leading-relaxed">
+                          <span className="font-mono text-xs text-primary tabular-nums">{index + 1}.</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  )}
+                  {section.imagePlaceholder && (
+                    <figure className="mt-8 border border-dashed border-border bg-card p-6">
+                      <div className="aspect-[16/9] w-full border border-border bg-background flex items-center justify-center px-6 text-center">
+                        <span className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                          Image placeholder
+                        </span>
+                      </div>
+                      <figcaption className="mt-3 font-mono text-xs leading-relaxed text-muted-foreground">
+                        {section.imagePlaceholder}
+                      </figcaption>
+                    </figure>
+                  )}
+                  {section.closingParagraphs && (
+                    <div className="mt-6 flex flex-col gap-4">
+                      {section.closingParagraphs.map((paragraph) => (
+                        <p key={paragraph} className="text-muted-foreground leading-relaxed">
+                          {paragraph}
+                        </p>
+                      ))}
+                    </div>
+                  )}
+                  {section.link && (
+                    <Link href={section.link.href} className="mt-6 inline-flex font-mono text-xs uppercase tracking-widest text-primary hover:underline">
+                      {section.link.label}
+                    </Link>
+                  )}
                 </motion.section>
               ))}
 

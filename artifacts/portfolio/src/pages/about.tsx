@@ -120,24 +120,24 @@ const CLIENT_LOGOS = [
 
 const AVAILABILITY = [
   {
-    label: "Role type",
-    title: "Full time Organic Search roles",
-    detail: "Best fit for teams that need technical SEO implementation, AI visibility, and organic ROI owned consistently.",
+    label: "Employment",
+    title: "Full time and part time roles",
+    detail: "For teams that need Organic Search capability embedded into planning, implementation, and reporting.",
   },
   {
-    label: "Flexible support",
-    title: "Part time Organic Search roles",
-    detail: "Useful for teams that need senior level execution support without a full time headcount.",
+    label: "Freelance",
+    title: "Independent SEO projects",
+    detail: "For brands or agencies that need focused support across technical SEO, AI visibility, and organic growth systems.",
+  },
+  {
+    label: "Contract",
+    title: "Short and medium term support",
+    detail: "For delivery sprints where technical change needs to turn into measurable organic impact.",
   },
   {
     label: "Location fit",
-    title: "Remote UK and EU roles",
-    detail: "Available for remote opportunities with teams operating in UK, EU, South African, or similar time zones.",
-  },
-  {
-    label: "Project support",
-    title: "Contract consulting",
-    detail: "Available for focused organic search projects where technical change needs to turn into measurable impact.",
+    title: "Remote UK and EU work",
+    detail: "Available for remote collaboration with teams operating in UK, EU, South African, or similar time zones.",
   },
 ];
 
@@ -208,7 +208,7 @@ export default function About() {
             {[
               { value: "3+", label: "Years active" },
               { value: "15+", label: "Clients worked with" },
-              { value: "R700k+", label: "Organic eCommerce revenue" },
+              { value: "R700k+", label: "Monthly organic ecommerce revenue" },
               { value: "200k+", label: "Organic clicks in 72 hrs" },
               { value: "14+", label: "Industries served" },
               { value: "2x", label: "Award contributions" },
@@ -384,7 +384,7 @@ export default function About() {
               Available for
             </motion.h2>
             <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed max-w-xl mb-10">
-              Open to full time, part time, remote and contract opportunities focused on bringing measurable organic growth to ambitious teams.
+              Open to employment, freelance, and contract work focused on bringing measurable organic growth to ambitious teams.
             </motion.p>
             <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-3xl">
               {AVAILABILITY.map((item) => (
@@ -421,7 +421,7 @@ export default function About() {
                 Let's turn technical search<br />into measurable growth.
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground">
-                Open to full time and part time Organic Search roles focused on AI visibility, technical SEO implementation, and organic ROI across leads and purchases.
+                Open to employment, freelance, and contract Organic Search work focused on AI visibility, technical SEO implementation, and organic ROI across leads and purchases.
               </motion.p>
             </div>
             <motion.div variants={stagger} className="flex flex-col sm:flex-row lg:flex-col gap-3">
