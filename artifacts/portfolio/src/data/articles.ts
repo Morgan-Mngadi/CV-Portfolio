@@ -24,11 +24,12 @@ export type Article = {
   category: string;
   date: string;
   readTime: string;
+  archived?: boolean;
   sections: ArticleSection[];
   faqs: ArticleFaq[];
 };
 
-export const ARTICLES: Article[] = [
+export const ALL_ARTICLES: Article[] = [
   {
     slug: "ai-is-reshaping-search-reporting",
     title: "AI Is Reshaping Search Reporting",
@@ -273,6 +274,7 @@ export const ARTICLES: Article[] = [
     category: "Measurement",
     date: "Jun 2026",
     readTime: "3 min read",
+    archived: true,
     sections: [
       {
         id: "start-with-the-business-question",
@@ -333,73 +335,6 @@ export const ARTICLES: Article[] = [
     ],
   },
   {
-    slug: "how-to-set-up-measurement-tools-gsc-ga4-microsoft-clarity",
-    title: "How to Set Up Google Search Console, GA4, and Microsoft Clarity",
-    excerpt:
-      "A simple measurement setup for understanding how users find a site, what they do after landing, and where experience issues appear.",
-    category: "Measurement",
-    date: "Jun 2026",
-    readTime: "2 min read",
-    sections: [
-      {
-        id: "why-these-tools-work-together",
-        heading: "Why these tools work together",
-        paragraphs: [
-          "Google Search Console, GA4, and Microsoft Clarity each answer a different question. Search Console shows how people find the site. GA4 shows what they do after they arrive. Clarity helps show where users hesitate, scroll, click, or run into friction.",
-          "Together, they give a better picture of Organic Search performance than any single tool can provide alone.",
-        ],
-      },
-      {
-        id: "set-up-search-console",
-        heading: "Set up Search Console",
-        paragraphs: [
-          "Start with Search Console because it confirms how Google sees the site. Use a domain property where possible, verify ownership, submit the XML sitemap, and check whether important pages are indexed.",
-        ],
-        numberedSteps: [
-          "Create a domain property.",
-          "Verify ownership through DNS or another supported method.",
-          "Submit the sitemap.",
-          "Review indexing, queries, pages, and technical issues.",
-        ],
-        imagePlaceholder: "Add a Search Console screenshot showing the property, sitemap, or performance report.",
-      },
-      {
-        id: "set-up-ga4",
-        heading: "Set up GA4",
-        paragraphs: [
-          "GA4 should track the actions that matter after the click. Install the tag through GTM or directly on the site, confirm page views, and then add important events for leads, purchases, route searches, form submissions, or other business actions.",
-        ],
-        imagePlaceholder: "Add a GA4 screenshot showing realtime events, DebugView, or the events report.",
-      },
-      {
-        id: "set-up-microsoft-clarity",
-        heading: "Set up Microsoft Clarity",
-        paragraphs: [
-          "Clarity helps explain behaviour that numbers alone can hide. Heatmaps and recordings can show whether users are missing calls to action, getting stuck in forms, or struggling with layout issues.",
-          "Use it carefully. The goal is not to watch every session. The goal is to find patterns that improve the user journey and support better conversion decisions.",
-        ],
-        imagePlaceholder: "Add a Microsoft Clarity screenshot showing heatmaps, recordings, or rage click insights.",
-      },
-    ],
-    faqs: [
-      {
-        question: "Which tool should be installed first?",
-        answer:
-          "Search Console and GA4 are usually the starting point. Clarity can follow once the site is live and has enough traffic to review behaviour.",
-      },
-      {
-        question: "Do these tools replace each other?",
-        answer:
-          "No. Search Console, GA4, and Clarity answer different questions, so they work best as a measurement stack.",
-      },
-      {
-        question: "Should dashboards include all three tools?",
-        answer:
-          "Not always. Dashboards should include the data that helps stakeholders understand performance, decisions, and ROI.",
-      },
-    ],
-  },
-  {
     slug: "how-to-set-up-looker-studio-dashboard-stakeholders",
     title: "How to Set Up a Looker Studio Dashboard That Impresses Stakeholders",
     excerpt:
@@ -407,6 +342,7 @@ export const ARTICLES: Article[] = [
     category: "Measurement",
     date: "Jun 2026",
     readTime: "3 min read",
+    archived: true,
     sections: [
       {
         id: "start-with-the-user",
@@ -474,5 +410,7 @@ export const ARTICLES: Article[] = [
     ],
   },
 ];
+
+export const ARTICLES = ALL_ARTICLES.filter((article) => !article.archived);
 
 export const getArticle = (slug: string) => ARTICLES.find((article) => article.slug === slug);

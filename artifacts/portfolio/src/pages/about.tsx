@@ -141,6 +141,29 @@ const AVAILABILITY = [
   },
 ];
 
+const FAQS = [
+  {
+    question: "How much SEO experience do you have?",
+    answer:
+      "I have 3+ years of SEO experience across agency environments, with work spanning technical audits, on-page optimisation, structured data, CMS implementation, analytics, and organic performance reporting.",
+  },
+  {
+    question: "What type of SEO roles are you best suited for?",
+    answer:
+      "I am best suited for SEO Specialist, Technical SEO Specialist, Organic Search, and implementation-focused roles where technical recommendations need to become measurable changes.",
+  },
+  {
+    question: "Do you work remotely?",
+    answer:
+      "Yes. I am open to remote UK and EU roles, as well as South African hybrid opportunities in Johannesburg and nearby business hubs.",
+  },
+  {
+    question: "What makes your background useful to a hiring team?",
+    answer:
+      "Agency work has exposed me to multiple industries, CMS platforms, stakeholder needs, and implementation constraints. That experience helps me move between audits, reporting, content recommendations, and developer collaboration.",
+  },
+];
+
 export default function About() {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -359,6 +382,7 @@ export default function About() {
                   <img
                     src={client.src}
                     alt={`${client.name} logo`}
+                    title={client.name}
                     className="max-h-14 w-full max-w-[180px] object-contain opacity-80 transition-opacity group-hover:opacity-100"
                     loading="lazy"
                   />
@@ -403,6 +427,27 @@ export default function About() {
           </div>
         </motion.section>
 
+        {/* ─── FAQ ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
+        >
+          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            05 / FAQ
+          </motion.div>
+          <motion.div variants={stagger} className="flex flex-col divide-y divide-border border border-border">
+            {FAQS.map((faq) => (
+              <motion.section key={faq.question} variants={fadeUp} className="bg-card p-6">
+                <h2 className="font-medium mb-3">{faq.question}</h2>
+                <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+              </motion.section>
+            ))}
+          </motion.div>
+        </motion.section>
+
         {/* ─── CONTACT ─── */}
         <motion.section
           id="contact"
@@ -415,7 +460,7 @@ export default function About() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                05 / Contact
+                06 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let's turn technical search<br />into measurable growth.

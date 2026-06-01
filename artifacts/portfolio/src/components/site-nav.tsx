@@ -7,7 +7,7 @@ const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Case Study", href: "/projects/commuteza" },
-  { label: "Work", href: "/work-with-me" },
+  { label: "Work With Me", href: "/work-with-me" },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -19,6 +19,7 @@ const linkClass = (isActive: boolean) =>
 export function SiteNav() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
+  const contactHref = location === "/" ? "#contact" : "/#contact";
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -42,7 +43,7 @@ export function SiteNav() {
             </Link>
           ))}
           <a
-            href="/#contact"
+            href={contactHref}
             className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 hover:bg-primary/90 transition-colors uppercase tracking-widest"
           >
             Contact
@@ -74,7 +75,7 @@ export function SiteNav() {
               </Link>
             ))}
             <a
-              href="/#contact"
+              href={contactHref}
               className="font-mono text-xs bg-primary text-primary-foreground px-3 py-2 hover:bg-primary/90 transition-colors uppercase tracking-widest self-start"
               onClick={() => setIsOpen(false)}
             >

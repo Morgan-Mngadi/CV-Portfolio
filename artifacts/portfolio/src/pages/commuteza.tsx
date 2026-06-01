@@ -107,6 +107,29 @@ const METRICS = [
   },
 ];
 
+const FAQS = [
+  {
+    question: "Why build CommuteZA instead of only showing client SEO work?",
+    answer:
+      "CommuteZA gives me a controlled environment to test SEO architecture directly. It shows how I think about rendering, metadata, URL structure, schema, reporting, and technical tradeoffs when I can own the full stack.",
+  },
+  {
+    question: "What makes this a technical SEO case study?",
+    answer:
+      "The project focuses on implementation decisions that affect crawlability and indexation, including server side rendering, structured data, metadata systems, canonical paths, redirect logic, and search performance measurement.",
+  },
+  {
+    question: "Are the results final?",
+    answer:
+      "No. The site is still in active development, so the metrics are early signals rather than a finished growth story. The value of the case study is the live implementation process and the way each SEO decision can be tested in production.",
+  },
+  {
+    question: "What tools are used to measure progress?",
+    answer:
+      "Progress is reviewed through Google Search Console, GA4, Google Tag Manager, PageSpeed Insights, Lighthouse, and AI visibility checks across surfaces such as AI Overviews and Microsoft Copilot.",
+  },
+];
+
 export default function CommuteZA() {
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -312,6 +335,29 @@ export default function CommuteZA() {
                 and continues to evolve as new SEO systems are implemented and tested in production.
               </motion.p>
             </div>
+          </div>
+        </motion.section>
+
+        {/* FAQ */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16">
+            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+              06 / FAQ
+            </motion.div>
+            <motion.div variants={stagger} className="flex flex-col divide-y divide-border border border-border">
+              {FAQS.map((faq) => (
+                <motion.section key={faq.question} variants={fadeUp} className="bg-card p-6">
+                  <h2 className="font-medium mb-3">{faq.question}</h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                </motion.section>
+              ))}
+            </motion.div>
           </div>
         </motion.section>
       </div>

@@ -116,7 +116,52 @@ export const seoByPath: Record<string, SeoConfig> = {
       "Learn more about Morgan Mngadi, an SEO specialist with experience in technical SEO, search strategy, analytics, structured data, and agency led implementation.",
     path: "/about",
     type: "profile",
-    schema: [personSchema],
+    schema: [
+      personSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/about#faq`,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "How much SEO experience does Morgan Mngadi have?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Morgan has 3+ years of SEO experience across agency environments, with work spanning technical audits, on-page optimisation, structured data, CMS implementation, analytics, and organic performance reporting.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What type of SEO roles is Morgan best suited for?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Morgan is best suited for SEO Specialist, Technical SEO Specialist, Organic Search, and implementation-focused roles where technical recommendations need to become measurable changes.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Does Morgan work remotely?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Yes. Morgan is open to remote UK and EU roles, as well as South African hybrid opportunities in Johannesburg and nearby business hubs.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What makes Morgan's background useful to a hiring team?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Agency work has exposed Morgan to multiple industries, CMS platforms, stakeholder needs, and implementation constraints across audits, reporting, content recommendations, and developer collaboration.",
+            },
+          },
+        ],
+      },
+    ],
   },
   "/work-with-me": {
     title: "SEO Consultant | Organic Search Consulting and Implementation",
@@ -200,6 +245,49 @@ export const seoByPath: Record<string, SeoConfig> = {
           "@id": `${SITE_URL}/#person`,
         },
         about: ["Technical SEO", "AI Search Visibility", "Headless CMS", "Organic Search"],
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "@id": `${SITE_URL}/projects/commuteza#faq`,
+        mainEntity: [
+          {
+            "@type": "Question",
+            name: "Why build CommuteZA instead of only showing client SEO work?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "CommuteZA gives Morgan a controlled environment to test SEO architecture directly, including rendering, metadata, URL structure, schema, reporting, and technical tradeoffs.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What makes this a technical SEO case study?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "The project focuses on implementation decisions that affect crawlability and indexation, including server side rendering, structured data, metadata systems, canonical paths, redirect logic, and search performance measurement.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Are the results final?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "No. The site is still in active development, so the metrics are early signals rather than a finished growth story.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "What tools are used to measure progress?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text:
+                "Progress is reviewed through Google Search Console, GA4, Google Tag Manager, PageSpeed Insights, Lighthouse, and AI visibility checks across surfaces such as AI Overviews and Microsoft Copilot.",
+            },
+          },
+        ],
       },
     ],
   },

@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { ArrowUpRight, Mail, Award, TrendingUp, Zap, Globe, BarChart3 } from "lucide-react";
+import { useEffect, useState } from "react";
+import type { FormEvent } from "react";
+import { ArrowUpRight, Mail, Award, TrendingUp, Zap, Globe, BarChart3, Send } from "lucide-react";
 import { Link } from "wouter";
 import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
 import { Seo } from "@/components/seo";
@@ -121,6 +123,61 @@ const WORK_WITH_ME = [
   },
 ];
 
+const ROLES_OPEN_TO = [
+  {
+    label: "Remote UK / EU",
+    title: "SEO Specialist roles",
+    detail: "Remote Organic Search roles with teams operating in UK, EU, South African, or similar time zones.",
+  },
+  {
+    label: "South African hybrid",
+    title: "Johannesburg based teams",
+    detail: "Hybrid SEO roles in Johannesburg, Sandton, Midrand, Bryanston, Rosebank, or nearby business hubs.",
+  },
+  {
+    label: "Agency or in house",
+    title: "Technical SEO delivery",
+    detail: "Roles focused on audits, implementation, CMS updates, structured data, reporting, and search performance.",
+  },
+  {
+    label: "Contract support",
+    title: "SEO implementation sprints",
+    detail: "Short and medium term projects where technical SEO work needs to be shipped, QA'd, and measured.",
+  },
+];
+
+const CONTACT_REASONS = ["Remote SEO role", "South African hybrid role", "Contract project", "Freelance project"];
+const WEB3FORMS_ACCESS_KEY = "f1c27f4e-67b3-4262-a419-127bda6406d0";
+const RECAPTCHA_SITE_KEY = (import.meta.env.VITE_RECAPTCHA_SITE_KEY ?? "").trim();
+const RECAPTCHA_ACTION = "contact_submit";
+
+const PERSONAL_EMAIL_DOMAINS = new Set([
+  "gmail.com",
+  "googlemail.com",
+  "yahoo.com",
+  "ymail.com",
+  "outlook.com",
+  "hotmail.com",
+  "live.com",
+  "icloud.com",
+  "me.com",
+  "mac.com",
+  "aol.com",
+  "proton.me",
+  "protonmail.com",
+  "pm.me",
+  "zoho.com",
+]);
+
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (callback: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
 function ToolPill({ name, icon }: { name: string; icon: React.ReactNode }) {
   return (
     <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-card border border-border text-xs font-mono text-muted-foreground hover:border-primary hover:text-foreground transition-colors whitespace-nowrap">
@@ -131,6 +188,95 @@ function ToolPill({ name, icon }: { name: string; icon: React.ReactNode }) {
 }
 
 export default function Home() {
+  const [formStatus, setFormStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  useEffect(() => {
+    if (!RECAPTCHA_SITE_KEY || document.querySelector('script[data-recaptcha-v3="true"]')) {
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = `https://www.google.com/recaptcha/api.js?render=${encodeURIComponent(RECAPTCHA_SITE_KEY)}`;
+    script.async = true;
+    script.defer = true;
+    script.dataset.recaptchaV3 = "true";
+    document.head.appendChild(script);
+  }, []);
+
+  const getRecaptchaToken = () =>
+    new Promise<string | null>((resolve) => {
+      if (!RECAPTCHA_SITE_KEY || !window.grecaptcha) {
+        resolve(null);
+        return;
+      }
+
+      window.grecaptcha.ready(() => {
+        window.grecaptcha
+          ?.execute(RECAPTCHA_SITE_KEY, { action: RECAPTCHA_ACTION })
+          .then(resolve)
+          .catch(() => resolve(null));
+      });
+    });
+
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setFormStatus("idle");
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const name = String(formData.get("name") ?? "").trim();
+    const email = String(formData.get("email") ?? "").trim();
+    const reason = String(formData.get("reason") ?? "").trim();
+    const message = String(formData.get("message") ?? "").trim();
+    const emailInput = form.elements.namedItem("email") as HTMLInputElement | null;
+    const emailDomain = email.split("@").at(-1)?.toLowerCase() ?? "";
+
+    if (PERSONAL_EMAIL_DOMAINS.has(emailDomain)) {
+      emailInput?.setCustomValidity("Please use a company email address.");
+      emailInput?.reportValidity();
+      return;
+    }
+
+    emailInput?.setCustomValidity("");
+    const recaptchaToken = await getRecaptchaToken();
+
+    if (RECAPTCHA_SITE_KEY && !recaptchaToken) {
+      const messageInput = form.elements.namedItem("message") as HTMLTextAreaElement | null;
+      messageInput?.setCustomValidity("reCAPTCHA could not verify this submission. Please try again.");
+      messageInput?.reportValidity();
+      return;
+    }
+
+    formData.append("access_key", WEB3FORMS_ACCESS_KEY);
+    formData.append("subject", `${reason || "Portfolio enquiry"} from ${name || "MorganMngadi.com"}`);
+    formData.append("from_name", "Morgan Mngadi Portfolio");
+    formData.append("replyto", email);
+
+    if (recaptchaToken) {
+      formData.append("recaptcha_action", RECAPTCHA_ACTION);
+      formData.append("recaptcha_token", recaptchaToken);
+    }
+
+    setFormStatus("submitting");
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const result = (await response.json()) as { success?: boolean };
+
+      if (!response.ok || !result.success) {
+        throw new Error("Form submission failed.");
+      }
+
+      form.reset();
+      setFormStatus("success");
+    } catch {
+      setFormStatus("error");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Seo path="/" />
@@ -171,7 +317,7 @@ export default function Home() {
               SEO strategist with agency experience. I build scalable visibility through audits, implementation, and search architecture.
             </motion.p>
             <motion.div variants={fadeUp} className="flex gap-3 mt-8">
-              <a href="mailto:morganmngadi@gmail.com" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
+              <a href="#contact" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
                 <Mail className="w-4 h-4" /> Get in touch
               </a>
               <a href="https://commuteza.co.za/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-mono text-muted-foreground hover:border-foreground hover:text-foreground transition-colors">
@@ -446,6 +592,7 @@ export default function Home() {
                 <img
                   src={client.src}
                   alt={`${client.name} logo`}
+                  title={client.name}
                   className="max-h-14 w-full max-w-[180px] object-contain opacity-80 transition-opacity group-hover:opacity-100"
                   loading="lazy"
                 />
@@ -503,6 +650,44 @@ export default function Home() {
           </Link>
         </motion.section>
 
+        {/* ─── ROLES ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
+            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+              08 / Roles
+            </motion.div>
+            <div>
+              <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
+                Roles I'm open to
+              </motion.h2>
+              <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
+                Open to remote, hybrid, employment, and contract opportunities where Organic Search needs clear ownership and measurable outcomes.
+              </motion.p>
+            </div>
+          </div>
+
+          <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
+            {ROLES_OPEN_TO.map((role) => (
+              <motion.div
+                key={role.label}
+                variants={fadeUp}
+                className="group relative bg-card p-6 md:p-7 hover:bg-primary/5 transition-colors overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300" />
+                <span className="font-mono text-[11px] uppercase tracking-widest text-primary">{role.label}</span>
+                <h3 className="mt-4 font-medium text-base leading-snug">{role.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{role.detail}</p>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.section>
+
         {/* WORK WITH ME */}
         <motion.section
           id="work-with-me"
@@ -514,7 +699,7 @@ export default function Home() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
             <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-              08 / Work With Me
+              09 / Work With Me
             </motion.div>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
@@ -544,7 +729,7 @@ export default function Home() {
               Explore ways to work <ArrowUpRight className="w-4 h-4" />
             </Link>
             <a
-              href="mailto:morganmngadi@gmail.com"
+              href="#contact"
               className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
             >
               <Mail className="w-4 h-4" /> Email me
@@ -562,7 +747,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            09 / Tooling & Stack
+            10 / Tooling & Stack
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-border border border-border">
@@ -603,12 +788,12 @@ export default function Home() {
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={stagger}
-          className="py-20"
+          className="scroll-mt-16 py-20"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                10 / Contact
+                11 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let's turn technical search<br />into measurable growth.
@@ -618,26 +803,112 @@ export default function Home() {
               </motion.p>
             </div>
 
-            <motion.div variants={stagger} className="flex flex-col sm:flex-row lg:flex-col gap-3">
-              <motion.a
-                variants={fadeUp}
-                href="mailto:morganmngadi@gmail.com"
-                data-testid="link-email"
-                className="flex items-center gap-3 px-6 py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
-              >
-                <Mail className="w-4 h-4 shrink-0" />
-                Email me
-              </motion.a>
-              <motion.a
-                variants={fadeUp}
-                href="https://www.linkedin.com/in/morgan-mngadi/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-3 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
-              >
-                <ArrowUpRight className="w-4 h-4 shrink-0" />
-                LinkedIn
-              </motion.a>
+            <motion.div variants={fadeUp} className="border border-border bg-card p-5 md:p-6">
+              <form className="grid gap-4" onSubmit={handleContactSubmit}>
+                <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <label className="grid gap-2">
+                    <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                      Name <span aria-hidden="true" className="text-primary">*</span>
+                    </span>
+                    <input
+                      name="name"
+                      required
+                      className="h-11 border border-border bg-background px-3 text-sm text-foreground shadow-none outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+                      autoComplete="name"
+                    />
+                  </label>
+                  <label className="grid gap-2">
+                    <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                      Company email <span aria-hidden="true" className="text-primary">*</span>
+                    </span>
+                    <input
+                      name="email"
+                      type="email"
+                      required
+                      placeholder="name@company.com"
+                      className="h-11 border border-border bg-background px-3 text-sm text-foreground shadow-none outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+                      autoComplete="email"
+                      onInput={(event) => event.currentTarget.setCustomValidity("")}
+                    />
+                  </label>
+                </div>
+
+                <label className="grid gap-2">
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                    Reason <span aria-hidden="true" className="text-primary">*</span>
+                  </span>
+                  <select
+                    name="reason"
+                    required
+                    defaultValue=""
+                    className="h-11 border border-border bg-background px-3 text-sm text-foreground shadow-none outline-none transition-colors focus:border-primary"
+                  >
+                    <option value="" disabled>
+                      Select an option
+                    </option>
+                    {CONTACT_REASONS.map((reason) => (
+                      <option key={reason} value={reason}>
+                        {reason}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label className="grid gap-2">
+                  <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                    Message <span aria-hidden="true" className="text-primary">*</span>
+                  </span>
+                  <textarea
+                    name="message"
+                    required
+                    rows={5}
+                    className="min-h-32 resize-y border border-border bg-background px-3 py-3 text-sm text-foreground shadow-none outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
+                    onInput={(event) => event.currentTarget.setCustomValidity("")}
+                  />
+                </label>
+
+                <button
+                  type="submit"
+                  disabled={formStatus === "submitting"}
+                  className="inline-flex items-center justify-center gap-2 bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+                >
+                  <Send className="h-4 w-4" />
+                  {formStatus === "submitting" ? "Sending..." : "Send enquiry"}
+                </button>
+
+                {formStatus === "success" && (
+                  <p className="font-mono text-xs leading-relaxed text-primary">
+                    Thanks. Your enquiry has been sent.
+                  </p>
+                )}
+
+                {formStatus === "error" && (
+                  <p className="font-mono text-xs leading-relaxed text-muted-foreground">
+                    Something went wrong. Please use the email link below.
+                  </p>
+                )}
+              </form>
+
+              <div className="mt-4 flex flex-col sm:flex-row gap-3">
+                <a
+                  href="mailto:morganmngadi@gmail.com"
+                  data-testid="link-email"
+                  className="flex items-center justify-center gap-2 border border-border px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                >
+                  <Mail className="w-4 h-4 shrink-0" />
+                  Email
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/morgan-mngadi/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 border border-border px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+                >
+                  <ArrowUpRight className="w-4 h-4 shrink-0" />
+                  LinkedIn
+                </a>
+              </div>
             </motion.div>
           </div>
         </motion.section>
