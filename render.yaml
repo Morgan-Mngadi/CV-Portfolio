@@ -2,6 +2,6 @@ services:
   - type: web
     name: morgan-mngadi-portfolio
     env: static
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm run build:portfolio:ssr
+    buildCommand: pnpm run build:portfolio:ssr
     staticPublishPath: artifacts/portfolio/dist/public
     pullRequestPreviewsEnabled: true

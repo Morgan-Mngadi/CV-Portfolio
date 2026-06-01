@@ -340,6 +340,7 @@ export const renderSeoHead = (path: string) => {
   return [
     `<title>${escapeHtml(seo.title)}</title>`,
     `<meta name="description" content="${escapeHtml(seo.description)}" />`,
+    ...(path === "/" ? [`<meta name="google-site-verification" content="A4ci4oieIQ_6atz06tTpMrzdvIc6CMPvLzI3Bw3fQvA" />`] : []),
     `<meta name="robots" content="index, follow" />`,
     `<link rel="canonical" href="${escapeHtml(seo.canonical)}" />`,
     `<meta property="og:title" content="${escapeHtml(seo.title)}" />`,
