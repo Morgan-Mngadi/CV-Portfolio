@@ -796,7 +796,7 @@ export default function Home() {
                 11 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
-                Let's turn technical search<br />into measurable growth.
+                Let's turn SEO fixes into<br />more visibility, leads, and revenue.
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground">
                 Open to employment, freelance, and contract Organic Search work focused on AI visibility, technical SEO implementation, and organic ROI across leads and purchases.
