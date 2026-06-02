@@ -11,6 +11,7 @@ import Blog from "@/pages/blog";
 import BlogArticle from "@/pages/blog-article";
 import WorkWithMe from "@/pages/work-with-me";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { CookieConsent } from "@/components/cookie-consent";
 
 const queryClient = new QueryClient();
 
@@ -44,6 +45,7 @@ function App({ ssrPath }: AppProps) {
           <ScrollToTop />
           <Router />
         </WouterRouter>
+        <CookieConsent />
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
