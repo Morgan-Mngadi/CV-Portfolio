@@ -33,16 +33,24 @@ const loadAnalytics = () => {
   loadScript("gtm-script", `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`);
 };
 
+const isTagManagerPreview = () => {
+  const params = new URLSearchParams(window.location.search);
+
+  return params.has("gtm_debug") || params.has("gtm_preview") || params.has("gtm_auth");
+};
+
 export function CookieConsent() {
   const [consent, setConsent] = useState<ConsentValue | null>(null);
   const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const storedConsent = window.localStorage.getItem(CONSENT_KEY) as ConsentValue | null;
+    const isPreview = isTagManagerPreview();
+
     setConsent(storedConsent);
     setIsReady(true);
 
-    if (storedConsent === "accepted") {
+    if (storedConsent === "accepted" || isPreview) {
       loadAnalytics();
     }
   }, []);
