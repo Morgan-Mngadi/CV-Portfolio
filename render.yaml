@@ -1,11 +1,12 @@
 services:
   - type: web
-    name: morgan-mngadi-portfolio
+    name: cv-portfolio-5tuf
     runtime: static
     buildCommand: pnpm run build:portfolio:ssr
     staticPublishPath: artifacts/portfolio/dist/public
     renderSubdomainPolicy: enabled
     domains:
-      - morganmngadi.com
+      - morgan-mngadi-portfolio.online
+      - www.morgan-mngadi-portfolio.online
     previews:
       generation: automatic

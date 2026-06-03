@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://morganmngadi.com/sitemap.xml
+Sitemap: https://morgan-mngadi-portfolio.online/sitemap.xml

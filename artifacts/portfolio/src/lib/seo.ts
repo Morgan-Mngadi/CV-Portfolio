@@ -1,6 +1,6 @@
 import { ARTICLES, type Article } from "@/data/articles";
 
-export const SITE_URL = "https://morganmngadi.com";
+export const SITE_URL = "https://morgan-mngadi-portfolio.online";
 export const SITE_NAME = "Morgan Mngadi";
 export const DEFAULT_IMAGE = `${SITE_URL}/opengraph.jpg`;
 
