@@ -19,6 +19,7 @@ const stagger: Variants = {
 const EXPERIENCE = [
   {
     company: "Accenture Song",
+    logo: "/company-logos/accenture.svg",
     role: "SEO Specialist",
     period: "Jan 2026 to Present",
     location: "Midrand, JHB",
@@ -29,6 +30,7 @@ const EXPERIENCE = [
   },
   {
     company: "Flume Digital Marketing",
+    logo: "/company-logos/flume.svg",
     role: "Junior SEO Specialist",
     period: "Nov 2023 to Dec 2025",
     location: "Bryanston, JHB",
@@ -40,6 +42,7 @@ const EXPERIENCE = [
   },
   {
     company: "IMS Ad Agency",
+    logo: "/company-logos/ims.svg",
     role: "SEO & Analytics Associate",
     period: "Mar 2023 to Sep 2023",
     location: "Lonehill, JHB",
@@ -262,9 +265,16 @@ export default function About() {
               <motion.div
                 key={exp.company}
                 variants={fadeUp}
-                className="py-10 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:gap-12 group"
+                className="relative overflow-hidden py-10 grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-6 lg:gap-12 group"
               >
-                <div className="flex flex-col gap-2">
+                <img
+                  src={exp.logo}
+                  alt=""
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-3 top-1/2 hidden h-14 w-auto max-w-[150px] -translate-y-1/2 object-contain opacity-65 grayscale contrast-125 transition-opacity group-hover:opacity-90 md:block lg:right-4"
+                />
+
+                <div className="relative z-10 flex flex-col gap-2">
                   <div className="flex items-center gap-2">
                     {exp.current && (
                       <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -285,7 +295,7 @@ export default function About() {
                   )}
                 </div>
 
-                <div>
+                <div className="relative z-10 md:pr-44">
                   <p className="text-muted-foreground leading-relaxed mb-5">{exp.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {exp.tags.map((tag) => (
