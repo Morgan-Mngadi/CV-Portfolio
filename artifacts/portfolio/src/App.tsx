@@ -36,6 +36,7 @@ type AppProps = {
 function App({ ssrPath }: AppProps) {
   useEffect(() => {
     document.documentElement.classList.add("dark");
+    document.documentElement.style.colorScheme = "dark";
   }, []);
 
   return (
