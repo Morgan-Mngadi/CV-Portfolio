@@ -20,7 +20,7 @@ import {
 } from "react-icons/si";
 
 const fadeUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 1, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
 };
 
@@ -436,6 +436,18 @@ export default function Home() {
                 issuer: "Google",
                 desc: "Certified in managing and optimising Google Business Profiles for local search visibility.",
                 badge: "GBP",
+              },
+              {
+                name: "Semrush Certification",
+                issuer: "Semrush",
+                desc: "Certified in using Semrush for SEO research, analysis and performance optimisation.",
+                badge: "SEO",
+              },
+              {
+                name: "HTML, CSS and JavaScript",
+                issuer: "IBM",
+                desc: "Certified in the core web technologies used to build responsive, interactive websites.",
+                badge: "WEB",
               },
             ].map((cert) => (
               <motion.div

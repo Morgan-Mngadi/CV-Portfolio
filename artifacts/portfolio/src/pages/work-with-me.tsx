@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { ArrowUpRight, CheckCircle2, Mail } from "lucide-react";
+import { CalendarDays, CheckCircle2, Mail } from "lucide-react";
 import { Seo } from "@/components/seo";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteNav } from "@/components/site-nav";
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 24 },
+  hidden: { opacity: 1, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" as const } },
 };
 
@@ -108,18 +108,18 @@ export default function WorkWithMe() {
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-col sm:flex-row gap-3">
             <a
-              href="mailto:morganmngadi@gmail.com"
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
-            >
-              <Mail className="w-4 h-4" /> Enquire via email
-            </a>
-            <a
-              href="https://www.linkedin.com/in/morgan-mngadi/"
+              href="https://cal.com/morgan-mngadi-18ixti/intro-call"
               target="_blank"
               rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
+            >
+              <CalendarDays className="w-4 h-4" /> Book a 20-minute intro call
+            </a>
+            <a
+              href="mailto:morganmngadi@gmail.com"
               className="inline-flex items-center justify-center gap-2 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
             >
-              Enquire on LinkedIn <ArrowUpRight className="w-4 h-4" />
+              <Mail className="w-4 h-4" /> Enquire via email
             </a>
           </motion.div>
         </motion.section>
@@ -181,27 +181,27 @@ export default function WorkWithMe() {
                 Tell me what you need Organic Search to change.
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground max-w-2xl">
-                Email me or connect on LinkedIn with a short note about the site, team, or search problem. I can then recommend the most useful way to work together.
+                Book a short introductory call or email me about the site, team, or search problem. I can then recommend the most useful way to work together.
               </motion.p>
             </div>
             <motion.div variants={stagger} className="flex flex-col sm:flex-row lg:flex-col gap-3">
               <motion.a
                 variants={fadeUp}
-                href="mailto:morganmngadi@gmail.com"
+                href="https://cal.com/morgan-mngadi-18ixti/intro-call"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 px-6 py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
               >
-                <Mail className="w-4 h-4 shrink-0" />
-                Email me
+                <CalendarDays className="w-4 h-4 shrink-0" />
+                Book an intro call
               </motion.a>
               <motion.a
                 variants={fadeUp}
-                href="https://www.linkedin.com/in/morgan-mngadi/"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="mailto:morganmngadi@gmail.com"
                 className="flex items-center justify-center gap-3 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
               >
-                <ArrowUpRight className="w-4 h-4 shrink-0" />
-                LinkedIn
+                <Mail className="w-4 h-4 shrink-0" />
+                Email me
               </motion.a>
             </motion.div>
           </div>
