@@ -5,11 +5,33 @@ export function ScrollToTop() {
   const [location] = useLocation();
 
   useEffect(() => {
-    if (window.location.hash) {
+    const hash = window.location.hash.slice(1);
+
+    if (!hash) {
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
       return;
     }
 
-    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    let frameId = 0;
+    let attempts = 0;
+
+    const scrollToHash = () => {
+      const target = document.getElementById(decodeURIComponent(hash));
+
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+
+      if (attempts < 10) {
+        attempts += 1;
+        frameId = window.requestAnimationFrame(scrollToHash);
+      }
+    };
+
+    frameId = window.requestAnimationFrame(scrollToHash);
+
+    return () => window.cancelAnimationFrame(frameId);
   }, [location]);
 
   return null;

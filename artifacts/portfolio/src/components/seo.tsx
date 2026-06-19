@@ -38,6 +38,11 @@ export function Seo({ path }: SeoProps) {
       meta.name = "description";
       return meta;
     }, seo.description);
+    upsertMeta('meta[name="robots"]', () => {
+      const meta = document.createElement("meta");
+      meta.name = "robots";
+      return meta;
+    }, seo.robots);
     upsertLink("canonical", seo.canonical);
 
     const metaPairs = [

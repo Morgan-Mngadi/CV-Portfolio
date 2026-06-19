@@ -10,6 +10,7 @@ export type SeoConfig = {
   path: string;
   type?: "website" | "profile" | "article";
   image?: string;
+  robots?: string;
   schema?: Record<string, unknown>[];
 };
 
@@ -102,6 +103,14 @@ const faqSchema = (article: Article) => ({
 });
 
 export const seoByPath: Record<string, SeoConfig> = {
+  "/404": {
+    title: "Page Not Found | Morgan Mngadi",
+    description: "The requested page could not be found. Return to Morgan Mngadi's Organic Search portfolio.",
+    path: "/404",
+    type: "website",
+    robots: "noindex, follow",
+    schema: [],
+  },
   "/": {
     title: "Morgan Mngadi | Organic Search and Technical SEO Specialist",
     description:
@@ -322,6 +331,7 @@ export const getSeoConfig = (path: string) => {
     ...config,
     canonical: absoluteUrl(config.path),
     image: config.image ?? DEFAULT_IMAGE,
+    robots: config.robots ?? "index, follow",
     schema: [pageSchema(config.path, config.title, config.description), ...(config.schema ?? [])],
   };
 };
@@ -341,7 +351,7 @@ export const renderSeoHead = (path: string) => {
     `<title>${escapeHtml(seo.title)}</title>`,
     `<meta name="description" content="${escapeHtml(seo.description)}" />`,
     ...(path === "/" ? [`<meta name="google-site-verification" content="A4ci4oieIQ_6atz06tTpMrzdvIc6CMPvLzI3Bw3fQvA" />`] : []),
-    `<meta name="robots" content="index, follow" />`,
+    `<meta name="robots" content="${escapeHtml(seo.robots)}" />`,
     `<link rel="canonical" href="${escapeHtml(seo.canonical)}" />`,
     `<meta property="og:title" content="${escapeHtml(seo.title)}" />`,
     `<meta property="og:description" content="${escapeHtml(seo.description)}" />`,

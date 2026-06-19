@@ -1,4 +1,5 @@
 import { useState } from "react";
+import type { MouseEvent } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
@@ -17,9 +18,21 @@ const linkClass = (isActive: boolean) =>
   }`;
 
 export function SiteNav() {
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
   const contactHref = location === "/" ? "#contact" : "/#contact";
+
+  const handleContactClick = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    setIsOpen(false);
+    navigate("/#contact");
+
+    if (location === "/") {
+      window.requestAnimationFrame(() => {
+        document.getElementById("contact")?.scrollIntoView({ block: "start" });
+      });
+    }
+  };
 
   const isActive = (href: string) => {
     if (href === "/") {
@@ -42,12 +55,13 @@ export function SiteNav() {
               {item.label}
             </Link>
           ))}
-          <a
+          <Link
             href={contactHref}
+            onClick={handleContactClick}
             className="font-mono text-xs bg-primary text-primary-foreground px-3 py-1 hover:bg-primary/90 transition-colors uppercase tracking-widest"
           >
             Contact
-          </a>
+          </Link>
         </div>
 
         <button
@@ -74,13 +88,13 @@ export function SiteNav() {
                 {item.label}
               </Link>
             ))}
-            <a
+            <Link
               href={contactHref}
               className="font-mono text-xs bg-primary text-primary-foreground px-3 py-2 hover:bg-primary/90 transition-colors uppercase tracking-widest self-start"
-              onClick={() => setIsOpen(false)}
+              onClick={handleContactClick}
             >
               Contact
-            </a>
+            </Link>
           </div>
         </div>
       )}
