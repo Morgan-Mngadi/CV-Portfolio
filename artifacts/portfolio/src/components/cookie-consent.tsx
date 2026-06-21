@@ -1,42 +1,20 @@
 import { useEffect, useState } from "react";
 
 const CONSENT_KEY = "morgan-cookie-consent";
-const GTM_ID = "GTM-MH72J2FK";
 
 type ConsentValue = "accepted" | "rejected";
 
 declare global {
   interface Window {
     dataLayer?: unknown[];
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
-const loadScript = (id: string, src: string) => {
-  if (document.getElementById(id)) {
-    return;
-  }
-
-  const script = document.createElement("script");
-  script.id = id;
-  script.async = true;
-  script.src = src;
-  document.head.appendChild(script);
-};
-
-const loadAnalytics = () => {
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({
-    "gtm.start": new Date().getTime(),
-    event: "gtm.js",
+const updateAnalyticsConsent = (value: ConsentValue) => {
+  window.gtag?.("consent", "update", {
+    analytics_storage: value === "accepted" ? "granted" : "denied",
   });
-
-  loadScript("gtm-script", `https://www.googletagmanager.com/gtm.js?id=${GTM_ID}`);
-};
-
-const isTagManagerPreview = () => {
-  const params = new URLSearchParams(window.location.search);
-
-  return params.has("gtm_debug") || params.has("gtm_preview") || params.has("gtm_auth");
 };
 
 export function CookieConsent() {
@@ -45,23 +23,19 @@ export function CookieConsent() {
 
   useEffect(() => {
     const storedConsent = window.localStorage.getItem(CONSENT_KEY) as ConsentValue | null;
-    const isPreview = isTagManagerPreview();
 
     setConsent(storedConsent);
     setIsReady(true);
 
-    if (storedConsent === "accepted" || isPreview) {
-      loadAnalytics();
+    if (storedConsent) {
+      updateAnalyticsConsent(storedConsent);
     }
   }, []);
 
   const saveConsent = (value: ConsentValue) => {
     window.localStorage.setItem(CONSENT_KEY, value);
     setConsent(value);
-
-    if (value === "accepted") {
-      loadAnalytics();
-    }
+    updateAnalyticsConsent(value);
   };
 
   if (!isReady || consent) {
