@@ -816,7 +816,7 @@ export default function Home() {
             </div>
 
             <motion.div variants={fadeUp} className="border border-border bg-card p-5 md:p-6">
-              <form className="grid gap-4" onSubmit={handleContactSubmit}>
+              <form id="form-submission" className="grid gap-4" onSubmit={handleContactSubmit}>
                 <input type="checkbox" name="botcheck" className="hidden" tabIndex={-1} autoComplete="off" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <label className="grid gap-2">
@@ -881,6 +881,7 @@ export default function Home() {
                 </label>
 
                 <button
+                  id="lead-enquiry-submit"
                   type="submit"
                   disabled={formStatus === "submitting"}
                   className="inline-flex items-center justify-center gap-2 bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
@@ -890,7 +891,7 @@ export default function Home() {
                 </button>
 
                 {formStatus === "success" && (
-                  <p className="font-mono text-xs leading-relaxed text-primary">
+                  <p id="lead-enquiry-success" className="font-mono text-xs leading-relaxed text-primary">
                     Thanks. Your enquiry has been sent.
                   </p>
                 )}
@@ -904,6 +905,7 @@ export default function Home() {
 
               <div className="mt-4 flex flex-col sm:flex-row gap-3">
                 <a
+                  id="home-contact-email"
                   href="mailto:morganmngadi@gmail.com"
                   data-testid="link-email"
                   className="flex items-center justify-center gap-2 border border-border px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-primary hover:text-primary"

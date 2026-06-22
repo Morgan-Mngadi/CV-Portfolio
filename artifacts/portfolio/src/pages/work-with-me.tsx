@@ -108,6 +108,7 @@ export default function WorkWithMe() {
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-col sm:flex-row gap-3">
             <a
+              id="book-intro-call-hero"
               href="https://cal.com/morgan-mngadi-18ixti/intro-call"
               target="_blank"
               rel="noopener noreferrer"
@@ -116,6 +117,7 @@ export default function WorkWithMe() {
               <CalendarDays className="w-4 h-4" /> Book a 20-minute intro call
             </a>
             <a
+              id="email-enquiry-hero"
               href="mailto:morganmngadi@gmail.com"
               className="inline-flex items-center justify-center gap-2 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
             >
@@ -187,6 +189,7 @@ export default function WorkWithMe() {
             <motion.div variants={stagger} className="flex flex-col sm:flex-row lg:flex-col gap-3">
               <motion.a
                 variants={fadeUp}
+                id="book-intro-call-enquiry"
                 href="https://cal.com/morgan-mngadi-18ixti/intro-call"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -197,6 +200,7 @@ export default function WorkWithMe() {
               </motion.a>
               <motion.a
                 variants={fadeUp}
+                id="email-enquiry-work-with-me"
                 href="mailto:morganmngadi@gmail.com"
                 className="flex items-center justify-center gap-3 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
               >

@@ -31,6 +31,151 @@ export type Article = {
 
 export const ALL_ARTICLES: Article[] = [
   {
+    slug: "how-to-create-gtm-tags-for-leads",
+    title: "How to Create GTM Tags for Lead Tracking",
+    excerpt:
+      "A practical guide to tracking successful form submissions, email link clicks, and book a call buttons in Google Tag Manager and GA4.",
+    category: "Measurement",
+    date: "Jun 2026",
+    readTime: "7 min read",
+    sections: [
+      {
+        id: "plan-your-lead-events",
+        heading: "Plan your lead events before opening GTM",
+        paragraphs: [
+          "Lead tracking works best when each event has one clear meaning. A successful enquiry form is a completed lead. An email link click or book a call button click shows strong intent, but it does not prove that an email was sent or a meeting was booked.",
+          "Write down the action, the event name, and the condition that proves it happened. This small measurement plan will prevent vague event names and duplicate reporting later.",
+        ],
+        bullets: [
+          "generate_lead: fire after the website confirms that an enquiry form was submitted successfully.",
+          "email_click: fire when a visitor clicks a link whose destination starts with mailto:.",
+          "book_call_click: fire when a visitor clicks the specific book a call button or booking link.",
+          "Useful parameters may include form_name, link_url, link_text, page_location, or lead_type. Never send names, email addresses, phone numbers, or other personal information to GA4.",
+        ],
+        imagePlaceholder: "Add a screenshot of the lead measurement plan showing the action, GA4 event name, trigger condition, and parameters.",
+      },
+      {
+        id: "check-your-ga4-setup",
+        heading: "Check the Google tag and enable GTM variables",
+        paragraphs: [
+          "Before creating lead tags, confirm that the Google tag is already sending page data from the GTM container to the correct GA4 property. Reusing the existing Google tag keeps the lead events connected to the same measurement setup.",
+          "In GTM, open Variables, select Configure under Built-In Variables, and enable the click and form variables you will need. Common choices include Click URL, Click Text, Click Classes, Click ID, Form ID, Form Classes, and Page URL.",
+        ],
+        numberedSteps: [
+          "Open the website's GTM container and select the working workspace.",
+          "Confirm that a Google tag exists and uses the correct GA4 measurement ID.",
+          "Open Variables and configure the built-in click and form variables.",
+          "Use GTM Preview to confirm that the expected variables become available when you interact with the website.",
+        ],
+        imagePlaceholder: "Add a GTM screenshot showing the Google tag and the enabled Click URL, Click Text, Form ID, and Page URL variables.",
+      },
+      {
+        id: "track-form-submissions",
+        heading: "Create a tag for successful form submissions",
+        paragraphs: [
+          "The strongest form trigger is based on proof of success, not the submit button click. A button click may still produce a validation error, and some modern forms submit through JavaScript without using the browser's standard form submission event.",
+          "If the form redirects to a unique thank-you page, use that page view as the trigger. For an AJAX or single-page form, ask the developer to push a custom data layer event only after the server confirms success. A native Form Submission trigger is a reasonable fallback when the website uses a standard HTML form and GTM can detect it reliably.",
+        ],
+        numberedSteps: [
+          "Create a new GA4 Event tag and connect it to the website's Google tag.",
+          "Set the event name to generate_lead.",
+          "Add a form_name or lead_type parameter if it helps distinguish forms in reporting.",
+          "Create a thank-you page, Custom Event, or Form Submission trigger that only matches the intended form.",
+          "Attach the trigger to the tag and save it with a clear name such as GA4 Event - Generate Lead - Contact Form.",
+        ],
+        imagePlaceholder: "Add a GTM screenshot showing the generate_lead event tag, its form_name parameter, and the successful submission trigger.",
+      },
+      {
+        id: "track-email-link-clicks",
+        heading: "Create a tag for email link clicks",
+        paragraphs: [
+          "Email links normally use a mailto: destination, which gives GTM a dependable condition to recognise. Use a Just Links trigger so ordinary buttons and other page elements do not enter this event.",
+        ],
+        numberedSteps: [
+          "Create a GA4 Event tag and name the event email_click.",
+          "Add link_url using the Click URL variable and link_text using the Click Text variable.",
+          "Create a Just Links trigger and choose Some Link Clicks.",
+          "Set the condition to Click URL starts with mailto:.",
+          "Attach the trigger and name the tag GA4 Event - Email Click.",
+        ],
+        closingParagraphs: [
+          "This event measures an attempt to contact the business by email. It cannot confirm that the visitor completed and sent the email, so label it accurately in dashboards and reports.",
+        ],
+        imagePlaceholder: "Add a GTM screenshot showing the email_click tag and a Just Links trigger where Click URL starts with mailto:.",
+      },
+      {
+        id: "track-book-a-call-clicks",
+        heading: "Create a tag for the book a call button",
+        paragraphs: [
+          "A booking button may be a normal link, an embedded calendar launcher, or a JavaScript button. Inspect the click in GTM Preview first, then build the trigger from the most stable value available.",
+          "A unique booking URL or element ID is usually safer than visible button text because copy can change and the same words may appear in several places. If the booking tool provides a confirmed-booking event or thank-you page, track that separately from the initial button click.",
+        ],
+        numberedSteps: [
+          "Click the book a call button in GTM Preview and inspect Click URL, Click ID, Click Classes, and Click Text.",
+          "Create a GA4 Event tag with the event name book_call_click.",
+          "Add useful parameters such as link_url, link_text, or button_location.",
+          "Create a Just Links trigger for a booking link, or an All Elements trigger for a JavaScript button.",
+          "Limit the trigger with a unique URL, ID, or class and attach it to the tag.",
+        ],
+        imagePlaceholder: "Add a GTM Preview screenshot showing the variables for the book a call button, followed by the final book_call_click trigger.",
+      },
+      {
+        id: "test-and-publish",
+        heading: "Test every event before publishing",
+        paragraphs: [
+          "Open GTM Preview, connect it to the website, and complete each lead action. Check that the correct tag fires once and that it stays silent on unrelated clicks, failed form attempts, and ordinary page views.",
+          "Then check GA4 DebugView to confirm the event name and parameters arrive correctly. Testing both tools helps separate a GTM trigger problem from a GA4 data problem.",
+        ],
+        bullets: [
+          "Submit the form successfully and also test a failed validation attempt.",
+          "Click more than one email link if the site has several placements.",
+          "Test the booking button on desktop and mobile layouts.",
+          "Check that each event fires once per action, not twice.",
+          "Remove any parameters containing personal information before publishing.",
+        ],
+        imagePlaceholder: "Add side-by-side screenshots of Tag Assistant showing the fired lead tag and GA4 DebugView showing the received event parameters.",
+      },
+      {
+        id: "mark-key-events",
+        heading: "Publish and mark the right events as key events",
+        paragraphs: [
+          "Once testing is complete, submit the GTM container with a version name that explains the change. In GA4, open Admin and then Events to mark the actions that genuinely matter to the business as key events.",
+          "A successful generate_lead event is normally the clearest lead key event. Email clicks and book a call clicks can also be useful key events when they represent meaningful contact intent, but keep them separate from confirmed leads so reporting does not overstate results.",
+        ],
+        numberedSteps: [
+          "Publish the tested GTM container with a descriptive version name and notes.",
+          "Confirm that the new events appear in GA4.",
+          "Mark the agreed lead events as key events in GA4 Admin.",
+          "Add the events to acquisition and landing page reports to see which channels and pages create lead activity.",
+          "Review the setup after website or form changes because selectors, URLs, and success behaviour can change.",
+        ],
+        imagePlaceholder: "Add a GA4 screenshot showing generate_lead, email_click, and book_call_click in the Events screen, with the selected key events marked.",
+      },
+    ],
+    faqs: [
+      {
+        question: "Should a form submit button click count as a lead?",
+        answer:
+          "No. A click does not prove that validation passed or the form reached the server. Fire generate_lead from a thank-you page, confirmed data layer event, or another reliable success signal.",
+      },
+      {
+        question: "Should email and book a call clicks use the same event name?",
+        answer:
+          "Keep them separate. They represent different actions and may have different lead quality. Separate names make reporting and optimisation more useful.",
+      },
+      {
+        question: "Can GTM confirm that somebody sent an email or booked a meeting?",
+        answer:
+          "A website click only confirms intent. To measure the completed outcome, use a confirmation page, a supported booking-platform event, or a CRM integration.",
+      },
+      {
+        question: "What information should not be sent to GA4?",
+        answer:
+          "Do not send personally identifiable information such as names, email addresses, phone numbers, or message contents. Use non-personal labels such as form_name or lead_type instead.",
+      },
+    ],
+  },
+  {
     slug: "ai-is-reshaping-search-reporting",
     title: "AI Is Reshaping Search Reporting",
     excerpt:

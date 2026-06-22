@@ -482,6 +482,7 @@ export default function About() {
             <motion.div variants={stagger} className="flex flex-col sm:flex-row lg:flex-col gap-3">
               <motion.a
                 variants={fadeUp}
+                id="about-contact-email"
                 href="mailto:morganmngadi@gmail.com"
                 className="flex items-center gap-3 px-6 py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
               >
