@@ -100,7 +100,7 @@ export default function BlogArticle() {
                   {section.bullets && (
                     <ul className="mt-6 flex flex-col gap-3">
                       {section.bullets.map((item) => (
-                        <li key={item} className="text-sm text-muted-foreground leading-relaxed border-l border-primary/50 pl-4">
+                        <li key={item} className="text-sm text-muted-foreground leading-relaxed border-l-4 border-primary/70 pl-5">
                           {item}
                         </li>
                       ))}
@@ -122,7 +122,13 @@ export default function BlogArticle() {
                         <thead className="border-b border-primary/30 bg-primary/10">
                           <tr>
                             {section.comparisonTable.columns.map((column) => (
-                              <th key={column} scope="col" className="px-4 py-3 font-mono text-xs uppercase tracking-widest text-primary">
+                              <th
+                                key={column}
+                                scope="col"
+                                className={`px-4 py-3 font-mono text-xs uppercase tracking-widest text-primary ${
+                                  column.includes("Recommended") ? "bg-primary/15 shadow-[inset_3px_0_0_hsl(var(--primary))]" : ""
+                                }`}
+                              >
                                 {column}
                               </th>
                             ))}
@@ -131,11 +137,20 @@ export default function BlogArticle() {
                         <tbody className="divide-y divide-border">
                           {section.comparisonTable.rows.map((row) => (
                             <tr key={row.join("-")} className="align-top">
-                              {row.map((cell, index) => (
-                                <td key={`${cell}-${index}`} className="px-4 py-4 text-muted-foreground leading-relaxed">
+                              {row.map((cell, index) => {
+                                const isRecommendedColumn = section.comparisonTable?.columns[index]?.includes("Recommended");
+
+                                return (
+                                  <td
+                                    key={`${cell}-${index}`}
+                                    className={`px-4 py-4 text-muted-foreground leading-relaxed ${
+                                      isRecommendedColumn ? "bg-primary/5 shadow-[inset_3px_0_0_hsl(var(--primary))]" : ""
+                                    }`}
+                                  >
                                   {cell}
-                                </td>
-                              ))}
+                                  </td>
+                                );
+                              })}
                             </tr>
                           ))}
                         </tbody>
@@ -143,7 +158,7 @@ export default function BlogArticle() {
                     </div>
                   )}
                   {section.imageBlocks && (
-                    <div className="mt-8 flex flex-col gap-8">
+                    <div className={section.imageLayout === "grid" ? "mt-8 grid grid-cols-1 gap-6 md:grid-cols-2" : "mt-8 flex flex-col gap-8"}>
                       {section.imageBlocks.map((image, index) => (
                         <figure key={image.src} className="border border-border bg-card p-3 sm:p-4">
                           <div className="flex aspect-[16/9] items-center justify-center overflow-hidden border border-border bg-background">
