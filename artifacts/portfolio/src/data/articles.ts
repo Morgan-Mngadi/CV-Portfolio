@@ -92,9 +92,7 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 });
 
 const ARTICLE_INPUTS: ArticleInput[] = [
-  ...(import.meta.env.DEV
-    ? [
-        {
+  {
           slug: "how-to-create-gtm-tags-for-leads",
           title: "How to Create GTM Tags for Lead Tracking",
           excerpt:
@@ -140,13 +138,13 @@ const ARTICLE_INPUTS: ArticleInput[] = [
               imageLayout: "grid",
               imageBlocks: [
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-choose-tag-type.png",
+                  src: "/article-images/gtm-choose-tag-type.png",
                   alt: "Google Tag Manager choose tag type screen showing Google Analytics, Google Ads, Floodlight, Google Tag, and Conversion Linker options.",
                   caption:
                     "The tag type screen is where you choose what GTM should send. For lead tracking in GA4, choose Google Analytics and create a GA4 Event tag.",
                 },
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-choose-trigger-type.png",
+                  src: "/article-images/gtm-choose-trigger-type.png",
                   alt: "Google Tag Manager choose trigger type screen showing page view triggers and click triggers including All Elements and Just Links.",
                   caption:
                     "The trigger type screen is where you choose when the tag should fire. For email and Book a Call clicks, Just Links is useful because those actions happen through links.",
@@ -168,7 +166,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
               ],
               imageBlocks: [
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-google-tag-complete.png",
+                  src: "/article-images/gtm-google-tag-complete.png",
                   alt: "Google Tag Manager Google Tag configuration screen showing a completed Tag ID field.",
                   caption:
                     "After the GA4 Measurement ID is added to the Google Tag, GTM can send page and event data into the connected GA4 property.",
@@ -262,13 +260,13 @@ const ARTICLE_INPUTS: ArticleInput[] = [
               ],
               imageBlocks: [
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-email-click-tag.png",
+                  src: "/article-images/gtm-email-click-tag.png",
                   alt: "GA4 Event tag for an email link click using generate_lead with page_url, lead_type, click_url, and has_contacted configured.",
                   caption:
                     "The GA4 Email Link Click tag sends generate_lead with lead_type set to email_link_click, alongside page_url, click_url, and has_contacted.",
                 },
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-email-click-trigger.png",
+                  src: "/article-images/gtm-email-click-trigger.png",
                   alt: "Google Tag Manager Just Links trigger that fires when Click URL contains mailto.",
                   caption:
                     "The trigger uses Click URL contains mailto: so the tag fires only when someone clicks an email link.",
@@ -290,13 +288,13 @@ const ARTICLE_INPUTS: ArticleInput[] = [
               ],
               imageBlocks: [
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-book-call-tag.png",
+                  src: "/article-images/gtm-book-call-tag.png",
                   alt: "GA4 Event tag for Book a Call using generate_lead with page_url, lead_type, click_url, and has_contacted configured.",
                   caption:
                     "The GA4 Book a Call tag sends generate_lead with lead_type set to book_a_call, alongside page_url, click_url, and has_contacted.",
                 },
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-book-call-trigger.png",
+                  src: "/article-images/gtm-book-call-trigger.png",
                   alt: "Google Tag Manager Just Links trigger that fires when Click URL contains intro-call.",
                   caption:
                     "The Book a Call trigger uses Click URL contains intro-call so the event only fires for the intro-call or calendar link.",
@@ -318,13 +316,13 @@ const ARTICLE_INPUTS: ArticleInput[] = [
               ],
               imageBlocks: [
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-form-submission-tag.png",
+                  src: "/article-images/gtm-form-submission-tag.png",
                   alt: "GA4 Event tag for Form Submission using generate_lead with page_url, lead_type, form_id, and has_contacted configured.",
                   caption:
                     "The GA4 Form Submission tag sends generate_lead with lead_type set to form_submission, alongside page_url, form_id, and has_contacted.",
                 },
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-form-submission-trigger.png",
+                  src: "/article-images/gtm-form-submission-trigger.png",
                   alt: "Google Tag Manager form submission trigger connected to the GA4 Form Submission tag.",
                   caption:
                     "The Form Submission trigger is attached to the GA4 Form Submission tag so GTM can fire the event when the form submit action is detected.",
@@ -346,13 +344,13 @@ const ARTICLE_INPUTS: ArticleInput[] = [
               ],
               imageBlocks: [
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-tag-assistant-email-click.png",
+                  src: "/article-images/gtm-tag-assistant-email-click.png",
                   alt: "Tag Assistant tag details for a GA4 Email Link Click event showing generate_lead, page_url, lead_type, click_url, and has_contacted.",
                   caption:
                     "Tag Assistant confirms the Email Link Click tag is sending generate_lead with lead_type set to email_link_click, plus page_url, click_url, and has_contacted.",
                 },
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-tag-assistant-form-submission.png",
+                  src: "/article-images/gtm-tag-assistant-form-submission.png",
                   alt: "Tag Assistant tag details for a GA4 Form Submission event showing generate_lead, page_url, lead_type, form_id, and has_contacted.",
                   caption:
                     "Tag Assistant confirms the Form Submission tag is sending generate_lead with lead_type set to form_submission, plus page_url, form_id, and has_contacted.",
@@ -373,13 +371,13 @@ const ARTICLE_INPUTS: ArticleInput[] = [
               ],
               imageBlocks: [
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-custom-definitions.png",
+                  src: "/article-images/gtm-custom-definitions.png",
                   alt: "GA4 custom definitions table showing click_url, form_id, generate_lead, has_contacted, lead_type, and page_url.",
                   caption:
                     "The custom definitions list shows generate_lead, the lead parameters, and the has_contacted user property registered in GA4.",
                 },
                 {
-                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-custom-dimension-form.png",
+                  src: "/article-images/gtm-custom-dimension-form.png",
                   alt: "GA4 new custom dimension form with Event scope selected and an event parameter dropdown.",
                   caption:
                     "Use event scope when creating a custom dimension for event parameters such as generate_lead, page_url, lead_type, click_url, and form_id.",
@@ -424,9 +422,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
                 "Do not send personally identifiable information such as names, email addresses, phone numbers, or message contents. Use non-personal labels such as form_name or lead_type instead.",
             },
           ],
-        },
-      ]
-    : []),
+  },
   {
     slug: "ai-is-reshaping-search-reporting",
     title: "AI Is Reshaping Search Reporting",
