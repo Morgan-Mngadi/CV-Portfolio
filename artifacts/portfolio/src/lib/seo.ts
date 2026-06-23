@@ -2,7 +2,6 @@ import { ARTICLES, type Article } from "@/data/articles";
 
 export const SITE_URL = "https://morgan-mngadi-portfolio.online";
 export const SITE_NAME = "Morgan Mngadi";
-export const DEFAULT_IMAGE = `${SITE_URL}/opengraph.jpg`;
 
 export type SeoConfig = {
   title: string;
@@ -337,7 +336,7 @@ export const getSeoConfig = (path: string) => {
   return {
     ...config,
     canonical: absoluteUrl(config.path),
-    image: config.image ?? DEFAULT_IMAGE,
+    image: config.image,
     robots: config.robots ?? "index, follow",
     schema: [pageSchema(config.path, config.title, config.description), ...(config.schema ?? [])],
   };
@@ -364,11 +363,11 @@ export const renderSeoHead = (path: string) => {
     `<meta property="og:description" content="${escapeHtml(seo.description)}" />`,
     `<meta property="og:type" content="${seo.type === "article" ? "article" : "website"}" />`,
     `<meta property="og:url" content="${escapeHtml(seo.canonical)}" />`,
-    `<meta property="og:image" content="${escapeHtml(seo.image)}" />`,
-    `<meta name="twitter:card" content="summary_large_image" />`,
+    ...(seo.image ? [`<meta property="og:image" content="${escapeHtml(seo.image)}" />`] : []),
+    `<meta name="twitter:card" content="${seo.image ? "summary_large_image" : "summary"}" />`,
     `<meta name="twitter:title" content="${escapeHtml(seo.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`,
-    `<meta name="twitter:image" content="${escapeHtml(seo.image)}" />`,
+    ...(seo.image ? [`<meta name="twitter:image" content="${escapeHtml(seo.image)}" />`] : []),
     `<script type="application/ld+json">${schema}</script>`,
   ].join("\n    ");
 };

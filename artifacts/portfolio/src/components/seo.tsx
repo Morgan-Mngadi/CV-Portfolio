@@ -28,6 +28,10 @@ const upsertLink = (rel: string, href: string) => {
   element.href = href;
 };
 
+const removeMeta = (selector: string) => {
+  document.head.querySelector(selector)?.remove();
+};
+
 export function Seo({ path }: SeoProps) {
   useEffect(() => {
     const seo = getSeoConfig(path);
@@ -50,11 +54,9 @@ export function Seo({ path }: SeoProps) {
       ["og:description", seo.description],
       ["og:type", seo.type === "article" ? "article" : "website"],
       ["og:url", seo.canonical],
-      ["og:image", seo.image],
-      ["twitter:card", "summary_large_image"],
+      ["twitter:card", seo.image ? "summary_large_image" : "summary"],
       ["twitter:title", seo.title],
       ["twitter:description", seo.description],
-      ["twitter:image", seo.image],
     ];
 
     for (const [property, content] of metaPairs) {
@@ -72,6 +74,22 @@ export function Seo({ path }: SeoProps) {
         },
         content,
       );
+    }
+
+    if (seo.image) {
+      upsertMeta('meta[property="og:image"]', () => {
+        const meta = document.createElement("meta");
+        meta.setAttribute("property", "og:image");
+        return meta;
+      }, seo.image);
+      upsertMeta('meta[name="twitter:image"]', () => {
+        const meta = document.createElement("meta");
+        meta.name = "twitter:image";
+        return meta;
+      }, seo.image);
+    } else {
+      removeMeta('meta[property="og:image"]');
+      removeMeta('meta[name="twitter:image"]');
     }
 
     document.querySelectorAll('script[data-seo-schema="true"]').forEach((script) => script.remove());
