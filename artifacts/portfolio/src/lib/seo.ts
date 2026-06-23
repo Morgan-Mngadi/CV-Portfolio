@@ -112,9 +112,9 @@ export const seoByPath: Record<string, SeoConfig> = {
     schema: [],
   },
   "/": {
-    title: "Morgan Mngadi | Organic Search and Technical SEO Specialist",
+    title: "Morgan Mngadi | SEO, Analytics and Digital Product Portfolio",
     description:
-      "Organic Search and Technical SEO specialist available for employment, freelance, and contract work focused on AI visibility, technical implementation, and measurable organic ROI.",
+      "Portfolio of Morgan Mngadi, an SEO professional focused on technical SEO, analytics, GTM, GA4, organic growth, digital products, and CommuteZA.",
     path: "/",
     type: "profile",
     schema: [personSchema, websiteSchema],
@@ -143,93 +143,100 @@ export const seoByPath: Record<string, SeoConfig> = {
           },
           {
             "@type": "Question",
-            name: "What type of SEO roles is Morgan best suited for?",
+            name: "What areas of SEO does Morgan Mngadi focus on?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Morgan is best suited for SEO Specialist, Technical SEO Specialist, Organic Search, and implementation-focused roles where technical recommendations need to become measurable changes.",
+                "Morgan focuses on technical SEO, organic growth strategy, analytics, GTM, GA4, structured data, CMS implementation, reporting, and product-led search systems.",
             },
           },
           {
             "@type": "Question",
-            name: "Does Morgan work remotely?",
+            name: "What is CommuteZA?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Yes. Morgan is open to remote UK and EU roles, as well as South African hybrid opportunities in Johannesburg and nearby business hubs.",
+                "CommuteZA is a digital product Morgan is building to explore SEO architecture, metadata systems, structured data, redirect logic, local search behaviour, and analytics.",
             },
           },
           {
             "@type": "Question",
-            name: "What makes Morgan's background useful to a hiring team?",
+            name: "What makes Morgan's background useful to teams and collaborators?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Agency work has exposed Morgan to multiple industries, CMS platforms, stakeholder needs, and implementation constraints across audits, reporting, content recommendations, and developer collaboration.",
+                "Agency work has exposed Morgan to multiple industries, CMS platforms, stakeholder needs, and implementation constraints across audits, reporting, content recommendations, developer collaboration, and measurable business impact.",
             },
           },
         ],
       },
     ],
   },
-  "/work-with-me": {
-    title: "SEO Consultant | Organic Search Consulting and Implementation",
+  "/areas-of-expertise": {
+    title: "Areas of Expertise | SEO, Analytics, GTM and Organic Growth",
     description:
-      "SEO consultant for employment, freelance, and contract work across Organic Search, technical SEO implementation, AI visibility, reporting, and measurable organic ROI.",
-    path: "/work-with-me",
+      "Explore Morgan Mngadi's areas of expertise across technical SEO, analytics, GTM, GA4, organic growth, AI visibility, reporting, and CommuteZA.",
+    path: "/areas-of-expertise",
     type: "website",
     schema: [
       personSchema,
       {
         "@context": "https://schema.org",
-        "@type": "Service",
-        "@id": `${SITE_URL}/work-with-me#service`,
-        name: "SEO consultant for Organic Search consulting and implementation",
-        provider: {
+        "@type": "AboutPage",
+        "@id": `${SITE_URL}/areas-of-expertise#webpage`,
+        name: "Areas of Expertise",
+        about: [
+          "Technical SEO",
+          "Google Analytics 4",
+          "Google Tag Manager",
+          "Organic Growth",
+          "AI Search Visibility",
+          "CommuteZA",
+          "Digital Products",
+        ],
+        author: {
           "@id": `${SITE_URL}/#person`,
         },
-        areaServed: ["South Africa", "United Kingdom", "European Union"],
-        serviceType: ["SEO Consulting", "Technical SEO", "Organic Search", "AI Search Visibility", "SEO Reporting"],
       },
       {
         "@context": "https://schema.org",
         "@type": "FAQPage",
-        "@id": `${SITE_URL}/work-with-me#faq`,
+        "@id": `${SITE_URL}/areas-of-expertise#faq`,
         mainEntity: [
           {
             "@type": "Question",
-            name: "Why are retainers quoted individually?",
+            name: "Why frame this as areas of expertise?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Every business has a different level of SEO maturity, technical debt, CMS complexity, reporting setup, and commercial target. A tailored quote keeps the retainer aligned to the size of the business and the amount of work required.",
+                "The page maps how Morgan thinks and works across SEO, analytics, technical implementation, reporting, and product-led growth.",
             },
           },
           {
             "@type": "Question",
-            name: "What affects the scope of a retainer?",
+            name: "How does analytics connect to SEO?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "The main factors are the number of pages or templates, the CMS and development workflow, whether reporting is already reliable, how much implementation support is needed, and whether the focus is leads, ecommerce revenue, AI visibility, or all three.",
+                "Analytics connects search visibility to what users do afterwards. GA4, GTM, Search Console, and Looker Studio help translate impressions and clicks into engagement, leads, purchases, and business context.",
             },
           },
           {
             "@type": "Question",
-            name: "Can the work start with a smaller project before a retainer?",
+            name: "What does CommuteZA show about Morgan's work?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Some teams may start with a focused audit, reporting setup, or implementation sprint before moving into monthly support. That can make the ongoing scope clearer and easier to prioritise.",
+                "CommuteZA shows how Morgan approaches search architecture when he can own the full system: URLs, metadata, rendering, schema, redirect logic, reporting, and product decisions.",
             },
           },
           {
             "@type": "Question",
-            name: "Do you work with both agencies and direct clients?",
+            name: "Can people contact Morgan about collaborations or thoughtful conversations?",
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Morgan supports agencies that need implementation capacity and direct clients that need Organic Search work tied to measurable outcomes.",
+                "Yes. The contact links are open for networking, collaborations, industry discussions, product conversations, and thoughtful conversations.",
             },
           },
         ],

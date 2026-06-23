@@ -5,7 +5,7 @@ import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.
 const FOOTER_LINKS = [
   { label: "About", href: "/about" },
   { label: "Case Study", href: "/projects/commuteza" },
-  { label: "Work With Me", href: "/work-with-me" },
+  { label: "Expertise", href: "/areas-of-expertise" },
   { label: "Blog", href: "/blog" },
 ];
 
@@ -21,7 +21,7 @@ export function SiteFooter() {
             <span>
               <span className="block font-medium text-foreground">Morgan Mngadi</span>
               <span className="mt-1 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
-                Organic Search Specialist
+                SEO · Analytics · Digital Products
               </span>
             </span>
           </Link>

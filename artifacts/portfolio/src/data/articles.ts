@@ -4,12 +4,25 @@ export type ArticleSection = {
   paragraphs: string[];
   bullets?: string[];
   numberedSteps?: string[];
+  imageBlocks?: ArticleImage[];
+  comparisonTable?: ArticleComparisonTable;
   imagePlaceholder?: string;
   closingParagraphs?: string[];
   link?: {
     href: string;
     label: string;
   };
+};
+
+export type ArticleImage = {
+  src: string;
+  alt: string;
+  caption: string;
+};
+
+export type ArticleComparisonTable = {
+  columns: string[];
+  rows: string[][];
 };
 
 export type ArticleFaq = {
@@ -42,122 +55,225 @@ export const ALL_ARTICLES: Article[] = [
           readTime: "7 min read",
           sections: [
             {
-              id: "plan-your-lead-events",
-              heading: "Plan your lead events before opening GTM",
+              id: "plan-the-lead-events",
+              heading: "Plan the Lead Events Before Building Tags",
               paragraphs: [
-                "Lead tracking works best when each event has one clear meaning. A successful enquiry form is a completed lead. An email link click or book a call button click shows strong intent, but it does not prove that an email was sent or a meeting was booked.",
-                "Write down the action, the event name, and the condition that proves it happened. This small measurement plan will prevent vague event names and duplicate reporting later.",
+                "Start by deciding which user actions count as lead activity. In this setup, the three lead actions are email link clicks, Book a Call clicks, and form submissions.",
+                "The flow should be built in this order: create or confirm the Google tag in Google Tag Manager, build the GTM event tags and triggers, then register the useful parameters in Google Analytics so they can be used in reports.",
               ],
               bullets: [
-                "generate_lead: fire after the website confirms that an enquiry form was submitted successfully.",
-                "email_click: fire when a visitor clicks a link whose destination starts with mailto:.",
-                "book_call_click: fire when a visitor clicks the specific book a call button or booking link.",
-                "Useful parameters may include form_name, link_url, link_text, page_location, or lead_type. Never send names, email addresses, phone numbers, or other personal information to GA4.",
+                "email_click tracks when a visitor clicks a mailto link.",
+                "book-a-call tracks when a visitor clicks the booking or intro-call link.",
+                "form_submission tracks when the enquiry form is submitted.",
+                "page_url, lead_type, click_url, and form_id explain where and how the lead action happened.",
+                "has_contacted marks users who completed any contact-intent action.",
               ],
-              imagePlaceholder:
-                "Add a screenshot of the lead measurement plan showing the action, GA4 event name, trigger condition, and parameters.",
+              comparisonTable: {
+                columns: ["Lead Action", "GA4 Event Name", "GTM Trigger", "Key Parameters"],
+                rows: [
+                  ["Email Link Click", "email_click", "Just Links where Click URL contains mailto:", "page_url, lead_type, click_url"],
+                  ["Book a Call", "book-a-call", "Just Links where Click URL contains intro-call", "page_url, lead_type, click_url"],
+                  ["Form Submission", "form_submission", "Form Submission trigger", "page_url, lead_type, form_id"],
+                ],
+              },
             },
             {
-              id: "check-your-ga4-setup",
-              heading: "Check the Google tag and enable GTM variables",
+              id: "tag-manager-google-tag",
+              heading: "Tag Manager: Add the Google Tag First",
               paragraphs: [
-                "Before creating lead tags, confirm that the Google tag is already sending page data from the GTM container to the correct GA4 property. Reusing the existing Google tag keeps the lead events connected to the same measurement setup.",
-                "In GTM, open Variables, select Configure under Built-In Variables, and enable the click and form variables you will need. Common choices include Click URL, Click Text, Click Classes, Click ID, Form ID, Form Classes, and Page URL.",
+                "Inside Google Tag Manager, the Google tag is the foundation. It connects the GTM container to the GA4 property so that the lead events created later are sent to the right place.",
+                "Once the Google tag is saved, each GA4 Event tag can reuse that configuration. This keeps the measurement setup cleaner than creating disconnected tracking for every lead action.",
               ],
-              numberedSteps: [
-                "Open the website's GTM container and select the working workspace.",
-                "Confirm that a Google tag exists and uses the correct GA4 measurement ID.",
-                "Open Variables and configure the built-in click and form variables.",
-                "Use GTM Preview to confirm that the expected variables become available when you interact with the website.",
+              imageBlocks: [
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-google-tag-complete.png",
+                  alt: "Google Tag Manager tag configuration screen showing a completed Google tag ID.",
+                  caption:
+                    "After the Google tag ID is added, GTM can send page and event data into the connected GA4 property.",
+                },
               ],
-              imagePlaceholder:
-                "Add a GTM screenshot showing the Google tag and the enabled Click URL, Click Text, Form ID, and Page URL variables.",
             },
             {
-              id: "track-form-submissions",
-              heading: "Create a tag for successful form submissions",
+              id: "what-are-event-parameters",
+              heading: "What Are Event Parameters?",
               paragraphs: [
-                "The strongest form trigger is based on proof of success, not the submit button click. A button click may still produce a validation error, and some modern forms submit through JavaScript without using the browser's standard form submission event.",
-                "If the form redirects to a unique thank-you page, use that page view as the trigger. For an AJAX or single-page form, ask the developer to push a custom data layer event only after the server confirms success. A native Form Submission trigger is a reasonable fallback when the website uses a standard HTML form and GTM can detect it reliably.",
-              ],
-              numberedSteps: [
-                "Create a new GA4 Event tag and connect it to the website's Google tag.",
-                "Set the event name to generate_lead.",
-                "Add a form_name or lead_type parameter if it helps distinguish forms in reporting.",
-                "Create a thank-you page, Custom Event, or Form Submission trigger that only matches the intended form.",
-                "Attach the trigger to the tag and save it with a clear name such as GA4 Event - Generate Lead - Contact Form.",
-              ],
-              imagePlaceholder:
-                "Add a GTM screenshot showing the generate_lead event tag, its form_name parameter, and the successful submission trigger.",
-            },
-            {
-              id: "track-email-link-clicks",
-              heading: "Create a tag for email link clicks",
-              paragraphs: [
-                "Email links normally use a mailto: destination, which gives GTM a dependable condition to recognise. Use a Just Links trigger so ordinary buttons and other page elements do not enter this event.",
-              ],
-              numberedSteps: [
-                "Create a GA4 Event tag and name the event email_click.",
-                "Add link_url using the Click URL variable and link_text using the Click Text variable.",
-                "Create a Just Links trigger and choose Some Link Clicks.",
-                "Set the condition to Click URL starts with mailto:.",
-                "Attach the trigger and name the tag GA4 Event - Email Click.",
-              ],
-              closingParagraphs: [
-                "This event measures an attempt to contact the business by email. It cannot confirm that the visitor completed and sent the email, so label it accurately in dashboards and reports.",
-              ],
-              imagePlaceholder: "Add a GTM screenshot showing the email_click tag and a Just Links trigger where Click URL starts with mailto:.",
-            },
-            {
-              id: "track-book-a-call-clicks",
-              heading: "Create a tag for the book a call button",
-              paragraphs: [
-                "A booking button may be a normal link, an embedded calendar launcher, or a JavaScript button. Inspect the click in GTM Preview first, then build the trigger from the most stable value available.",
-                "A unique booking URL or element ID is usually safer than visible button text because copy can change and the same words may appear in several places. If the booking tool provides a confirmed-booking event or thank-you page, track that separately from the initial button click.",
-              ],
-              numberedSteps: [
-                "Click the book a call button in GTM Preview and inspect Click URL, Click ID, Click Classes, and Click Text.",
-                "Create a GA4 Event tag with the event name book_call_click.",
-                "Add useful parameters such as link_url, link_text, or button_location.",
-                "Create a Just Links trigger for a booking link, or an All Elements trigger for a JavaScript button.",
-                "Limit the trigger with a unique URL, ID, or class and attach it to the tag.",
-              ],
-              imagePlaceholder:
-                "Add a GTM Preview screenshot showing the variables for the book a call button, followed by the final book_call_click trigger.",
-            },
-            {
-              id: "test-and-publish",
-              heading: "Test every event before publishing",
-              paragraphs: [
-                "Open GTM Preview, connect it to the website, and complete each lead action. Check that the correct tag fires once and that it stays silent on unrelated clicks, failed form attempts, and ordinary page views.",
-                "Then check GA4 DebugView to confirm the event name and parameters arrive correctly. Testing both tools helps separate a GTM trigger problem from a GA4 data problem.",
+                "Event parameters are extra details sent with a GA4 event. The event name tells GA4 what happened, while the parameters explain the context around that action.",
+                "For lead tracking, the event name on its own is not enough. If GA4 only receives email_click, book-a-call, or form_submission, the report can count the action but cannot easily explain which page, link, or form created it.",
               ],
               bullets: [
-                "Submit the form successfully and also test a failed validation attempt.",
-                "Click more than one email link if the site has several placements.",
-                "Test the booking button on desktop and mobile layouts.",
-                "Check that each event fires once per action, not twice.",
-                "Remove any parameters containing personal information before publishing.",
+                "page_url tells you where the lead action happened.",
+                "lead_type keeps email clicks, booking clicks, and form submissions grouped consistently.",
+                "click_url shows the destination clicked for email and booking actions.",
+                "form_id identifies which form was submitted.",
+                "These parameters become especially useful once they are registered as GA4 custom dimensions and used in Looker Studio tables or filters.",
               ],
-              imagePlaceholder:
-                "Add side-by-side screenshots of Tag Assistant showing the fired lead tag and GA4 DebugView showing the received event parameters.",
             },
             {
-              id: "mark-key-events",
-              heading: "Publish and mark the right events as key events",
+              id: "what-are-user-properties",
+              heading: "What Are User Properties?",
               paragraphs: [
-                "Once testing is complete, submit the GTM container with a version name that explains the change. In GA4, open Admin and then Events to mark the actions that genuinely matter to the business as key events.",
-                "A successful generate_lead event is normally the clearest lead key event. Email clicks and book a call clicks can also be useful key events when they represent meaningful contact intent, but keep them separate from confirmed leads so reporting does not overstate results.",
+                "User properties describe the user rather than only the single event. In this setup, has_contacted is used to mark a visitor who has taken a contact-intent action.",
+                "That means email clicks, Book a Call clicks, and form submissions can all set has_contacted to TRUE. The individual event still explains the exact action, while the user property helps create a broader contacted-user segment.",
               ],
-              numberedSteps: [
-                "Publish the tested GTM container with a descriptive version name and notes.",
-                "Confirm that the new events appear in GA4.",
-                "Mark the agreed lead events as key events in GA4 Admin.",
-                "Add the events to acquisition and landing page reports to see which channels and pages create lead activity.",
-                "Review the setup after website or form changes because selectors, URLs, and success behaviour can change.",
+              bullets: [
+                "Use event parameters when the value belongs to the action, such as the clicked URL or submitted form ID.",
+                "Use user properties when the value should describe the user after the action, such as whether they have contacted you.",
+                "In Looker Studio, has_contacted can help separate users who only browsed from users who showed lead intent.",
               ],
-              imagePlaceholder:
-                "Add a GA4 screenshot showing generate_lead, email_click, and book_call_click in the Events screen, with the selected key events marked.",
+            },
+            {
+              id: "tag-manager-email-link-click",
+              heading: "Tag Manager: Email Link Click",
+              paragraphs: [
+                "The email link click is an intent event. It does not prove that the visitor sent an email, but it does show that they tried to contact you through a mailto link.",
+                "In GTM, create a GA4 Event tag named email_click. Add event parameters for page_url, lead_type, and click_url, then set the user property has_contacted to TRUE.",
+              ],
+              bullets: [
+                "page_url shows which page generated the email click.",
+                "lead_type is set to email_link_click so the action can be grouped separately from bookings and form submissions.",
+                "click_url stores the mailto destination that was clicked.",
+                "has_contacted = TRUE lets reporting identify users who took a contact-intent action.",
+              ],
+              imageBlocks: [
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-email-click-tag.png",
+                  alt: "GA4 Event tag for an email link click with page_url, lead_type, click_url, and has_contacted configured.",
+                  caption:
+                    "The GA4 Email Link Click tag sends the email_click event with page_url, lead_type, click_url, and has_contacted.",
+                },
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-email-click-trigger.png",
+                  alt: "Google Tag Manager Just Links trigger that fires when Click URL contains mailto.",
+                  caption:
+                    "The trigger uses Click URL contains mailto: so the tag fires only when someone clicks an email link.",
+                },
+              ],
+            },
+            {
+              id: "tag-manager-book-a-call",
+              heading: "Tag Manager: Book a Call",
+              paragraphs: [
+                "Book a Call clicks should be tracked separately because they usually show stronger commercial intent than a general email click. A visitor is moving towards a scheduled conversation, so the event deserves its own lead type.",
+                "In GTM, create a GA4 Event tag named book-a-call. Add page_url, lead_type, and click_url as event parameters, then set has_contacted to TRUE as a user property.",
+              ],
+              bullets: [
+                "page_url shows which page or CTA placement generated the booking click.",
+                "lead_type is set to book_a_call so booking intent can be reported separately.",
+                "click_url records the booking destination, which helps if multiple booking links are used.",
+                "has_contacted = TRUE keeps booking-click users in the broader contacted-user audience.",
+              ],
+              imageBlocks: [
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-book-call-tag.png",
+                  alt: "GA4 Event tag for Book a Call with page_url, lead_type, click_url, and has_contacted configured.",
+                  caption:
+                    "The GA4 Book a Call tag sends the booking event with the page, lead type, clicked URL, and has_contacted user property.",
+                },
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-book-call-trigger.png",
+                  alt: "Google Tag Manager Just Links trigger that fires when Click URL contains intro-call.",
+                  caption:
+                    "The Book a Call trigger uses Click URL contains intro-call so the event only fires for the intro-call or calendar link.",
+                },
+              ],
+            },
+            {
+              id: "tag-manager-form-submission",
+              heading: "Tag Manager: Form Submission",
+              paragraphs: [
+                "Form submission is the strongest lead action in this setup because the visitor has completed the enquiry form. It should be reported separately from click-based intent.",
+                "In GTM, create a GA4 Event tag named form_submission. Add page_url, lead_type, and form_id as event parameters, then set has_contacted to TRUE as a user property.",
+              ],
+              bullets: [
+                "page_url shows which page produced the submitted enquiry.",
+                "lead_type is set to form_submission so confirmed form leads are easy to isolate.",
+                "form_id captures the submitted form ID, such as form-submission.",
+                "has_contacted = TRUE marks the user as someone who completed a meaningful contact action.",
+              ],
+              imageBlocks: [
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-form-submission-tag.png",
+                  alt: "GA4 Event tag for Form Submission with page_url, lead_type, form_id, and has_contacted configured.",
+                  caption:
+                    "The GA4 Form Submission tag sends form_submission with page_url, lead_type, form_id, and has_contacted.",
+                },
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-form-submission-trigger.png",
+                  alt: "Google Tag Manager form submission trigger connected to the GA4 Form Submission tag.",
+                  caption:
+                    "The Form Submission trigger is attached to the GA4 Form Submission tag so GTM can fire the event when the form submit action is detected.",
+                },
+              ],
+            },
+            {
+              id: "tag-assistant-validation",
+              heading: "Tag Assistant: Confirm the Values Are Firing",
+              paragraphs: [
+                "After the GTM tags and triggers are created, use Tag Assistant preview mode to confirm that each event is sending the expected values. This step is where you check whether the tag is doing what the report needs it to do.",
+                "In the tag details view, look for the event name, event settings table, and user properties. The event settings table should show the parameters you configured in GTM, and the user properties row should show has_contacted set to TRUE.",
+              ],
+              bullets: [
+                "For form_submission, confirm page_url, lead_type, and form_id are present.",
+                "For book-a-call, confirm page_url, lead_type, and click_url are present.",
+                "Confirm the event name matches the action you want to report in GA4 and Looker Studio.",
+                "Confirm has_contacted is set to TRUE so the user can be included in contacted-user reporting.",
+              ],
+              imageBlocks: [
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-tag-assistant-form-submission.png",
+                  alt: "Tag Assistant tag details for a GA4 Form Submission event showing page_url, lead_type, form_id, has_contacted, and form_submission.",
+                  caption:
+                    "Tag Assistant confirms the Form Submission tag is sending page_url, lead_type, form_id, the has_contacted user property, and the form_submission event name.",
+                },
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-tag-assistant-book-call.png",
+                  alt: "Tag Assistant tag details for a GA4 Book a Call event showing page_url, lead_type, click_url, has_contacted, and book-a-call.",
+                  caption:
+                    "Tag Assistant confirms the Book a Call tag is sending page_url, lead_type, click_url, the has_contacted user property, and the book-a-call event name.",
+                },
+              ],
+            },
+            {
+              id: "google-analytics-custom-definitions",
+              heading: "Google Analytics: Register the Parameters",
+              paragraphs: [
+                "After the GTM tags are configured, move into Google Analytics. GA4 can receive event parameters, but custom definitions make those values easier to use in reports and explorations.",
+                "Create event-scoped custom dimensions for page_url, lead_type, click_url, and form_id. Create the has_contacted custom definition as a user property so it can describe the user after they have taken a contact action.",
+              ],
+              bullets: [
+                "Use event scope for page_url, lead_type, click_url, and form_id because those values describe the event that happened.",
+                "Use user scope for has_contacted because it describes the user after contact intent has been recorded.",
+                "Keep the names consistent between GTM and GA4 so Looker Studio fields are easy to understand later.",
+              ],
+              imageBlocks: [
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-custom-definitions.png",
+                  alt: "GA4 custom definitions table showing click_url, form_id, has_contacted, lead_type, and page_url.",
+                  caption:
+                    "The custom definitions list shows the lead parameters and has_contacted user property registered in GA4.",
+                },
+                {
+                  src: "/@fs/Users/mcebisi.r.mngadi/Sites/CV-Portfolio/artifacts/portfolio/local-article-images/gtm-custom-dimension-form.png",
+                  alt: "GA4 new custom dimension form with Event scope selected and an event parameter dropdown.",
+                  caption:
+                    "Use event scope when creating a custom dimension for event parameters such as page_url, lead_type, click_url, and form_id.",
+                },
+              ],
+            },
+            {
+              id: "looker-studio-reporting",
+              heading: "Why This Matters for Looker Studio",
+              paragraphs: [
+                "The reason for adding event parameters and user properties is not just cleaner GA4 setup. The real value appears when the data reaches Looker Studio and stakeholders need to understand which pages and actions create leads.",
+                "With this structure, a dashboard can separate softer contact intent from stronger form submissions, compare lead actions by page, and show whether users are moving from visibility into actual enquiry behaviour.",
+              ],
+              bullets: [
+                "Create scorecards for total email clicks, Book a Call clicks, and form submissions.",
+                "Build tables that show page_url by lead_type so you can see which pages generate each action.",
+                "Use click_url to audit which email or booking links are being used.",
+                "Use form_id to separate forms if the site adds more enquiry forms later.",
+                "Use has_contacted to segment users who have shown contact intent across any lead action.",
+              ],
             },
           ],
           faqs: [

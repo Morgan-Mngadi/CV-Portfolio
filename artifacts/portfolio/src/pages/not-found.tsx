@@ -55,10 +55,10 @@ export default function NotFound() {
                   <ArrowLeft className="h-4 w-4" /> Return home
                 </Link>
                 <Link
-                  href="/work-with-me"
+                  href="/areas-of-expertise"
                   className="inline-flex items-center justify-center gap-2 border border-border px-6 py-3 text-sm font-medium text-muted-foreground transition-colors hover:border-primary hover:text-primary"
                 >
-                  Work with me <ArrowUpRight className="h-4 w-4" />
+                  View expertise <ArrowUpRight className="h-4 w-4" />
                 </Link>
               </div>
             </div>

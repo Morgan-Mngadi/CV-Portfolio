@@ -200,9 +200,9 @@ export default function CommuteZA() {
             01 / Overview
           </motion.div>
           <div>
-            <motion.p variants={fadeUp} className="text-2xl font-medium leading-tight mb-6 max-w-2xl">
+            <motion.h2 variants={fadeUp} className="text-2xl font-medium leading-tight mb-6 max-w-2xl">
               A self initiated build designed to close the gap between SEO theory and systems implementation.
-            </motion.p>
+            </motion.h2>
             <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed max-w-2xl mb-4">
               Most SEO work happens on platforms you don't own, constrained by CMS limitations, development timelines, and third party tooling. CommuteZA was built to change that. By owning the full stack, every SEO decision, from rendering strategy to URL structure, is deliberate, testable, and measurable.
             </motion.p>
@@ -221,9 +221,9 @@ export default function CommuteZA() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               02 / Early Signals
-            </motion.div>
+            </motion.h2>
             <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-0 border border-border divide-y sm:divide-y-0 sm:divide-x divide-border">
               {METRICS.map((metric) => (
                 <motion.div key={metric.label} variants={fadeUp} className="bg-card p-6 md:p-8">
@@ -245,9 +245,9 @@ export default function CommuteZA() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               03 / Technical Focus
-            </motion.div>
+            </motion.h2>
             <div className="flex flex-col gap-6">
               {HIGHLIGHTS.map((item) => (
                 <motion.div
@@ -278,9 +278,9 @@ export default function CommuteZA() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               04 / Stack & Methods
-            </motion.div>
+            </motion.h2>
             <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {TECH_STACK.map((group) => (
                 <motion.div
@@ -314,9 +314,9 @@ export default function CommuteZA() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               05 / Status
-            </motion.div>
+            </motion.h2>
             <div className="flex flex-col gap-6 max-w-xl">
               <motion.div variants={fadeUp} className="flex items-center gap-3">
                 <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse shrink-0" />
@@ -347,13 +347,13 @@ export default function CommuteZA() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               06 / FAQ
-            </motion.div>
+            </motion.h2>
             <motion.div variants={stagger} className="flex flex-col divide-y divide-border border border-border">
               {FAQS.map((faq) => (
                 <motion.section key={faq.question} variants={fadeUp} className="bg-card p-6">
-                  <h2 className="font-medium mb-3">{faq.question}</h2>
+                  <h3 className="font-medium mb-3">{faq.question}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
                 </motion.section>
               ))}

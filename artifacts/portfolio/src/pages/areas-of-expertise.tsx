@@ -14,75 +14,88 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
-const SERVICES = [
+const EXPERTISE_AREAS = [
   {
-    title: "Organic Search Retainers",
-    fit: "Best for startups, ecommerce teams, agencies, and marketing teams that need ongoing support.",
+    title: "Organic Growth Strategy",
+    fit: "Search strategy connected to business impact, content systems, and measurable organic outcomes.",
     body:
-      "Monthly Organic Search support across technical SEO implementation, AI visibility, measurement, and reporting. Useful when SEO needs consistent ownership and ROI accountability instead of one off recommendations.",
-    engagement: ["3 month retainer", "6 month retainer", "12 month retainer"],
+      "My approach to organic growth combines intent mapping, technical foundations, SERP analysis, AI visibility, and content architecture. The aim is to make search activity easier to prioritise, execute, and measure.",
+    focus: ["Search intent", "Content architecture", "AI visibility", "Organic ROI"],
     includes: [
-      "Technical SEO implementation priorities",
-      "Search Console and GA4 performance review",
-      "AI visibility checks and content recommendations",
-      "Organic ROI reporting tied to leads, purchases, or revenue",
+      "Keyword and intent mapping aligned to business questions",
+      "Search Console analysis and opportunity sizing",
+      "AI Overview and answer engine visibility thinking",
+      "Organic performance reporting tied to outcomes",
     ],
   },
   {
-    title: "SEO Implementation Support",
-    fit: "Best for agencies and in house teams that already know what needs doing but need extra delivery capacity.",
+    title: "Technical SEO Implementation",
+    fit: "Hands-on technical SEO across crawlability, metadata, structured data, CMS workflows, and QA.",
     body:
-      "Execution support for SEO changes inside CMS and development workflows. Smaller scopes can run once off, while larger implementation projects are better handled through a retainer so changes can be prioritised, shipped, and measured properly.",
-    engagement: ["Once off implementation", "Retainer for larger projects"],
+      "I work close to implementation details: templates, metadata, redirects, canonicals, structured data, indexation, and development handoff. This is where recommendations become visible site changes.",
+    focus: ["Technical audits", "Schema", "CMS implementation", "Indexation"],
     includes: [
       "Metadata, schema, and internal linking updates",
       "Redirect, canonical, and indexation support",
-      "CMS implementation across common platforms",
-      "QA and ROI review of deployed SEO changes",
+      "CMS implementation across WordPress, Webflow, Umbraco, and headless setups",
+      "QA of deployed SEO changes and reporting impact",
     ],
   },
   {
-    title: "Reporting and Measurement Setup",
-    fit: "Best for teams that need clearer evidence of organic search impact.",
+    title: "Analytics, GTM, and GA4",
+    fit: "Measurement systems that explain how organic visibility becomes engagement, leads, purchases, and decisions.",
     body:
-      "Reporting setup that connects visibility, engagement, and commercial outcomes. Setup can be once off, but dashboard maintenance and monthly commentary are best included in a retainer so ROI stays visible as search performance changes.",
-    engagement: ["Once off setup", "Monthly dashboard maintenance"],
+      "Analytics is part of the SEO system. I use GA4, GTM, Search Console, and Looker Studio to connect events, key actions, page performance, and business questions into clearer reporting.",
+    focus: ["GA4", "GTM", "Looker Studio", "Lead tracking"],
     includes: [
       "GA4, Google Search Console, and GTM review",
       "Organic lead and ecommerce reporting structure",
       "AI platform referral visibility where data is available",
-      "Monthly ROI commentary for stakeholders",
+      "Dashboards and commentary that explain performance changes",
+    ],
+  },
+  {
+    title: "Digital Products and CommuteZA",
+    fit: "Product thinking applied to search architecture, local information systems, and measurement.",
+    body:
+      "CommuteZA is where I test the relationship between product structure and search performance. It gives me a controlled environment for rendering, metadata, schema, redirect logic, local discovery, and analytics.",
+    focus: ["CommuteZA", "Product SEO", "Local search", "Structured data"],
+    includes: [
+      "Headless CMS architecture and metadata systems",
+      "Route and location page search considerations",
+      "Structured data and redirect logic experiments",
+      "GA4, GTM, Search Console, and AI visibility review",
     ],
   },
 ];
 
 const FAQS = [
   {
-    question: "Why are retainers quoted individually?",
+    question: "Why frame this as areas of expertise?",
     answer:
-      "Every business has a different level of SEO maturity, technical debt, CMS complexity, reporting setup, and commercial target. A tailored quote keeps the retainer aligned to the size of the business and the amount of work required.",
+      "This page is designed as a professional map of how I think and work across SEO, analytics, technical implementation, reporting, and product-led growth.",
   },
   {
-    question: "What affects the scope of a retainer?",
+    question: "How does analytics connect to SEO?",
     answer:
-      "The main factors are the number of pages or templates, the CMS and development workflow, whether reporting is already reliable, how much implementation support is needed, and whether the focus is leads, ecommerce revenue, AI visibility, or all three.",
+      "Analytics connects search visibility to what users do afterwards. GA4, GTM, Search Console, and Looker Studio help translate impressions and clicks into engagement, leads, purchases, and business context.",
   },
   {
-    question: "Can the work start with a smaller project before a retainer?",
+    question: "What does CommuteZA show about your work?",
     answer:
-      "Yes. Some teams may start with a focused audit, reporting setup, or implementation sprint before moving into monthly support. That can make the ongoing scope clearer and easier to prioritise.",
+      "CommuteZA shows how I approach search architecture when I can own the full system: URLs, metadata, rendering, schema, redirect logic, reporting, and product decisions.",
   },
   {
-    question: "Do you work with both agencies and direct clients?",
+    question: "Can people contact you about collaborations or conversations?",
     answer:
-      "Yes. I can support agencies that need implementation capacity and direct clients that need Organic Search work tied to measurable outcomes.",
+      "Yes. The contact links are open for networking, collaborations, industry discussions, product conversations, and relevant conversations.",
   },
 ];
 
-export default function WorkWithMe() {
+export default function AreasOfExpertise() {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Seo path="/work-with-me" />
+      <Seo path="/areas-of-expertise" />
       <div
         className="fixed inset-0 pointer-events-none z-0"
         style={{
@@ -98,30 +111,30 @@ export default function WorkWithMe() {
         <motion.section initial="hidden" animate="visible" variants={stagger} className="border-b border-border py-16 lg:py-24">
           <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6 font-mono text-xs text-primary uppercase tracking-widest">
             <span className="w-6 h-px bg-primary" />
-            SEO Consultant
+            Areas of Expertise
           </motion.div>
           <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl font-medium tracking-tight leading-[0.95] mb-8 max-w-4xl">
-            SEO consultant for Organic Search systems that create measurable impact.
+            SEO, analytics, technical implementation, and product-led organic growth.
           </motion.h1>
           <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-2xl">
-            I support employment, freelance, and contract work across technical SEO implementation, AI visibility, and organic performance reporting. The focus is simple: turn search work into leads, purchases, revenue, and clearer decision making.
+            A closer look at the disciplines that shape my portfolio: Technical SEO, GA4, GTM, organic reporting, AI visibility, digital products, and CommuteZA.
           </motion.p>
           <motion.div variants={fadeUp} className="mt-8 flex flex-col sm:flex-row gap-3">
             <a
-              id="book-intro-call-hero"
+              id="book-intro-call-areas-hero"
               href="https://cal.com/morgan-mngadi-18ixti/intro-call"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-6 py-4 bg-primary text-primary-foreground font-medium hover:bg-primary/90 transition-colors"
             >
-              <CalendarDays className="w-4 h-4" /> Book a 20-minute intro call
+              <CalendarDays className="w-4 h-4" /> Book a Call
             </a>
             <a
-              id="email-enquiry-hero"
+              id="email-enquiry-areas-hero"
               href="mailto:morganmngadi@gmail.com"
-              className="inline-flex items-center justify-center gap-2 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
+              className="inline-flex items-center justify-center gap-2 px-6 py-4 border border-border text-foreground font-medium hover:border-primary hover:text-primary transition-colors"
             >
-              <Mail className="w-4 h-4" /> Enquire via email
+              <Mail className="w-4 h-4" /> Get in Touch
             </a>
           </motion.div>
         </motion.section>
@@ -133,11 +146,11 @@ export default function WorkWithMe() {
           variants={stagger}
           className="border-b border-border py-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-10">
-            01 / Ways To Work
-          </motion.div>
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-10">
+            01 / Expertise Map
+          </motion.h2>
           <div className="grid grid-cols-1 gap-px bg-border border border-border">
-            {SERVICES.map((service) => (
+            {EXPERTISE_AREAS.map((service) => (
               <motion.article key={service.title} variants={fadeUp} className="bg-card p-6 md:p-8 grid grid-cols-1 lg:grid-cols-[0.7fr_1fr] gap-8">
                 <div>
                   <h2 className="text-2xl font-medium mb-3">{service.title}</h2>
@@ -146,7 +159,7 @@ export default function WorkWithMe() {
                 <div>
                   <p className="text-muted-foreground leading-relaxed mb-6">{service.body}</p>
                   <div className="flex flex-wrap gap-2 mb-6">
-                    {service.engagement.map((item) => (
+                    {service.focus.map((item) => (
                       <span key={item} className="border border-border bg-background px-3 py-1.5 font-mono text-xs text-muted-foreground">
                         {item}
                       </span>
@@ -177,35 +190,35 @@ export default function WorkWithMe() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                02 / Enquire
+                02 / Connect
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
-                Tell me what you need Organic Search to change.
+                Start a Conversation Around Search and Growth.
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground max-w-2xl">
-                Book a short introductory call or email me about the site, team, or search problem. I can then recommend the most useful way to work together.
+                Reach out for networking, collaborations, industry discussions, product conversations, or thoughtful conversations connected to SEO, analytics, and organic growth.
               </motion.p>
             </div>
             <motion.div variants={stagger} className="flex flex-col sm:flex-row lg:flex-col gap-3">
               <motion.a
                 variants={fadeUp}
-                id="book-intro-call-enquiry"
+                id="book-intro-call-areas-connect"
                 href="https://cal.com/morgan-mngadi-18ixti/intro-call"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-3 px-6 py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
               >
                 <CalendarDays className="w-4 h-4 shrink-0" />
-                Book an intro call
+                Book a Call
               </motion.a>
               <motion.a
                 variants={fadeUp}
-                id="email-enquiry-work-with-me"
+                id="email-enquiry-areas-of-expertise"
                 href="mailto:morganmngadi@gmail.com"
                 className="flex items-center justify-center gap-3 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
               >
                 <Mail className="w-4 h-4 shrink-0" />
-                Email me
+                Get in Touch
               </motion.a>
             </motion.div>
           </div>
@@ -219,13 +232,13 @@ export default function WorkWithMe() {
           className="border-t border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               03 / FAQ
-            </motion.div>
+            </motion.h2>
             <motion.div variants={stagger} className="flex flex-col divide-y divide-border border border-border">
               {FAQS.map((faq) => (
                 <motion.section key={faq.question} variants={fadeUp} className="bg-card p-6">
-                  <h2 className="font-medium mb-3">{faq.question}</h2>
+                  <h3 className="font-medium mb-3">{faq.question}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
                 </motion.section>
               ))}

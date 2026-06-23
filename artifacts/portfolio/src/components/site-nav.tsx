@@ -8,7 +8,7 @@ const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Case Study", href: "/projects/commuteza" },
-  { label: "Work With Me", href: "/work-with-me" },
+  { label: "Expertise", href: "/areas-of-expertise" },
   { label: "Blog", href: "/blog" },
 ];
 

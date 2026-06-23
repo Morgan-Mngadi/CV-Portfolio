@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, Clock } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CalendarDays, Clock } from "lucide-react";
 import { Link, useRoute } from "wouter";
-import { getArticle } from "@/data/articles";
+import { ARTICLES, getArticle } from "@/data/articles";
 import NotFound from "@/pages/not-found";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
@@ -24,6 +24,8 @@ export default function BlogArticle() {
   if (!article) {
     return <NotFound />;
   }
+
+  const moreArticles = ARTICLES.filter((item) => item.slug !== article.slug).slice(0, 3);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -114,6 +116,51 @@ export default function BlogArticle() {
                       ))}
                     </ol>
                   )}
+                  {section.comparisonTable && (
+                    <div className="mt-8 overflow-x-auto border border-border bg-card">
+                      <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+                        <thead className="border-b border-primary/30 bg-primary/10">
+                          <tr>
+                            {section.comparisonTable.columns.map((column) => (
+                              <th key={column} scope="col" className="px-4 py-3 font-mono text-xs uppercase tracking-widest text-primary">
+                                {column}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border">
+                          {section.comparisonTable.rows.map((row) => (
+                            <tr key={row.join("-")} className="align-top">
+                              {row.map((cell, index) => (
+                                <td key={`${cell}-${index}`} className="px-4 py-4 text-muted-foreground leading-relaxed">
+                                  {cell}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                  {section.imageBlocks && (
+                    <div className="mt-8 flex flex-col gap-8">
+                      {section.imageBlocks.map((image, index) => (
+                        <figure key={image.src} className="border border-border bg-card p-3 sm:p-4">
+                          <div className="flex aspect-[16/9] items-center justify-center overflow-hidden border border-border bg-background">
+                            <img
+                              src={image.src}
+                              alt={image.alt}
+                              loading={index === 0 ? "eager" : "lazy"}
+                              className="h-full w-full object-contain"
+                            />
+                          </div>
+                          <figcaption className="mt-3 font-mono text-xs leading-relaxed text-muted-foreground">
+                            {image.caption}
+                          </figcaption>
+                        </figure>
+                      ))}
+                    </div>
+                  )}
                   {section.imagePlaceholder && (
                     <figure className="mt-8 border border-dashed border-border bg-card p-6">
                       <div className="aspect-[16/9] w-full border border-border bg-background flex items-center justify-center px-6 text-center">
@@ -155,12 +202,88 @@ export default function BlogArticle() {
                 </div>
               </motion.section>
 
-              <motion.footer variants={fadeUp} className="border-t border-border py-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
+              <motion.section variants={fadeUp} className="border-y border-border py-10 mb-10">
+                <div className="border border-primary/40 bg-card p-6 md:p-8">
+                  <p className="font-mono text-xs uppercase tracking-widest text-primary mb-4">Let’s Connect</p>
+                  <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">
+                    Want to Talk Search, Analytics, or Digital Products?
+                  </h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-6">
+                    I’m interested in thoughtful conversations around technical SEO, analytics, GTM, GA4, organic growth, and product-led search systems.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Link
+                      href="/areas-of-expertise"
+                      className="inline-flex items-center justify-center gap-2 border border-border px-5 py-3 text-sm font-medium text-foreground hover:border-primary hover:text-primary transition-colors"
+                    >
+                      Explore Expertise <ArrowUpRight className="w-4 h-4" />
+                    </Link>
+                    <a
+                      id="article-book-intro-call"
+                      href="https://cal.com/morgan-mngadi-18ixti/intro-call"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-2 bg-primary px-5 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
+                    >
+                      <CalendarDays className="w-4 h-4" /> Book a Call
+                    </a>
+                    <a
+                      id="article-contact-email"
+                      href="mailto:morganmngadi@gmail.com"
+                      className="inline-flex items-center justify-center gap-2 border border-border px-5 py-3 text-sm font-medium text-foreground hover:border-primary hover:text-primary transition-colors"
+                    >
+                      Get in Touch
+                    </a>
+                  </div>
+                </div>
+              </motion.section>
+
+              {moreArticles.length > 0 && (
+                <motion.section variants={fadeUp} className="border-b border-border pb-10 mb-10">
+                  <div className="flex items-end justify-between gap-4 mb-6">
+                    <div>
+                      <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">Keep Reading</p>
+                      <h2 className="text-2xl md:text-3xl font-medium tracking-tight">More Articles</h2>
+                    </div>
+                    <Link href="/blog" className="hidden sm:inline-flex font-mono text-xs uppercase tracking-widest text-primary hover:underline">
+                      View all
+                    </Link>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4">
+                    {moreArticles.map((item) => (
+                      <Link
+                        key={item.slug}
+                        href={`/blog/${item.slug}`}
+                        className="group border border-border bg-card p-5 hover:border-primary transition-colors"
+                      >
+                        <div className="flex flex-wrap items-center gap-3 mb-3">
+                          <span className="font-mono text-xs text-primary border border-primary/30 bg-primary/5 px-2.5 py-1">
+                            {item.category}
+                          </span>
+                          <span className="font-mono text-xs text-muted-foreground flex items-center gap-1.5">
+                            <Clock className="w-3 h-3" />
+                            {item.readTime}
+                          </span>
+                        </div>
+                        <div className="grid grid-cols-[1fr_auto] gap-4 items-start">
+                          <div>
+                            <h3 className="text-lg font-medium mb-2 group-hover:text-primary transition-colors">{item.title}</h3>
+                            <p className="text-sm text-muted-foreground leading-relaxed">{item.excerpt}</p>
+                          </div>
+                          <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </motion.section>
+              )}
+
+              <motion.footer variants={fadeUp} className="py-8 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-between">
                 <Link href="/" className="inline-flex items-center gap-2 font-mono text-xs text-muted-foreground hover:text-foreground transition-colors uppercase tracking-widest">
                   <ArrowLeft className="w-3 h-3" /> Back to portfolio
                 </Link>
                 <Link href="/blog" className="font-mono text-xs text-primary hover:underline uppercase tracking-widest">
-                  More articles
+                  View All Articles
                 </Link>
               </motion.footer>
             </div>

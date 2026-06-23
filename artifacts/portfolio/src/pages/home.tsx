@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { ArrowUpRight, Mail, Award, TrendingUp, Zap, Globe, BarChart3, Send } from "lucide-react";
+import { ArrowUpRight, Mail, Award, TrendingUp, Zap, Globe, BarChart3, Send, CalendarDays } from "lucide-react";
 import { Link } from "wouter";
 import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
 import { Seo } from "@/components/seo";
@@ -104,70 +104,52 @@ const CLIENT_LOGOS = [
 
 const WORK_WITH_ME = [
   {
-    title: "Organic Search Retainers",
+    title: "Organic Growth Systems",
     description:
-      "Ongoing monthly support across technical SEO, AI visibility, implementation, and reporting that connects search activity to leads or purchases.",
-    bestFor: "Startups, ecommerce teams, agencies",
+      "Search strategy shaped around intent, technical foundations, content architecture, and measurable business outcomes.",
+    bestFor: "Strategy, search demand, business impact",
   },
   {
-    title: "SEO Implementation Support",
+    title: "Technical SEO & Implementation",
     description:
-      "Execution support for teams that already have a strategy but need help shipping metadata, schema, redirects, CMS updates, and technical fixes.",
-    bestFor: "Agencies and in house teams",
+      "Hands-on technical SEO across metadata, schema, redirects, indexation, CMS workflows, rendering, and QA.",
+    bestFor: "Crawlability, structured data, technical change",
   },
   {
-    title: "Reporting and Measurement Setup",
+    title: "Analytics, GTM & GA4",
     description:
-      "GA4, Search Console, and GTM support for teams that need clearer organic performance reporting across visibility, engagement, and revenue.",
-    bestFor: "Marketing teams and founders",
+      "Measurement systems that connect organic visibility to events, leads, revenue, dashboards, and decision-making.",
+    bestFor: "GA4, GTM, Looker Studio, attribution",
   },
 ];
 
-const ROLES_OPEN_TO = [
+const PRODUCT_SYSTEMS = [
   {
-    label: "Remote UK / EU",
-    title: "SEO Specialist roles",
-    detail: "Remote Organic Search roles with teams operating in UK, EU, South African, or similar time zones.",
+    label: "Product",
+    title: "CommuteZA",
+    detail: "A South African commuter routing product used to test search architecture, structured data, redirects, and measurement from the ground up.",
   },
   {
-    label: "South African hybrid",
-    title: "Johannesburg based teams",
-    detail: "Hybrid SEO roles in Johannesburg, Sandton, Midrand, Bryanston, Rosebank, or nearby business hubs.",
+    label: "Measurement",
+    title: "Lead Tracking Systems",
+    detail: "GTM and GA4 setups for form submissions, email clicks, booking actions, and page-level lead reporting.",
   },
   {
-    label: "Agency or in house",
-    title: "Technical SEO delivery",
-    detail: "Roles focused on audits, implementation, CMS updates, structured data, reporting, and search performance.",
+    label: "Search",
+    title: "AI Visibility & Technical SEO",
+    detail: "Experiments around AI Overviews, structured content, entity clarity, indexation, and search performance reporting.",
   },
   {
-    label: "Contract support",
-    title: "SEO implementation sprints",
-    detail: "Short and medium term projects where technical SEO work needs to be shipped, QA'd, and measured.",
+    label: "Reporting",
+    title: "Organic Performance Dashboards",
+    detail: "Search Console, GA4, GTM, and Looker Studio views designed to explain what changed, why it changed, and what to do next.",
   },
 ];
 
-const CONTACT_REASONS = ["Remote SEO role", "South African hybrid role", "Contract project", "Freelance project"];
+const CONTACT_REASONS = ["Networking", "Collaboration", "Industry discussion", "Project or product conversation", "CommuteZA"];
 const WEB3FORMS_ACCESS_KEY = "f1c27f4e-67b3-4262-a419-127bda6406d0";
 const RECAPTCHA_SITE_KEY = (import.meta.env.VITE_RECAPTCHA_SITE_KEY ?? "").trim();
 const RECAPTCHA_ACTION = "contact_submit";
-
-const PERSONAL_EMAIL_DOMAINS = new Set([
-  "gmail.com",
-  "googlemail.com",
-  "yahoo.com",
-  "ymail.com",
-  "outlook.com",
-  "hotmail.com",
-  "live.com",
-  "icloud.com",
-  "me.com",
-  "mac.com",
-  "aol.com",
-  "proton.me",
-  "protonmail.com",
-  "pm.me",
-  "zoho.com",
-]);
 
 declare global {
   interface Window {
@@ -228,16 +210,6 @@ export default function Home() {
     const email = String(formData.get("email") ?? "").trim();
     const reason = String(formData.get("reason") ?? "").trim();
     const message = String(formData.get("message") ?? "").trim();
-    const emailInput = form.elements.namedItem("email") as HTMLInputElement | null;
-    const emailDomain = email.split("@").at(-1)?.toLowerCase() ?? "";
-
-    if (PERSONAL_EMAIL_DOMAINS.has(emailDomain)) {
-      emailInput?.setCustomValidity("Please use a company email address.");
-      emailInput?.reportValidity();
-      return;
-    }
-
-    emailInput?.setCustomValidity("");
     const recaptchaToken = await getRecaptchaToken();
 
     if (RECAPTCHA_SITE_KEY && !recaptchaToken) {
@@ -248,7 +220,7 @@ export default function Home() {
     }
 
     formData.append("access_key", WEB3FORMS_ACCESS_KEY);
-    formData.append("subject", `${reason || "Portfolio enquiry"} from ${name || "MorganMngadi.com"}`);
+    formData.append("subject", `${reason || "Portfolio message"} from ${name || "MorganMngadi.com"}`);
     formData.append("from_name", "Morgan Mngadi Portfolio");
     formData.append("replyto", email);
 
@@ -314,14 +286,23 @@ export default function Home() {
               <span className="text-primary">Mngadi</span>
             </motion.h1>
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-              SEO strategist with agency experience. I build scalable visibility through audits, implementation, and search architecture.
+              SEO professional and builder focused on technical search infrastructure, analytics, organic growth, and digital products.
             </motion.p>
-            <motion.div variants={fadeUp} className="flex gap-3 mt-8">
-              <a href="#contact" className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
-                <Mail className="w-4 h-4" /> Get in touch
+            <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mt-8">
+              <a
+                id="book-intro-call-hero"
+                href="https://cal.com/morgan-mngadi-18ixti/intro-call"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
+              >
+                <CalendarDays className="w-4 h-4" /> Book a Call
+              </a>
+              <a href="#contact" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-border text-sm font-mono text-muted-foreground hover:border-foreground hover:text-foreground transition-colors">
+                <Mail className="w-4 h-4" /> Get in Touch
               </a>
               <a href="https://commuteza.co.za/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-mono text-muted-foreground hover:border-foreground hover:text-foreground transition-colors">
-                View project <ArrowUpRight className="w-4 h-4" />
+                View CommuteZA <ArrowUpRight className="w-4 h-4" />
               </a>
             </motion.div>
           </div>
@@ -354,15 +335,15 @@ export default function Home() {
             01 / About
           </motion.div>
           <div>
-            <motion.p variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-3xl">
-              SEO specialist focused on business impact, combining technical depth with strategic thinking.
-            </motion.p>
+            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-3xl">
+              Technical SEO and analytics specialist building search systems that connect visibility, product thinking, and measurable business impact.
+            </motion.h2>
             <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
-              Experienced in collaborating with development teams to implement SEO recommendations effectively across multiple CMS platforms. Strong interest in systems driven SEO and scalable implementation within agency led client work.
+              My work sits across technical SEO, GA4, GTM, organic growth strategy, reporting, and digital product experimentation. CommuteZA is the clearest example: a self-built product used to test SEO architecture, structured data, redirect logic, and measurement systems in a controlled environment.
             </motion.p>
             <motion.div variants={fadeUp}>
               <Link href="/about" className="inline-flex items-center gap-2 font-mono text-xs text-primary hover:underline uppercase tracking-widest">
-                Full profile <ArrowUpRight className="w-3 h-3" />
+                View Profile <ArrowUpRight className="w-3 h-3" />
               </Link>
             </motion.div>
           </div>
@@ -379,6 +360,9 @@ export default function Home() {
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
             02 / Impact Metrics
           </motion.div>
+          <motion.h2 variants={fadeUp} className="sr-only">
+            Impact Metrics
+          </motion.h2>
 
           <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-border divide-y md:divide-y-0 md:divide-x divide-border">
             {[
@@ -420,9 +404,9 @@ export default function Home() {
           variants={stagger}
           className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
             03 / Certifications
-          </motion.div>
+          </motion.h2>
           <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {[
               {
@@ -662,7 +646,7 @@ export default function Home() {
           </Link>
         </motion.section>
 
-        {/* ─── ROLES ─── */}
+        {/* ─── PRODUCT SYSTEMS ─── */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -672,20 +656,20 @@ export default function Home() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
             <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-              08 / Roles
+              08 / Product Systems
             </motion.div>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
-                Roles I'm open to
+                Builder Mindset Across Search, Analytics, and Product
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
-                Open to remote, hybrid, employment, and contract opportunities where Organic Search needs clear ownership and measurable outcomes.
+                Beyond client and agency work, I use digital products and measurement projects to explore how technical SEO decisions shape discoverability, user journeys, and reporting clarity.
               </motion.p>
             </div>
           </div>
 
           <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
-            {ROLES_OPEN_TO.map((role) => (
+            {PRODUCT_SYSTEMS.map((role) => (
               <motion.div
                 key={role.label}
                 variants={fadeUp}
@@ -700,9 +684,9 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
-        {/* WORK WITH ME */}
+        {/* AREAS OF EXPERTISE */}
         <motion.section
-          id="work-with-me"
+          id="areas-of-expertise"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
@@ -711,14 +695,14 @@ export default function Home() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
             <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-              09 / Work With Me
+              09 / Areas of Expertise
             </motion.div>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
-                Organic Search support for teams that need technical change to become measurable impact.
+                Core Disciplines Across SEO, Analytics, and Organic Growth
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed max-w-2xl">
-                Available for employment, freelance, and contract work across technical SEO implementation, AI visibility, and organic performance reporting.
+                The site is organised around the areas I continue to build depth in: technical SEO, GTM, GA4, organic measurement, AI visibility, reporting, and product-led search systems.
               </motion.p>
             </div>
           </div>
@@ -735,16 +719,19 @@ export default function Home() {
 
           <motion.div variants={fadeUp} className="mt-8 flex flex-col sm:flex-row gap-3">
             <Link
-              href="/work-with-me"
+              href="/areas-of-expertise"
               className="inline-flex items-center justify-center gap-2 px-5 py-3 border border-border text-sm font-mono text-muted-foreground hover:border-primary hover:text-primary transition-colors"
             >
-              Explore ways to work <ArrowUpRight className="w-4 h-4" />
+              Explore Areas of Expertise <ArrowUpRight className="w-4 h-4" />
             </Link>
             <a
-              href="#contact"
+              id="book-intro-call-expertise"
+              href="https://cal.com/morgan-mngadi-18ixti/intro-call"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
             >
-              <Mail className="w-4 h-4" /> Email me
+              <CalendarDays className="w-4 h-4" /> Book a Call
             </a>
           </motion.div>
         </motion.section>
@@ -761,6 +748,9 @@ export default function Home() {
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
             10 / Tooling & Stack
           </motion.div>
+          <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-2xl">
+            Tools and Platforms Behind the Work
+          </motion.h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 divide-border border border-border">
             <motion.div variants={fadeUp} className="p-8 md:border-r border-border md:border-b border-b">
@@ -808,10 +798,10 @@ export default function Home() {
                 11 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
-                Let's turn SEO fixes into<br />more visibility, leads, and revenue.
+                Let’s Connect Around Search,<br />Analytics, and Digital Products.
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground">
-                Open to employment, freelance, and contract Organic Search work focused on AI visibility, technical SEO implementation, and organic ROI across leads and purchases.
+                Use the form for networking, collaborations, industry discussions, product conversations, or thoughtful conversations connected to SEO, analytics, GTM, GA4, organic growth, and CommuteZA.
               </motion.p>
             </div>
 
@@ -832,13 +822,13 @@ export default function Home() {
                   </label>
                   <label className="grid gap-2">
                     <span className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
-                      Company email <span aria-hidden="true" className="text-primary">*</span>
+                      Email <span aria-hidden="true" className="text-primary">*</span>
                     </span>
                     <input
                       name="email"
                       type="email"
                       required
-                      placeholder="name@company.com"
+                      placeholder="name@example.com"
                       className="h-11 border border-border bg-background px-3 text-sm text-foreground shadow-none outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
                       autoComplete="email"
                       onInput={(event) => event.currentTarget.setCustomValidity("")}
@@ -887,12 +877,12 @@ export default function Home() {
                   className="inline-flex items-center justify-center gap-2 bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
                 >
                   <Send className="h-4 w-4" />
-                  {formStatus === "submitting" ? "Sending..." : "Send enquiry"}
+                  {formStatus === "submitting" ? "Sending..." : "Start a conversation"}
                 </button>
 
                 {formStatus === "success" && (
                   <p id="lead-enquiry-success" className="font-mono text-xs leading-relaxed text-primary">
-                    Thanks. Your enquiry has been sent.
+                    Thanks. Your message has been sent.
                   </p>
                 )}
 

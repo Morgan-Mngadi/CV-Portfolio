@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
-import { ArrowUpRight, Mail, MapPin, Award, TrendingUp, Zap, Globe, BarChart3, CheckCircle2 } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Award, TrendingUp, Zap, Globe, BarChart3, CheckCircle2, CalendarDays } from "lucide-react";
 import { Link } from "wouter";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
@@ -121,26 +121,26 @@ const CLIENT_LOGOS = [
   { name: "The Courier Guy", src: "/client-logos/the-courier-guy.png" },
 ];
 
-const AVAILABILITY = [
+const PROFILE_FOCUS = [
   {
-    label: "Employment",
-    title: "Full time and part time roles",
-    detail: "For teams that need Organic Search capability embedded into planning, implementation, and reporting.",
+    label: "SEO",
+    title: "Technical Search Systems",
+    detail: "Search infrastructure, structured data, CMS implementation, indexation, rendering, and technical QA.",
   },
   {
-    label: "Freelance",
-    title: "Independent SEO projects",
-    detail: "For brands or agencies that need focused support across technical SEO, AI visibility, and organic growth systems.",
+    label: "Analytics",
+    title: "GA4, GTM & Reporting",
+    detail: "Event tracking, organic attribution, lead measurement, ecommerce reporting, and Looker Studio dashboards.",
   },
   {
-    label: "Contract",
-    title: "Short and medium term support",
-    detail: "For delivery sprints where technical change needs to turn into measurable organic impact.",
+    label: "Product",
+    title: "CommuteZA & Digital Products",
+    detail: "Product-led SEO experiments across information architecture, metadata, redirects, schema, and measurement.",
   },
   {
-    label: "Location fit",
-    title: "Remote UK and EU work",
-    detail: "Available for remote collaboration with teams operating in UK, EU, South African, or similar time zones.",
+    label: "Growth",
+    title: "Organic Growth Thinking",
+    detail: "Connecting search visibility, user intent, technical execution, content systems, and business outcomes.",
   },
 ];
 
@@ -151,19 +151,19 @@ const FAQS = [
       "I have 3+ years of SEO experience across agency environments, with work spanning technical audits, on-page optimisation, structured data, CMS implementation, analytics, and organic performance reporting.",
   },
   {
-    question: "What type of SEO roles are you best suited for?",
+    question: "What areas of SEO do you focus on?",
     answer:
-      "I am best suited for SEO Specialist, Technical SEO Specialist, Organic Search, and implementation-focused roles where technical recommendations need to become measurable changes.",
+      "My focus is technical SEO, organic growth strategy, analytics, GTM, GA4, structured data, CMS implementation, reporting, and product-led search systems.",
   },
   {
-    question: "Do you work remotely?",
+    question: "What is CommuteZA?",
     answer:
-      "Yes. I am open to remote UK and EU roles, as well as South African hybrid opportunities in Johannesburg and nearby business hubs.",
+      "CommuteZA is a digital product I am building to explore SEO architecture, metadata systems, structured data, redirect logic, local search behaviour, and analytics in a controlled environment.",
   },
   {
-    question: "What makes your background useful to a hiring team?",
+    question: "What makes your background useful to teams and collaborators?",
     answer:
-      "Agency work has exposed me to multiple industries, CMS platforms, stakeholder needs, and implementation constraints. That experience helps me move between audits, reporting, content recommendations, and developer collaboration.",
+      "Agency work has exposed me to multiple industries, CMS platforms, stakeholder needs, and implementation constraints. That experience helps me connect audits, reporting, content recommendations, developer collaboration, and measurable business impact.",
   },
 ];
 
@@ -256,9 +256,9 @@ export default function About() {
           variants={stagger}
           className="border-b border-border py-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
             01 / Experience
-          </motion.div>
+          </motion.h2>
 
           <div className="flex flex-col divide-y divide-border">
             {EXPERIENCE.map((exp) => (
@@ -376,9 +376,9 @@ export default function About() {
             03 / Clients
           </motion.div>
           <div>
-            <motion.p variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
+            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
               Examples of clients I've worked with:
-            </motion.p>
+            </motion.h2>
             <motion.p variants={fadeUp} className="text-sm text-muted-foreground font-mono mb-10">
               This is a sample of client work from agency-led SEO projects.
             </motion.p>
@@ -402,7 +402,7 @@ export default function About() {
           </div>
         </motion.section>
 
-        {/* ─── AVAILABILITY ─── */}
+        {/* ─── PROFESSIONAL FOCUS ─── */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -411,17 +411,17 @@ export default function About() {
           className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-            04 / Availability
+            04 / Focus
           </motion.div>
           <div>
             <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4">
-              Available for
+              Professional Focus
             </motion.h2>
             <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed max-w-xl mb-10">
-              Open to employment, freelance, and contract work focused on bringing measurable organic growth to ambitious teams.
+              A snapshot of the areas that define my work across SEO, analytics, product thinking, and organic growth.
             </motion.p>
             <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-3xl">
-              {AVAILABILITY.map((item) => (
+              {PROFILE_FOCUS.map((item) => (
                 <motion.div
                   key={item.title}
                   variants={fadeUp}
@@ -445,13 +445,13 @@ export default function About() {
           variants={stagger}
           className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
             05 / FAQ
-          </motion.div>
+          </motion.h2>
           <motion.div variants={stagger} className="flex flex-col divide-y divide-border border border-border">
             {FAQS.map((faq) => (
               <motion.section key={faq.question} variants={fadeUp} className="bg-card p-6">
-                <h2 className="font-medium mb-3">{faq.question}</h2>
+                <h3 className="font-medium mb-3">{faq.question}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
               </motion.section>
             ))}
@@ -473,21 +473,32 @@ export default function About() {
                 06 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
-                Let's turn SEO fixes into<br />more visibility, leads, and revenue.
+                Let’s Connect Around Search,<br />Analytics, and Product Thinking.
               </motion.h2>
               <motion.p variants={fadeUp} className="text-muted-foreground">
-                Open to employment, freelance, and contract Organic Search work focused on AI visibility, technical SEO implementation, and organic ROI across leads and purchases.
+                I’m always interested in thoughtful conversations around SEO, technical implementation, analytics, GTM, GA4, organic growth, and digital products.
               </motion.p>
             </div>
             <motion.div variants={stagger} className="flex flex-col sm:flex-row lg:flex-col gap-3">
               <motion.a
                 variants={fadeUp}
-                id="about-contact-email"
-                href="mailto:morganmngadi@gmail.com"
+                id="book-intro-call-about"
+                href="https://cal.com/morgan-mngadi-18ixti/intro-call"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="flex items-center gap-3 px-6 py-4 bg-primary text-primary-foreground hover:bg-primary/90 transition-colors font-medium"
               >
+                <CalendarDays className="w-4 h-4 shrink-0" />
+                Book a Call
+              </motion.a>
+              <motion.a
+                variants={fadeUp}
+                id="about-contact-email"
+                href="mailto:morganmngadi@gmail.com"
+                className="flex items-center gap-3 px-6 py-4 border border-border text-foreground hover:border-primary hover:text-primary transition-colors font-medium"
+              >
                 <Mail className="w-4 h-4 shrink-0" />
-                Email me
+                Get in Touch
               </motion.a>
               <motion.a
                 variants={fadeUp}

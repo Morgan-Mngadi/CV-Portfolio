@@ -9,7 +9,7 @@ import About from "@/pages/about";
 import CommuteZA from "@/pages/commuteza";
 import Blog from "@/pages/blog";
 import BlogArticle from "@/pages/blog-article";
-import WorkWithMe from "@/pages/work-with-me";
+import AreasOfExpertise from "@/pages/areas-of-expertise";
 import { ScrollToTop } from "@/components/scroll-to-top";
 import { BackToTop } from "@/components/back-to-top";
 import { CookieConsent } from "@/components/cookie-consent";
@@ -21,7 +21,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
-      <Route path="/work-with-me" component={WorkWithMe} />
+      <Route path="/areas-of-expertise" component={AreasOfExpertise} />
       <Route path="/projects/commuteza" component={CommuteZA} />
       <Route path="/blog/:slug" component={BlogArticle} />
       <Route path="/blog" component={Blog} />
