@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import type { Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
-import { ArrowUpRight, Mail, Award, TrendingUp, Zap, Globe, BarChart3, Send, CalendarDays } from "lucide-react";
+import { ArrowUpRight, Mail, Award, TrendingUp, Zap, Globe, BarChart3, Send } from "lucide-react";
 import { Link } from "wouter";
 import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.png";
 import { Seo } from "@/components/seo";
@@ -289,16 +289,7 @@ export default function Home() {
               SEO professional and builder focused on technical search infrastructure, analytics, organic growth, and digital products.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mt-8">
-              <a
-                id="book-intro-call-hero"
-                href="https://cal.com/morgan-mngadi-18ixti/intro-call"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-              >
-                <CalendarDays className="w-4 h-4" /> Book a Call
-              </a>
-              <a href="#contact" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 border border-border text-sm font-mono text-muted-foreground hover:border-foreground hover:text-foreground transition-colors">
+              <a href="#contact" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
                 <Mail className="w-4 h-4" /> Get in Touch
               </a>
               <a href="https://commuteza.co.za/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-mono text-muted-foreground hover:border-foreground hover:text-foreground transition-colors">
@@ -724,15 +715,6 @@ export default function Home() {
             >
               Explore Areas of Expertise <ArrowUpRight className="w-4 h-4" />
             </Link>
-            <a
-              id="book-intro-call-expertise"
-              href="https://cal.com/morgan-mngadi-18ixti/intro-call"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-2 px-5 py-3 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors"
-            >
-              <CalendarDays className="w-4 h-4" /> Book a Call
-            </a>
           </motion.div>
         </motion.section>
 
