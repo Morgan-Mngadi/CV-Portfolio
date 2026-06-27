@@ -7,7 +7,7 @@ services:
     routes:
       - type: rewrite
         source: /*
-        destination: /404/index.html
+        destination: /index.html
     renderSubdomainPolicy: enabled
     domains:
       - morgan-mngadi-portfolio.online

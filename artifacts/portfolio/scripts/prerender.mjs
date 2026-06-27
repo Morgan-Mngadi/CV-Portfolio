@@ -26,6 +26,10 @@ for (const route of routes) {
 
   await mkdir(path.dirname(outputPath), { recursive: true });
   await writeFile(outputPath, output);
+
+  if (route === "/404") {
+    await writeFile(path.join(distRoot, "404.html"), output);
+  }
 }
 
 console.log(`Prerendered ${routes.length} routes.`);
