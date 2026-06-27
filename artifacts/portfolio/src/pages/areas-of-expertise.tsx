@@ -42,6 +42,20 @@ const EXPERTISE_AREAS = [
     ],
   },
   {
+    title: "Backlink and Authority Building",
+    fit: "Sustainable authority building that avoids manipulative link schemes and low-quality backlink practices.",
+    body:
+      "I favour long-term authority building over shortcuts. My approach focuses on genuinely valuable content, technical excellence, useful assets, PR-driven link building support, local SEO citations where appropriate, and internal linking that helps search engines understand priority pages.",
+    focus: ["Digital PR support", "Local citations", "Internal linking", "Google-aligned practices"],
+    includes: [
+      "Link-worthy content and assets designed to earn attention naturally",
+      "Support for PR-led link building initiatives and brand visibility",
+      "Local SEO citations and business directory management where appropriate",
+      "Internal linking improvements that strengthen topical and page-level authority",
+      "Avoidance of paid, manipulative, or low-quality backlink practices",
+    ],
+  },
+  {
     title: "Analytics, GTM, and GA4",
     fit: "Measurement systems that explain how organic visibility becomes engagement, leads, purchases, and decisions.",
     body:

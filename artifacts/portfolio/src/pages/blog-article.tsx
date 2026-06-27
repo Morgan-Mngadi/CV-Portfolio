@@ -61,7 +61,28 @@ export default function BlogArticle() {
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 lg:gap-16 py-14">
-            <motion.aside variants={fadeUp} className="lg:sticky lg:top-20 lg:self-start">
+            <motion.aside variants={fadeUp} className="flex flex-col gap-5 lg:sticky lg:top-20 lg:self-start">
+              <section aria-labelledby="article-author" className="border border-border bg-card p-5">
+                <h2 id="article-author" className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                  Author
+                </h2>
+                <div className="flex items-center gap-3">
+                  <img
+                    src="/morgan-photo.png"
+                    alt="Morgan Mngadi"
+                    className="h-14 w-12 shrink-0 border border-border bg-background object-cover object-top"
+                    loading="eager"
+                  />
+                  <div>
+                    <p className="font-medium leading-tight">Morgan Mngadi</p>
+                    <p className="mt-1 font-mono text-xs uppercase tracking-widest text-primary">SEO Specialist</p>
+                  </div>
+                </div>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  Writing about technical SEO, analytics, AI visibility, organic growth, and product-led search systems.
+                </p>
+              </section>
+
               <nav aria-label="Table of contents" className="border border-border bg-card p-5">
                 <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">Contents</h2>
                 <ol className="flex flex-col gap-3">

@@ -2,6 +2,7 @@ import { ARTICLES, type Article } from "@/data/articles";
 
 export const SITE_URL = "https://morgan-mngadi-portfolio.online";
 export const SITE_NAME = "Morgan Mngadi";
+export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/morgan-photo.png`;
 
 export type SeoConfig = {
   title: string;
@@ -24,7 +25,7 @@ export const personSchema = {
   jobTitle: "SEO Specialist",
   url: SITE_URL,
   email: "mailto:morganmngadi@gmail.com",
-  image: `${SITE_URL}/morgan-photo.png`,
+  image: DEFAULT_SOCIAL_IMAGE,
   sameAs: ["https://www.linkedin.com/in/morgan-mngadi/"],
   knowsAbout: [
     "Technical SEO",
@@ -68,14 +69,69 @@ const pageSchema = (path: string, title: string, description: string) => ({
   },
 });
 
+const articleText = (article: Article) => {
+  const text: string[] = [article.title, article.excerpt, article.category];
+
+  article.sections.forEach((section) => {
+    text.push(section.heading, ...section.paragraphs);
+    text.push(...(section.bullets ?? []));
+    text.push(...(section.numberedSteps ?? []));
+    text.push(...(section.closingParagraphs ?? []));
+    section.imageBlocks?.forEach((image) => text.push(image.alt, image.caption));
+    section.comparisonTable?.rows.forEach((row) => text.push(...row));
+  });
+
+  article.faqs.forEach((faq) => text.push(faq.question, faq.answer));
+
+  return text.join(" ");
+};
+
+const articleWordCount = (article: Article) => articleText(article).match(/[A-Za-z0-9]+(?:[-'][A-Za-z0-9]+)*/g)?.length ?? 0;
+
+const articleDate = (date: string) => {
+  const [month, year] = date.split(" ");
+  const monthIndex = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].indexOf(month);
+
+  if (monthIndex === -1 || !year) {
+    return "2026-06-01";
+  }
+
+  return `${year}-${String(monthIndex + 1).padStart(2, "0")}-01`;
+};
+
+const articleImage = (article: Article) => {
+  const firstImage = article.sections.flatMap((section) => section.imageBlocks ?? [])[0];
+  return firstImage ? absoluteUrl(firstImage.src) : DEFAULT_SOCIAL_IMAGE;
+};
+
+const articleKeywords = (article: Article) =>
+  [article.category, ...article.sections.map((section) => section.heading)]
+    .map((keyword) => keyword.trim())
+    .filter(Boolean);
+
+const readingTime = (readTime: string) => {
+  const minutes = Number.parseInt(readTime, 10);
+  return Number.isFinite(minutes) ? `PT${minutes}M` : undefined;
+};
+
 const articleSchema = (article: Article) => ({
   "@context": "https://schema.org",
   "@type": "Article",
   "@id": `${absoluteUrl(`/blog/${article.slug}`)}#article`,
+  url: absoluteUrl(`/blog/${article.slug}`),
   headline: article.title,
   description: article.excerpt,
+  image: articleImage(article),
+  articleSection: article.category,
+  keywords: articleKeywords(article),
+  wordCount: articleWordCount(article),
+  ...(readingTime(article.readTime) ? { timeRequired: readingTime(article.readTime) } : {}),
   author: {
+    "@type": "Person",
     "@id": `${SITE_URL}/#person`,
+    name: "Morgan Mngadi",
+    url: SITE_URL,
+    image: DEFAULT_SOCIAL_IMAGE,
   },
   publisher: {
     "@id": `${SITE_URL}/#person`,
@@ -83,8 +139,8 @@ const articleSchema = (article: Article) => ({
   mainEntityOfPage: {
     "@id": `${absoluteUrl(`/blog/${article.slug}`)}#webpage`,
   },
-  datePublished: "2026-06-01",
-  dateModified: "2026-06-01",
+  datePublished: articleDate(article.date),
+  dateModified: articleDate(article.date),
 });
 
 const faqSchema = (article: Article) => ({
@@ -329,16 +385,43 @@ for (const article of ARTICLES) {
 
 export const routes = Object.keys(seoByPath);
 
+const schemaKey = (schema: Record<string, unknown>) => {
+  const id = schema["@id"];
+  const type = schema["@type"];
+
+  return typeof id === "string" ? id : `${String(type)}-${JSON.stringify(schema)}`;
+};
+
+const withSitewidePersonSchema = (schema: Record<string, unknown>[]) => {
+  const seen = new Set<string>();
+  const [primarySchema, ...additionalSchema] = schema;
+  const schemaWithPerson = primarySchema
+    ? [primarySchema, personSchema, ...additionalSchema]
+    : [personSchema, ...additionalSchema];
+
+  return schemaWithPerson.filter((item) => {
+    const key = schemaKey(item);
+
+    if (seen.has(key)) {
+      return false;
+    }
+
+    seen.add(key);
+    return true;
+  });
+};
+
 export const getSeoConfig = (path: string) => {
   const normalisedPath = path === "" ? "/" : path.replace(/\/$/, "") || "/";
   const config = seoByPath[normalisedPath] ?? seoByPath["/"];
+  const page = pageSchema(config.path, config.title, config.description);
 
   return {
     ...config,
     canonical: absoluteUrl(config.path),
-    image: config.image,
+    image: config.image ?? DEFAULT_SOCIAL_IMAGE,
     robots: config.robots ?? "index, follow",
-    schema: [pageSchema(config.path, config.title, config.description), ...(config.schema ?? [])],
+    schema: withSitewidePersonSchema([page, ...(config.schema ?? [])]),
   };
 };
 

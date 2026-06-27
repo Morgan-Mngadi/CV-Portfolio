@@ -81,6 +81,7 @@ export default function Blog() {
                   <span className="font-mono text-xs text-muted-foreground">{featured.date}</span>
                 </div>
                 <h2 className="text-2xl md:text-3xl font-medium mb-4 group-hover:text-primary transition-colors">{featured.title}</h2>
+                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">By Morgan Mngadi</p>
                 <p className="text-muted-foreground leading-relaxed max-w-2xl">{featured.excerpt}</p>
               </div>
               <div className="shrink-0">
@@ -133,6 +134,7 @@ export default function Blog() {
                   <span className="font-mono text-xs text-muted-foreground">{post.date}</span>
                 </div>
                 <h3 className="text-xl md:text-2xl font-medium mb-3 group-hover:text-primary transition-colors">{post.title}</h3>
+                <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">By Morgan Mngadi</p>
                 <p className="text-muted-foreground leading-relaxed max-w-2xl text-sm">{post.excerpt}</p>
               </a>
               <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mt-1 hidden md:block" />

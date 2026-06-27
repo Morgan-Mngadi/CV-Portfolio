@@ -40,6 +40,7 @@ const DAILY_TOOLS = [
   { name: "Bing Webmaster Tools", icon: null },
   { name: "Keyword Planner", icon: null },
   { name: "Google Trends", icon: null },
+  { name: "Working knowledge of Ahrefs", icon: null },
 ];
 
 const CMS_TOOLS = [
@@ -114,6 +115,12 @@ const WORK_WITH_ME = [
     description:
       "Hands-on technical SEO across metadata, schema, redirects, indexation, CMS workflows, rendering, and QA.",
     bestFor: "Crawlability, structured data, technical change",
+  },
+  {
+    title: "Backlink & Authority Building",
+    description:
+      "Sustainable authority building through valuable content, technical excellence, link-worthy assets, PR support, local citations, and strong internal linking.",
+    bestFor: "Authority, citations, ethical link strategy",
   },
   {
     title: "Analytics, GTM & GA4",
@@ -698,7 +705,7 @@ export default function Home() {
             </div>
           </div>
 
-          <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border border border-border">
+          <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
             {WORK_WITH_ME.map((item) => (
               <motion.div key={item.title} variants={fadeUp} className="bg-card p-6 md:p-8">
                 <h3 className="text-lg font-medium mb-4">{item.title}</h3>
