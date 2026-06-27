@@ -4,6 +4,10 @@ services:
     runtime: static
     buildCommand: pnpm run build:portfolio:ssr
     staticPublishPath: artifacts/portfolio/dist/public
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /404/index.html
     renderSubdomainPolicy: enabled
     domains:
       - morgan-mngadi-portfolio.online
