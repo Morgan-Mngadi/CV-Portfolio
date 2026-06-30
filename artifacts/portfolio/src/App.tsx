@@ -11,6 +11,7 @@ import Blog from "@/pages/blog";
 import BlogArticle from "@/pages/blog-article";
 import AreasOfExpertise from "@/pages/areas-of-expertise";
 import { ScrollToTop } from "@/components/scroll-to-top";
+import { ScrollProgress } from "@/components/scroll-progress";
 import { BackToTop } from "@/components/back-to-top";
 import { CookieConsent } from "@/components/cookie-consent";
 
@@ -45,6 +46,7 @@ function App({ ssrPath }: AppProps) {
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")} ssrPath={ssrPath}>
           <ScrollToTop />
+          <ScrollProgress />
           <Router />
           <BackToTop />
         </WouterRouter>
