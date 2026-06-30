@@ -84,7 +84,7 @@ export function SiteNav() {
       </div>
 
       {isOpen && (
-        <div className="fixed inset-0 z-40 md:hidden bg-[hsl(var(--background))] animate-in fade-in-0 duration-200">
+        <div className="fixed inset-0 z-40 h-dvh overflow-y-auto md:hidden bg-[hsl(var(--background))] animate-in fade-in-0 duration-200">
           <div className="absolute inset-0 bg-[hsl(var(--background))]" />
           <div
             className="absolute inset-0 pointer-events-none opacity-70"
@@ -94,7 +94,7 @@ export function SiteNav() {
               backgroundSize: "80px 80px",
             }}
           />
-          <div className="relative flex min-h-svh flex-col px-6 pb-8 pt-24">
+          <div className="relative flex min-h-dvh flex-col px-6 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-24">
             <div className="mb-8 border-b border-border pb-4">
               <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Navigation</p>
             </div>
