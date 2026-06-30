@@ -36,8 +36,8 @@ const EXPERIENCE = [
     location: "Bryanston, JHB",
     current: false,
     description:
-      "Managed SEO implementation across finance, education, humanitarian, courier, hospitality and automotive verticals. Delivered technical audits, on-page optimisation, structured data deployment and CMS implementation. Contributed implementation work to campaigns recognised with two Assegai honours under senior strategic direction.",
-    tags: ["Multi industry", "Structured Data", "WordPress", "Webflow"],
+      "Managed SEO implementation across finance, education, humanitarian, courier, hospitality and automotive verticals. Delivered technical audits, on-page optimisation, structured data deployment and CMS implementation across WordPress, Webflow, Umbraco, Pimcore and headless CMS setups. Contributed implementation work to campaigns recognised with two Assegai honours under senior strategic direction.",
+    tags: ["Multi industry", "Structured Data", "WordPress", "Webflow", "Umbraco", "Pimcore", "Headless CMS"],
     award: "Contributed to 2× Assegai honours",
   },
   {
@@ -48,8 +48,8 @@ const EXPERIENCE = [
     location: "Lonehill, JHB",
     current: false,
     description:
-      "Built a foundation in SEO and analytics across multiple client accounts. Keyword research, on-page optimisation, technical audits and performance reporting using GSC, SEMrush and Looker Studio.",
-    tags: ["SEO Foundations", "Analytics", "Reporting"],
+      "Built a foundation in SEO and analytics across multiple client accounts, mainly working on WordPress and Webflow websites. Keyword research, on-page optimisation, technical audits and performance reporting using GSC, SEMrush and Looker Studio.",
+    tags: ["SEO Foundations", "WordPress", "Webflow", "Analytics", "Reporting"],
   },
 ];
 
