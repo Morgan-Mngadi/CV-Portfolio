@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { MouseEvent } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, useLocation } from "wouter";
@@ -22,6 +22,14 @@ export function SiteNav() {
   const [isOpen, setIsOpen] = useState(false);
   const contactHref = location === "/" ? "#contact" : "/#contact";
 
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   const handleContactClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     setIsOpen(false);
@@ -43,8 +51,8 @@ export function SiteNav() {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-6 min-h-12 flex items-center justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/60 bg-[hsl(var(--background))]">
+      <div className="relative z-50 max-w-6xl mx-auto px-6 min-h-12 flex items-center justify-between bg-[hsl(var(--background))]">
         <Link href="/" aria-label="Morgan Mngadi home" onClick={() => setIsOpen(false)}>
           <img src={logoSrc} alt="Morgan Mngadi logo" className="h-9 w-9 object-contain opacity-90 cursor-pointer" />
         </Link>
@@ -66,7 +74,7 @@ export function SiteNav() {
 
         <button
           type="button"
-          className="md:hidden inline-flex h-9 w-9 items-center justify-center border border-border text-muted-foreground hover:text-foreground"
+          className="md:hidden inline-flex h-9 w-9 items-center justify-center border border-border bg-[hsl(var(--background))] text-muted-foreground transition-colors hover:border-muted-foreground/50 hover:text-foreground focus:outline-none focus-visible:border-muted-foreground/60 focus-visible:text-foreground"
           aria-label={isOpen ? "Close navigation" : "Open navigation"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((open) => !open)}
@@ -76,25 +84,49 @@ export function SiteNav() {
       </div>
 
       {isOpen && (
-        <div className="md:hidden border-t border-border bg-background/95 px-6 py-4">
-          <div className="max-w-6xl mx-auto flex flex-col gap-4">
-            {NAV_ITEMS.map((item) => (
+        <div className="fixed inset-0 z-40 md:hidden bg-[hsl(var(--background))] animate-in fade-in-0 duration-200">
+          <div className="absolute inset-0 bg-[hsl(var(--background))]" />
+          <div
+            className="absolute inset-0 pointer-events-none opacity-70"
+            style={{
+              backgroundImage:
+                "linear-gradient(hsl(var(--border) / 0.35) 1px, transparent 1px), linear-gradient(90deg, hsl(var(--border) / 0.35) 1px, transparent 1px)",
+              backgroundSize: "80px 80px",
+            }}
+          />
+          <div className="relative flex min-h-svh flex-col px-6 pb-8 pt-24">
+            <div className="mb-8 border-b border-border pb-4">
+              <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">Navigation</p>
+            </div>
+
+            <div className="flex flex-1 flex-col justify-center gap-1">
+              {NAV_ITEMS.map((item, index) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`group flex items-center justify-between border-b border-border/70 py-5 transition-colors ${
+                    isActive(item.href) ? "text-foreground" : "text-muted-foreground hover:text-foreground"
+                  }`}
+                  onClick={() => setIsOpen(false)}
+                >
+                  <span className="text-3xl font-medium tracking-tight">{item.label}</span>
+                  <span className="font-mono text-xs tabular-nums text-primary/80">{String(index + 1).padStart(2, "0")}</span>
+                </Link>
+              ))}
+            </div>
+
+            <div className="mt-10 grid gap-4 border-t border-border pt-5">
+              <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
+                Organic Search Growth Specialist focused on analytics and product-led search systems.
+              </p>
               <Link
-                key={item.href}
-                href={item.href}
-                className={linkClass(isActive(item.href))}
-                onClick={() => setIsOpen(false)}
+                href={contactHref}
+                className="inline-flex min-h-12 items-center justify-center bg-primary px-5 font-mono text-xs uppercase tracking-widest text-primary-foreground transition-colors hover:bg-primary/90"
+                onClick={handleContactClick}
               >
-                {item.label}
+                Contact
               </Link>
-            ))}
-            <Link
-              href={contactHref}
-              className="font-mono text-xs bg-primary text-primary-foreground px-3 py-2 hover:bg-primary/90 transition-colors uppercase tracking-widest self-start"
-              onClick={handleContactClick}
-            >
-              Contact
-            </Link>
+            </div>
           </div>
         </div>
       )}
