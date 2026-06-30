@@ -167,9 +167,9 @@ export const seoByPath: Record<string, SeoConfig> = {
     schema: [],
   },
   "/": {
-    title: "Morgan Mngadi | SEO, Analytics and Digital Product Portfolio",
+    title: "SEO Specialist | Morgan Mngadi",
     description:
-      "Portfolio of Morgan Mngadi, an SEO professional focused on technical SEO, analytics, GTM, GA4, organic growth, digital products, and CommuteZA.",
+      "Portfolio of Morgan Mngadi, an SEO specialist focused on organic search growth for product and service-led businesses.",
     path: "/",
     type: "profile",
     schema: [personSchema, websiteSchema],

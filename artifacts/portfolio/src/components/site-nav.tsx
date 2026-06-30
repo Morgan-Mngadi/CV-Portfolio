@@ -117,7 +117,7 @@ export function SiteNav() {
 
             <div className="mt-10 grid gap-4 border-t border-border pt-5">
               <p className="max-w-xs text-sm leading-relaxed text-muted-foreground">
-                Organic Search Growth Specialist focused on analytics and product-led search systems.
+                Organic search growth for product and service-led businesses.
               </p>
               <Link
                 href={contactHref}

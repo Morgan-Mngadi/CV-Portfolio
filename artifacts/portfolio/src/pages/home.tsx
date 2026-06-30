@@ -103,6 +103,15 @@ const CLIENT_LOGOS = [
   { name: "The Courier Guy", src: "/client-logos/the-courier-guy.png" },
 ];
 
+const SEARCH_FOCUS_AREAS = [
+  "SEO strategy",
+  "Technical optimisation",
+  "Analytics & reporting",
+  "AI search visibility",
+  "Content performance",
+  "Product/Service-led search",
+];
+
 const WORK_WITH_ME = [
   {
     title: "Organic Growth Systems",
@@ -286,14 +295,17 @@ export default function Home() {
             </motion.div>
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6 font-mono text-xs text-primary uppercase tracking-widest">
               <span className="w-6 h-px bg-primary" />
-              SEO Specialist · Johannesburg, ZA
+              Organic Search Growth · Johannesburg, ZA
             </motion.div>
             <motion.h1 variants={fadeUp} className="text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight leading-[0.9] mb-8">
-              Morgan<br />
-              <span className="text-primary">Mngadi</span>
+              SEO<br />
+              <span className="text-primary">Specialist</span>
             </motion.h1>
+            <motion.h2 variants={fadeUp} className="mb-5 text-2xl md:text-3xl font-medium tracking-tight text-foreground">
+              Morgan Mngadi
+            </motion.h2>
             <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-xl">
-              SEO professional and builder focused on technical search infrastructure, analytics, organic growth, and digital products.
+              Organic search growth for product and service-led businesses.
             </motion.p>
             <motion.div variants={fadeUp} className="flex flex-col sm:flex-row gap-3 mt-8">
               <a href="#contact" className="inline-flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground text-sm font-medium hover:bg-primary/90 transition-colors">
@@ -316,6 +328,23 @@ export default function Home() {
               <motion.div key={stat.label} variants={fadeUp} className="flex flex-col">
                 <span className="text-4xl font-medium text-primary tabular-nums">{stat.value}</span>
                 <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest mt-1">{stat.label}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </motion.section>
+
+        {/* ─── SEARCH FOCUS ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-8"
+        >
+          <motion.div variants={stagger} className="grid grid-cols-2 gap-px overflow-hidden border border-border bg-border md:grid-cols-3 lg:grid-cols-6">
+            {SEARCH_FOCUS_AREAS.map((area) => (
+              <motion.div key={area} variants={fadeUp} className="bg-card px-4 py-4">
+                <p className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground leading-relaxed">{area}</p>
               </motion.div>
             ))}
           </motion.div>
