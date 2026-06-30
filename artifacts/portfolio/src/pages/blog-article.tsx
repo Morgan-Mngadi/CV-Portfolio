@@ -1,7 +1,15 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowUpRight, CalendarDays, Clock } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, CalendarDays, Clock, Maximize2 } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
-import { ARTICLES, getArticle } from "@/data/articles";
+import { ARTICLES, getArticle, type ArticleComparisonTable, type ArticleImage } from "@/data/articles";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import NotFound from "@/pages/not-found";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
@@ -17,9 +25,117 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
+function ScrollableComparisonTable({ table }: { table: ArticleComparisonTable }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const thumbRef = useRef<HTMLDivElement>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  const updateThumb = () => {
+    const element = scrollRef.current;
+    const thumb = thumbRef.current;
+
+    if (!element || !thumb) {
+      return;
+    }
+
+    const maxScroll = element.scrollWidth - element.clientWidth;
+    const scrollable = maxScroll > 0;
+    const width = scrollable ? Math.max(18, (element.clientWidth / element.scrollWidth) * 100) : 100;
+    const trackWidth = thumb.parentElement?.clientWidth ?? 0;
+    const thumbWidth = (trackWidth * width) / 100;
+    const left = scrollable ? (element.scrollLeft / maxScroll) * (trackWidth - thumbWidth) : 0;
+
+    setIsScrollable(scrollable);
+    thumb.style.width = `${thumbWidth}px`;
+    thumb.style.transform = `translate3d(${left}px, 0, 0)`;
+  };
+
+  const scheduleThumbUpdate = () => {
+    if (animationFrameRef.current !== null) {
+      cancelAnimationFrame(animationFrameRef.current);
+    }
+
+    animationFrameRef.current = requestAnimationFrame(() => {
+      updateThumb();
+      animationFrameRef.current = null;
+    });
+  };
+
+  useEffect(() => {
+    scheduleThumbUpdate();
+    window.addEventListener("resize", scheduleThumbUpdate);
+
+    return () => {
+      window.removeEventListener("resize", scheduleThumbUpdate);
+
+      if (animationFrameRef.current !== null) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div className="mt-8">
+      <div ref={scrollRef} onScroll={scheduleThumbUpdate} className="overflow-x-auto border border-border bg-card">
+        <table className="w-full min-w-[720px] border-collapse text-left text-sm">
+          <thead className="border-b border-primary/30 bg-primary/10">
+            <tr>
+              {table.columns.map((column) => (
+                <th
+                  key={column}
+                  scope="col"
+                  className={`px-4 py-3 font-mono text-xs uppercase tracking-widest text-primary ${
+                    column.includes("Recommended") ? "bg-primary/15 shadow-[inset_3px_0_0_hsl(var(--primary))]" : ""
+                  }`}
+                >
+                  {column}
+                </th>
+              ))}
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {table.rows.map((row) => (
+              <tr key={row.join("-")} className="align-top">
+                {row.map((cell, index) => {
+                  const isRecommendedColumn = table.columns[index]?.includes("Recommended");
+
+                  return (
+                    <td
+                      key={`${cell}-${index}`}
+                      className={`px-4 py-4 text-muted-foreground leading-relaxed ${
+                        isRecommendedColumn ? "bg-primary/5 shadow-[inset_3px_0_0_hsl(var(--primary))]" : ""
+                      }`}
+                    >
+                      {cell}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div
+        aria-hidden="true"
+        className={`relative mt-2 h-0.5 w-24 overflow-hidden bg-border transition-opacity duration-300 md:hidden ${
+          isScrollable ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <div
+          ref={thumbRef}
+          className="absolute inset-y-0 left-0 bg-primary transition-[transform,width] duration-200 ease-out will-change-transform"
+          style={{ transform: "translate3d(0, 0, 0)", width: "100%" }}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default function BlogArticle() {
   const [, params] = useRoute("/blog/:slug");
   const article = params?.slug ? getArticle(params.slug) : undefined;
+  const [selectedImage, setSelectedImage] = useState<ArticleImage | null>(null);
 
   if (!article) {
     return <NotFound />;
@@ -138,58 +254,28 @@ export default function BlogArticle() {
                     </ol>
                   )}
                   {section.comparisonTable && (
-                    <div className="mt-8 overflow-x-auto border border-border bg-card">
-                      <table className="w-full min-w-[720px] border-collapse text-left text-sm">
-                        <thead className="border-b border-primary/30 bg-primary/10">
-                          <tr>
-                            {section.comparisonTable.columns.map((column) => (
-                              <th
-                                key={column}
-                                scope="col"
-                                className={`px-4 py-3 font-mono text-xs uppercase tracking-widest text-primary ${
-                                  column.includes("Recommended") ? "bg-primary/15 shadow-[inset_3px_0_0_hsl(var(--primary))]" : ""
-                                }`}
-                              >
-                                {column}
-                              </th>
-                            ))}
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-border">
-                          {section.comparisonTable.rows.map((row) => (
-                            <tr key={row.join("-")} className="align-top">
-                              {row.map((cell, index) => {
-                                const isRecommendedColumn = section.comparisonTable?.columns[index]?.includes("Recommended");
-
-                                return (
-                                  <td
-                                    key={`${cell}-${index}`}
-                                    className={`px-4 py-4 text-muted-foreground leading-relaxed ${
-                                      isRecommendedColumn ? "bg-primary/5 shadow-[inset_3px_0_0_hsl(var(--primary))]" : ""
-                                    }`}
-                                  >
-                                  {cell}
-                                  </td>
-                                );
-                              })}
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+                    <ScrollableComparisonTable table={section.comparisonTable} />
                   )}
                   {section.imageBlocks && (
                     <div className={section.imageLayout === "grid" ? "mt-8 grid grid-cols-1 gap-6 md:grid-cols-2" : "mt-8 flex flex-col gap-8"}>
                       {section.imageBlocks.map((image, index) => (
                         <figure key={image.src} className="border border-border bg-card p-3 sm:p-4">
-                          <div className="flex aspect-[16/9] items-center justify-center overflow-hidden border border-border bg-background">
+                          <button
+                            type="button"
+                            className="group relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden border border-border bg-background"
+                            onClick={() => setSelectedImage(image)}
+                            aria-label={`Open larger image: ${image.alt}`}
+                          >
                             <img
                               src={image.src}
                               alt={image.alt}
                               loading={index === 0 ? "eager" : "lazy"}
                               className="h-full w-full object-contain"
                             />
-                          </div>
+                            <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center border border-border bg-background/90 text-foreground opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
+                              <Maximize2 className="h-4 w-4" />
+                            </span>
+                          </button>
                           <figcaption className="mt-3 font-mono text-xs leading-relaxed text-muted-foreground">
                             {image.caption}
                           </figcaption>
@@ -326,6 +412,35 @@ export default function BlogArticle() {
           </div>
         </motion.article>
       </main>
+      <Dialog open={Boolean(selectedImage)} onOpenChange={(open) => !open && setSelectedImage(null)}>
+        <DialogContent className="max-h-[92svh] w-[calc(100vw-1.5rem)] max-w-6xl gap-3 border-border bg-background p-3 sm:p-4 [&>button]:hidden">
+          <div className="absolute right-3 top-3 z-10">
+            <DialogClose className="grid h-10 w-10 place-items-center border border-border bg-card/95 text-muted-foreground opacity-100 transition-colors hover:border-muted-foreground/50 hover:bg-background hover:text-foreground focus:outline-none focus-visible:border-muted-foreground/60 focus-visible:bg-background focus-visible:text-foreground">
+              <span className="relative block h-4 w-4" aria-hidden="true">
+                <span className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 rotate-45 bg-current" />
+                <span className="absolute left-1/2 top-0 h-4 w-px -translate-x-1/2 -rotate-45 bg-current" />
+              </span>
+              <span className="sr-only">Close image</span>
+            </DialogClose>
+          </div>
+          <DialogTitle className="sr-only">{selectedImage?.alt ?? "Article image"}</DialogTitle>
+          <DialogDescription className="sr-only">{selectedImage?.caption ?? "Expanded article image"}</DialogDescription>
+          {selectedImage && (
+            <figure className="flex max-h-[calc(92svh-2rem)] flex-col gap-3">
+              <div className="min-h-0 flex-1 overflow-auto border border-border bg-card">
+                <img
+                  src={selectedImage.src}
+                  alt={selectedImage.alt}
+                  className="h-auto min-h-full w-full max-w-none object-contain sm:max-h-[78svh]"
+                />
+              </div>
+              <figcaption className="font-mono text-xs leading-relaxed text-muted-foreground">
+                {selectedImage.caption}
+              </figcaption>
+            </figure>
+          )}
+        </DialogContent>
+      </Dialog>
       <SiteFooter />
     </div>
   );
