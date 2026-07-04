@@ -93,6 +93,200 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 
 const ARTICLE_INPUTS: ArticleInput[] = [
   {
+    slug: "link-building-in-2026",
+    title: "Link Building in 2026: What Still Works",
+    excerpt:
+      "A practical look at modern link building, from sponsored links and guest posting to digital PR, business directories, and the difference between follow and nofollow backlinks.",
+    category: "Authority Building",
+    date: "Jul 2026",
+    sections: [
+      {
+        id: "what-link-building-means-now",
+        heading: "What link building means in 2026",
+        paragraphs: [
+          "Link building is the process of earning links from other websites back to your own website. In SEO, those links matter because they can help search engines understand trust, relevance, authority, and how your brand fits into the wider web.",
+          "In 2026, link building is not only about getting as many links as possible. My approach is more asset-led: create great content, useful resources, or tools that are genuinely worth linking back to, then use the right channels to help people discover them.",
+          "The stronger approach is to earn links from places that make sense: industry publications, trusted local directories, digital PR coverage, partner mentions, useful resources, and websites that real people actually use.",
+          "A good backlink should make sense even if search engines did not exist. If a potential customer, journalist, supplier, or industry peer would find the link useful, it is much more likely to be the kind of link worth having.",
+        ],
+      },
+      {
+        id: "benefits-of-link-building",
+        heading: "The benefits of link building",
+        paragraphs: [
+          "The obvious benefit is authority. When credible websites refer to your site, it can support organic visibility, especially in competitive markets where many pages have similar content quality and technical foundations.",
+          "The better benefit is trust. A link from a relevant publication, business association, local directory, or industry resource can help users discover the brand before they are ready to search for it directly.",
+        ],
+        bullets: [
+          "Improves authority signals when links are relevant and earned from credible websites.",
+          "Supports referral traffic from people who discover the business through another trusted source.",
+          "Helps search engines understand brand relationships, local relevance, and topical relevance.",
+          "Can increase branded search demand when PR coverage or directory visibility introduces people to the business.",
+          "Strengthens competitive SEO performance when paired with useful content, technical SEO, and internal linking.",
+        ],
+      },
+      {
+        id: "follow-vs-nofollow-backlinks",
+        heading: "Follow vs nofollow backlinks",
+        paragraphs: [
+          "A follow backlink is a normal link without a qualifying rel attribute such as nofollow or sponsored. It can be crawled and may pass ranking signals, depending on the quality and context of the page linking to you.",
+          "A nofollow backlink includes rel=\"nofollow\" in the link. It tells search engines that the linking site does not want to pass endorsement signals in the normal way. Google now treats nofollow as a hint rather than a simple all-or-nothing command, but the practical SEO meaning is still clear: you should not value a nofollow link in the same way as a strong editorial follow link.",
+          "There are also sponsored and UGC attributes. Sponsored is used for paid placements, sponsorships, advertorials, and other compensated links. UGC is used for user-generated content such as comments or forum posts. These attributes help clarify the relationship behind the link.",
+        ],
+        comparisonTable: {
+          columns: ["Link Type", "What It Means", "Typical Use"],
+          rows: [
+            [
+              "Follow link",
+              "A standard link that may pass ranking signals when the linking page is trusted and relevant.",
+              "Editorial mentions, resource links, partner pages, and genuine citations.",
+            ],
+            [
+              "Nofollow link",
+              "A link marked with rel=\"nofollow\" to avoid treating the link as a normal endorsement.",
+              "Untrusted references, some directories, comments, forums, and platforms that do not want to pass link equity.",
+            ],
+            [
+              "Sponsored link",
+              "A paid or compensated link marked with rel=\"sponsored\" so search engines understand the commercial relationship.",
+              "Sponsored posts, paid placements, advertorials, influencer campaigns, and paid media links.",
+            ],
+            [
+              "UGC link",
+              "A link marked with rel=\"ugc\" because it was added by users rather than the site owner or editorial team.",
+              "Comments, forums, community posts, and user-submitted content.",
+            ],
+          ],
+        },
+      },
+      {
+        id: "sponsored-links",
+        heading: "Sponsored links",
+        paragraphs: [
+          "Sponsored links are links placed because money, products, services, or another form of compensation changed hands. They are not automatically bad. Advertising, sponsorships, partnerships, and paid media are normal parts of the web.",
+          "The SEO risk begins when a sponsored link is used to pass ranking credit as if it were an organic editorial endorsement. That is why paid placements should be qualified with rel=\"sponsored\" or rel=\"nofollow\".",
+          "For businesses, the question should be: would this sponsorship still be worth doing for brand visibility, referral traffic, audience fit, or credibility if the link did not pass authority? If the answer is no, the link is probably doing too much of the strategic work.",
+        ],
+        bullets: [
+          "Use sponsored links for visibility, awareness, referral traffic, and partnership value.",
+          "Avoid relying on paid placements as the main authority-building strategy.",
+          "Make sure paid links are disclosed and correctly qualified with sponsored or nofollow attributes.",
+          "Be careful with sites that sell links at scale, publish thin sponsored articles, or accept any niche without editorial standards.",
+        ],
+      },
+      {
+        id: "guest-posting-reality",
+        heading: "Guest posting has changed",
+        paragraphs: [
+          "Guest posting used to feel like a clean exchange: you bring useful expertise to another website, they get quality content, and you earn a relevant author link or contextual link. That version still exists, but it is harder to find.",
+          "From my own experience, guest posting has become very similar to buying links in many cases. When you target a website and ask to write for them, they often respond with a fee because they know exactly how powerful their links can be. The conversation quickly moves away from editorial contribution and towards placement cost.",
+          "That does not mean every guest post is bad. A thoughtful article on a genuinely relevant website can still support brand authority and referral traffic. But if the main selling point is the strength of the backlink, and the site is charging mostly for that link, then it should be treated with caution.",
+        ],
+        bullets: [
+          "Prioritise sites with real audiences, real editorial standards, and topical relevance.",
+          "Avoid guest post farms that sell placements across unrelated categories.",
+          "Do not force exact-match anchor text into articles where it feels unnatural.",
+          "Treat paid guest posts as sponsored placements and qualify the links correctly.",
+          "Focus on expertise and brand visibility first, not only the link metric.",
+        ],
+      },
+      {
+        id: "digital-pr",
+        heading: "Digital PR is usually the strongest route",
+        paragraphs: [
+          "Digital PR is one of the most effective link-building routes because it earns attention rather than asking for a link directly. The link is a by-product of a useful story, data point, campaign, expert quote, local angle, or newsworthy asset.",
+          "This is where authority building becomes closer to brand building. A publication is more likely to mention and link to a business when there is a strong reason: original research, a helpful tool, a founder insight, a timely comment, a community initiative, or a genuinely interesting story.",
+          "Digital PR is ideal because it can create opportunities beyond the backlink itself. A strong campaign can open doors for media mentions, expert commentary, industry relationships, referral traffic, and future collaborations.",
+          "Digital PR is not always quick, and it is not guaranteed. But when it works, the links tend to be more defensible because they come from editorial judgement rather than a link placement transaction.",
+        ],
+        numberedSteps: [
+          "Find the topics where your expertise, data, or opinion can add something useful.",
+          "Create a story, content asset, or tool that journalists, industry writers, or local publications would care about.",
+          "Build a focused media list instead of blasting every publication you can find.",
+          "Pitch the angle clearly, with a short summary, useful evidence, and why it matters now.",
+          "Make it easy for the writer to cite your brand, link to the source, or ask follow-up questions.",
+        ],
+      },
+      {
+        id: "business-directories",
+        heading: "Business directories still matter when they are credible",
+        paragraphs: [
+          "Business directories are still useful, especially for local SEO, B2B discovery, and trust signals. The key is quality. A credible directory should help users verify a business, understand what it offers, and find consistent contact or location details.",
+          "The strongest directory work is not about submitting to hundreds of low-quality sites. It is about being present in the places customers, suppliers, search engines, and local platforms expect to see a legitimate business.",
+          "This can create real opportunities too. The right business directory can support local discovery, supplier research, partnership enquiries, and trust before somebody even reaches your website.",
+        ],
+        bullets: [
+          "Use Google Business Profile and other relevant local platforms where appropriate.",
+          "Keep name, address, phone number, website, and business category details consistent.",
+          "Prioritise directories with real local, industry, or professional relevance.",
+          "Avoid low-quality directory networks created mainly to sell links.",
+          "Review listings periodically so outdated contact details do not weaken trust.",
+        ],
+      },
+      {
+        id: "wikipedia-and-nofollow",
+        heading: "Why Wikipedia is not the shortcut people thought it was",
+        paragraphs: [
+          "For years, people treated Wikipedia as one of the dream backlinks because of its authority. The problem is that Wikipedia understood that too. To reduce spam and stop people from abusing the platform for rankings, its external links have long used nofollow.",
+          "That does not make Wikipedia useless. A citation from Wikipedia can still send referral traffic, support discovery, and place a source in a trusted context. But it should not be treated as a clean follow backlink strategy.",
+          "The broader lesson is important: if a platform becomes famous for link value, it usually becomes stricter. That is why sustainable link building has to move beyond chasing loopholes.",
+        ],
+      },
+      {
+        id: "how-to-build-links-in-2026",
+        heading: "How to approach link building in 2026",
+        paragraphs: [
+          "A practical link-building strategy should begin with the business, not the backlink tool. Look at who needs to trust the brand, where those people spend time, which publications shape the market, and which directories or platforms validate the business.",
+          "Then build assets worth referencing. This could be a guide, a data study, a case study, a useful calculator, a local resource, a technical explainer, an interactive tool, or a strong opinion backed by experience.",
+          "For me, this is the centre of good link building: create something worth linking to first. Digital PR and business directories then become the practical routes for earning visibility, mentions, trust, and opportunities around that work.",
+        ],
+        numberedSteps: [
+          "Audit existing backlinks and separate strong links from spam, irrelevant directories, or old low-value placements.",
+          "Fix the basics first: useful pages, strong internal links, crawlable content, clear service pages, and accurate business information.",
+          "Choose the authority gaps that matter, such as local trust, industry credibility, PR visibility, or partner mentions.",
+          "Build a target list across digital PR prospects, relevant directories, partner websites, associations, and niche publications.",
+          "Create something worth citing before asking for coverage or links.",
+          "Track link quality, referral traffic, branded search movement, and business outcomes rather than reporting only the number of links built.",
+        ],
+        closingParagraphs: [
+          "The best link building in 2026 is less about chasing loopholes and more about earning references that make sense in the real world. Great content and useful tools create the reason to link, while digital PR and credible business directories help turn that value into visibility, trust, and opportunity.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Is link building still important in 2026?",
+        answer:
+          "Yes. Links still help search engines and users understand authority, relevance, and trust. The difference is that quality, context, and legitimacy matter far more than link volume.",
+      },
+      {
+        question: "What is the difference between a follow and nofollow backlink?",
+        answer:
+          "A follow backlink is a normal link that may pass ranking signals. A nofollow backlink uses rel=\"nofollow\", which tells search engines not to treat the link as a normal endorsement.",
+      },
+      {
+        question: "Are sponsored links bad for SEO?",
+        answer:
+          "Sponsored links are not bad when they are used honestly for advertising, awareness, or referral traffic. They become risky when they are paid placements designed to pass ranking credit without rel=\"sponsored\" or rel=\"nofollow\".",
+      },
+      {
+        question: "Does guest posting still work?",
+        answer:
+          "Guest posting can still work when the website is relevant, editorially selective, and useful to a real audience. It becomes risky when the placement is mainly a paid link transaction.",
+      },
+      {
+        question: "What is the most effective link-building method?",
+        answer:
+          "Digital PR and credible business directories are often the most effective routes because they create trust signals, referral opportunities, and links that make sense beyond SEO metrics.",
+      },
+      {
+        question: "Are Wikipedia backlinks useful?",
+        answer:
+          "Wikipedia links can support discovery and referral traffic, but they should not be treated as a follow backlink strategy because external links on Wikipedia are nofollow.",
+      },
+    ],
+  },
+  {
           slug: "how-to-create-gtm-tags-for-leads",
           title: "How to Create GTM Tags for Lead Tracking",
           excerpt:
