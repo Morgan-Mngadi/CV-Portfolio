@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { ArrowLeft, ArrowUpRight, CalendarDays, Clock, Maximize2 } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Clock, Maximize2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
-import { ARTICLES, getArticle, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleParagraph } from "@/data/articles";
+import { ARTICLES, getArticle, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleImageCarousel, type ArticleParagraph } from "@/data/articles";
 import {
   Dialog,
   DialogClose,
@@ -10,6 +10,13 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import NotFound from "@/pages/not-found";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
@@ -26,6 +33,11 @@ const stagger = {
 };
 
 const isExternalHref = (href: string) => /^https?:\/\//.test(href);
+
+type LightboxState = {
+  images: ArticleImage[];
+  index: number;
+};
 
 function renderLinkedParagraph(paragraph: ArticleParagraph) {
   if (typeof paragraph === "string") {
@@ -150,6 +162,59 @@ function ArticleBarChart({ chart }: { chart: ArticleChart }) {
   );
 }
 
+function ArticleImageCarouselBlock({
+  carousel,
+  onSelectImage,
+}: {
+  carousel: ArticleImageCarousel;
+  onSelectImage: (images: ArticleImage[], index: number) => void;
+}) {
+  return (
+    <figure className="mt-8 border border-border bg-card p-3 sm:p-5">
+      <div className="mb-4 border-b border-border pb-4">
+        <p className="font-mono text-xs uppercase tracking-widest text-primary">Visual Examples</p>
+        <h3 className="mt-2 text-xl font-medium tracking-tight text-foreground">{carousel.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{carousel.description}</p>
+      </div>
+
+      <Carousel opts={{ align: "start", loop: false }} className="mx-auto w-full">
+        <CarouselContent>
+          {carousel.images.map((image, index) => (
+            <CarouselItem key={image.src}>
+              <div className="border border-border bg-background p-2 sm:p-3">
+                <button
+                  type="button"
+                  className="group relative flex aspect-[16/10] w-full items-center justify-center overflow-hidden border border-border bg-background"
+                  onClick={() => onSelectImage(carousel.images, index)}
+                  aria-label={`Open larger image: ${image.alt}`}
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    className="h-full w-full object-contain"
+                  />
+                  <span className="absolute right-3 top-3 grid h-9 w-9 place-items-center border border-border bg-background/90 text-foreground opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100">
+                    <Maximize2 className="h-4 w-4" />
+                  </span>
+                </button>
+                <figcaption className="mt-3 grid gap-2 text-xs leading-relaxed text-muted-foreground sm:grid-cols-[auto_1fr]">
+                  <span className="font-mono text-primary tabular-nums">
+                    {index + 1}/{carousel.images.length}
+                  </span>
+                  <span>{image.caption}</span>
+                </figcaption>
+              </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-3 border-border bg-background/90 text-foreground hover:bg-card disabled:opacity-30" />
+        <CarouselNext className="right-3 border-border bg-background/90 text-foreground hover:bg-card disabled:opacity-30" />
+      </Carousel>
+    </figure>
+  );
+}
+
 function ScrollableComparisonTable({ table }: { table: ArticleComparisonTable }) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
@@ -260,13 +325,23 @@ function ScrollableComparisonTable({ table }: { table: ArticleComparisonTable })
 export default function BlogArticle() {
   const [, params] = useRoute("/blog/:slug");
   const article = params?.slug ? getArticle(params.slug) : undefined;
-  const [selectedImage, setSelectedImage] = useState<ArticleImage | null>(null);
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
 
   if (!article) {
     return <NotFound />;
   }
 
   const moreArticles = ARTICLES.filter((item) => item.slug !== article.slug).slice(0, 3);
+  const selectedImage = lightbox?.images[lightbox.index] ?? null;
+  const canShowPreviousImage = Boolean(lightbox && lightbox.index > 0);
+  const canShowNextImage = Boolean(lightbox && lightbox.index < lightbox.images.length - 1);
+  const openLightbox = (images: ArticleImage[], index = 0) => setLightbox({ images, index });
+  const showPreviousImage = () => {
+    setLightbox((current) => current && current.index > 0 ? { ...current, index: current.index - 1 } : current);
+  };
+  const showNextImage = () => {
+    setLightbox((current) => current && current.index < current.images.length - 1 ? { ...current, index: current.index + 1 } : current);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -391,7 +466,7 @@ export default function BlogArticle() {
                           <button
                             type="button"
                             className="group relative flex aspect-[16/9] w-full items-center justify-center overflow-hidden border border-border bg-background"
-                            onClick={() => setSelectedImage(image)}
+                            onClick={() => openLightbox([image])}
                             aria-label={`Open larger image: ${image.alt}`}
                           >
                             <img
@@ -410,6 +485,9 @@ export default function BlogArticle() {
                         </figure>
                       ))}
                     </div>
+                  )}
+                  {section.imageCarousel && (
+                    <ArticleImageCarouselBlock carousel={section.imageCarousel} onSelectImage={openLightbox} />
                   )}
                   {section.imagePlaceholder && (
                     <figure className="mt-8 border border-dashed border-border bg-card p-6">
@@ -576,7 +654,7 @@ export default function BlogArticle() {
           </div>
         </motion.article>
       </main>
-      <Dialog open={Boolean(selectedImage)} onOpenChange={(open) => !open && setSelectedImage(null)}>
+      <Dialog open={Boolean(selectedImage)} onOpenChange={(open) => !open && setLightbox(null)}>
         <DialogContent className="max-h-[92svh] w-[calc(100vw-1.5rem)] max-w-6xl gap-3 border-border bg-background p-3 sm:p-4 [&>button]:hidden">
           <div className="absolute right-3 top-3 z-10">
             <DialogClose className="grid h-10 w-10 place-items-center border border-border bg-card/95 text-muted-foreground opacity-100 transition-colors hover:border-muted-foreground/50 hover:bg-background hover:text-foreground focus:outline-none focus-visible:border-muted-foreground/60 focus-visible:bg-background focus-visible:text-foreground">
@@ -591,15 +669,42 @@ export default function BlogArticle() {
           <DialogDescription className="sr-only">{selectedImage?.caption ?? "Expanded article image"}</DialogDescription>
           {selectedImage && (
             <figure className="flex max-h-[calc(92svh-2rem)] flex-col gap-3">
-              <div className="min-h-0 flex-1 overflow-auto border border-border bg-card">
+              <div className="relative min-h-0 flex-1 overflow-auto border border-border bg-card">
                 <img
                   src={selectedImage.src}
                   alt={selectedImage.alt}
                   className="h-auto min-h-full w-full max-w-none object-contain sm:max-h-[78svh]"
                 />
+                {lightbox && lightbox.images.length > 1 && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={showPreviousImage}
+                      disabled={!canShowPreviousImage}
+                      className="absolute left-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center border border-border bg-background/90 text-foreground transition-colors hover:border-primary hover:text-primary disabled:pointer-events-none disabled:opacity-30"
+                      aria-label="Show previous image"
+                    >
+                      <ArrowLeft className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={showNextImage}
+                      disabled={!canShowNextImage}
+                      className="absolute right-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center border border-border bg-background/90 text-foreground transition-colors hover:border-primary hover:text-primary disabled:pointer-events-none disabled:opacity-30"
+                      aria-label="Show next image"
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </>
+                )}
               </div>
-              <figcaption className="font-mono text-xs leading-relaxed text-muted-foreground">
-                {selectedImage.caption}
+              <figcaption className="grid gap-2 font-mono text-xs leading-relaxed text-muted-foreground sm:grid-cols-[auto_1fr]">
+                {lightbox && lightbox.images.length > 1 && (
+                  <span className="text-primary tabular-nums">
+                    {lightbox.index + 1}/{lightbox.images.length}
+                  </span>
+                )}
+                <span>{selectedImage.caption}</span>
               </figcaption>
             </figure>
           )}

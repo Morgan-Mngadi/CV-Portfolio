@@ -16,6 +16,22 @@ export type SeoConfig = {
 
 export const absoluteUrl = (path: string) => `${SITE_URL}${path === "/" ? "" : path}`;
 
+const MAX_META_DESCRIPTION_LENGTH = 154;
+
+const normaliseMetaDescription = (description: string) => {
+  const trimmedDescription = description.replace(/\s+/g, " ").trim();
+
+  if (trimmedDescription.length <= MAX_META_DESCRIPTION_LENGTH) {
+    return trimmedDescription;
+  }
+
+  const truncatedDescription = trimmedDescription.slice(0, MAX_META_DESCRIPTION_LENGTH - 3);
+  const lastSpaceIndex = truncatedDescription.lastIndexOf(" ");
+  const cleanDescription = lastSpaceIndex > 80 ? truncatedDescription.slice(0, lastSpaceIndex) : truncatedDescription;
+
+  return `${cleanDescription.replace(/[.,;:!?-]+$/, "")}...`;
+};
+
 export const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -78,6 +94,10 @@ const articleText = (article: Article) => {
     text.push(...(section.numberedSteps ?? []));
     text.push(...(section.closingParagraphs ?? []).map(articleParagraphText));
     section.imageBlocks?.forEach((image) => text.push(image.alt, image.caption));
+    if (section.imageCarousel) {
+      text.push(section.imageCarousel.title, section.imageCarousel.description);
+      section.imageCarousel.images.forEach((image) => text.push(image.alt, image.caption));
+    }
     if (section.chart) {
       text.push(section.chart.title, section.chart.subtitle, section.chart.axisLabel, section.chart.sourceLabel);
       section.chart.rows.forEach((row) => text.push(row.label, String(row.value)));
@@ -419,10 +439,12 @@ const withSitewidePersonSchema = (schema: Record<string, unknown>[]) => {
 export const getSeoConfig = (path: string) => {
   const normalisedPath = path === "" ? "/" : path.replace(/\/$/, "") || "/";
   const config = seoByPath[normalisedPath] ?? seoByPath["/"];
-  const page = pageSchema(config.path, config.title, config.description);
+  const description = normaliseMetaDescription(config.description);
+  const page = pageSchema(config.path, config.title, description);
 
   return {
     ...config,
+    description,
     canonical: absoluteUrl(config.path),
     image: config.image ?? DEFAULT_SOCIAL_IMAGE,
     robots: config.robots ?? "index, follow",

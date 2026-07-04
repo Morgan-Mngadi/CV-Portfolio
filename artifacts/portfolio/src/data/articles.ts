@@ -16,6 +16,7 @@ export type ArticleSection = {
   numberedSteps?: string[];
   imageBlocks?: ArticleImage[];
   imageLayout?: string;
+  imageCarousel?: ArticleImageCarousel;
   chart?: ArticleChart;
   comparisonTable?: ArticleComparisonTable;
   imagePlaceholder?: string;
@@ -34,6 +35,12 @@ export type ArticleImage = {
   src: string;
   alt: string;
   caption: string;
+};
+
+export type ArticleImageCarousel = {
+  title: string;
+  description: string;
+  images: ArticleImage[];
 };
 
 export type ArticleComparisonTable = {
@@ -93,6 +100,11 @@ const calculateReadTime = (article: ArticleInput) => {
       visibleText.push(image.caption);
     });
 
+    if (section.imageCarousel) {
+      visibleText.push(section.imageCarousel.title, section.imageCarousel.description);
+      section.imageCarousel.images.forEach((image) => visibleText.push(image.alt, image.caption));
+    }
+
     if (section.chart) {
       visibleText.push(section.chart.title, section.chart.subtitle, section.chart.axisLabel, section.chart.sourceLabel);
       section.chart.rows.forEach((row) => visibleText.push(row.label, String(row.value)));
@@ -128,6 +140,236 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 });
 
 const ARTICLE_INPUTS: ArticleInput[] = [
+  {
+    slug: "social-media-seo-ai-era",
+    title: "Social Media SEO in the AI Era",
+    excerpt:
+      "A practical look at how social media affects SEO in 2026, from branded SERP visibility and content discovery to AI Overviews, LLM citations, and off-page authority.",
+    category: "Social Media SEO",
+    date: "Jul 2026",
+    sections: [
+      {
+        id: "what-social-media-seo-is",
+        heading: "What social media SEO means in 2026",
+        paragraphs: [
+          "Social media SEO is the practice of making brand, creator, and content activity on social platforms easier to discover, understand, trust, and connect back to the wider organic search strategy.",
+          "It does not mean that every like, share, or follower count is a direct Google ranking factor. The more useful way to think about it is that social media can influence discovery, branded demand, entity recognition, content distribution, reputation, and the sources people and AI systems encounter when researching a topic.",
+          {
+            text: "This is why social media now sits inside a wider off-page SEO strategy. The website is still the home base, but platforms such as YouTube, LinkedIn, Reddit, Instagram, TikTok, Facebook, and niche communities can shape how people search for a brand and how confidently search systems understand it.",
+            links: [
+              {
+                text: "off-page SEO strategy",
+                href: "/blog/off-page-seo-in-2026",
+              },
+            ],
+          },
+        ],
+        bullets: [
+          "Social profiles can rank for branded searches and occupy more SERP real estate.",
+          "Social content can be discovered directly inside Google results, platform search, and AI-assisted answers.",
+          "Useful posts can create secondary demand by encouraging people to search for the brand, product, person, or topic later.",
+          "Community conversations can reveal how real users describe problems, objections, comparisons, and alternatives.",
+          "Social platforms can help distribute assets that earn links, mentions, embeds, newsletter references, and PR opportunities.",
+        ],
+      },
+      {
+        id: "how-social-media-impacts-seo",
+        heading: "How social media impacts SEO",
+        paragraphs: [
+          "The SEO impact of social media is mostly indirect, but indirect does not mean unimportant. Search visibility is shaped by more than what happens on a website. It is shaped by what people search, where they discover a brand, what independent sources mention it, and whether the same entity is described consistently across the web.",
+          "A strong social presence can help SEO by improving content distribution. When an article, tool, video, report, or opinion reaches the right audience, it has a better chance of earning links, branded searches, newsletter mentions, podcast references, forum discussions, and PR coverage.",
+          "It can also help search intent research. Comments, replies, DMs, Reddit threads, LinkedIn discussions, and YouTube comments often reveal the exact language people use before that language appears in keyword tools.",
+        ],
+        comparisonTable: {
+          columns: ["Social Activity", "SEO Impact", "What To Measure"],
+          rows: [
+            ["Consistent branded profiles", "Improves branded SERP coverage and entity consistency.", "Branded rankings, profile visibility, knowledge panel signals, referral clicks."],
+            ["Educational posts and clips", "Creates demand and supports topical authority beyond the website.", "Branded search growth, assisted conversions, engagement quality."],
+            ["Community discussions", "Reveals real user language, pain points, and comparison intent.", "Repeated questions, objections, product terms, competitor mentions."],
+            ["Social distribution of assets", "Increases the chance of links, mentions, embeds, and PR pickup.", "Backlinks, unlinked mentions, newsletter references, referring domains."],
+            ["YouTube and video content", "Can appear in Google results and support richer search visibility.", "Video impressions, watch time, SERP appearances, embedded page engagement."],
+          ],
+        },
+      },
+      {
+        id: "social-media-in-ai-search",
+        heading: "Social media in AI search and LLM visibility",
+        paragraphs: [
+          {
+            text: "AI search has made social media more important because AI systems often need fresh, human, experience-led sources to answer messy real-world questions. Google's own guidance on generative AI search says SEO best practices still matter because AI features are rooted in Search ranking and quality systems, while also rewarding useful, non-commodity content and first-hand experience.",
+            links: [
+              {
+                text: "Google's own guidance on generative AI search",
+                href: "https://developers.google.com/search/docs/fundamentals/ai-optimization-guide",
+              },
+            ],
+          },
+          {
+            text: "The shift is visible in citation data too. Semrush's study of the most-cited domains in LLM responses placed community, social, and content platforms such as Reddit, LinkedIn, Wikipedia, Medium, YouTube, Facebook, Quora, and Instagram among the domains that AI systems reference frequently.",
+            links: [
+              {
+                text: "Semrush's study of the most-cited domains in LLM responses",
+                href: "https://www.semrush.com/blog/most-cited-domains-ai/",
+              },
+            ],
+          },
+          "This does not mean every brand should chase every platform. It means social content is increasingly part of the public evidence layer around a brand, person, product, or topic. If that evidence is thin, inconsistent, overly promotional, or absent, AI systems and users have less to work with.",
+        ],
+        bullets: [
+          "Reddit-style discussions can surface authentic experience, objections, and comparisons.",
+          "LinkedIn can strengthen professional entity signals for people, teams, and B2B brands.",
+          "YouTube can support search visibility through videos, transcripts, embeds, and VideoObject schema on relevant pages.",
+          "Instagram and TikTok can influence discovery and branded demand, especially where visuals, locations, products, and creators matter.",
+          "Quora, forums, and niche communities can reveal questions that deserve stronger website content.",
+        ],
+        imageCarousel: {
+          title: "Examples of Social Sources in AI Overviews",
+          description:
+            "These screenshots show YouTube and Facebook results appearing as cited or supporting examples inside an AI Overview source panel.",
+          images: [
+            {
+              src: "/article-images/ai-overview-youtube-social-source.png",
+              alt: "AI Overview source panel highlighting a YouTube result for a brownie-related query.",
+              caption:
+                "YouTube result highlighted inside an AI Overview source panel, showing how video platforms can become part of AI-assisted discovery.",
+            },
+            {
+              src: "/article-images/ai-overview-facebook-blue-bowl.png",
+              alt: "AI Overview source panel highlighting a Facebook result from Blue Bowl Recipes.",
+              caption:
+                "Facebook content highlighted in an AI Overview source panel, showing that social posts can appear alongside traditional web pages.",
+            },
+            {
+              src: "/article-images/ai-overview-facebook-recipetin.png",
+              alt: "AI Overview source panel highlighting a Facebook result from RecipeTin Eats.",
+              caption:
+                "Another Facebook example in an AI Overview source panel, reinforcing how platform content can support search and AI visibility.",
+            },
+          ],
+        },
+      },
+      {
+        id: "platform-by-platform",
+        heading: "Platform-by-platform SEO opportunities",
+        paragraphs: [
+          "Different platforms support SEO in different ways. The mistake is treating every channel as a place to repost the same caption. The better approach is to understand what each platform contributes to discovery, trust, and evidence.",
+          {
+            text: "YouTube deserves special attention because it is both a social platform and a search engine. A well-optimised video can rank on YouTube, appear in Google results, support a website page when embedded, and strengthen the wider organic strategy.",
+            links: [
+              {
+                text: "well-optimised video",
+                href: "/blog/youtube-seo-in-2026",
+              },
+            ],
+          },
+        ],
+        bullets: [
+          "LinkedIn: useful for B2B authority, expert commentary, employee advocacy, case study distribution, and professional entity visibility.",
+          "YouTube: useful for tutorials, explainers, product demos, reviews, webinars, interviews, and embedded video SEO.",
+          "Reddit and forums: useful for understanding real user language, pain points, comparisons, and reputation risks.",
+          "Instagram: useful for visual proof, local discovery, product storytelling, creators, and brand familiarity.",
+          "TikTok: useful for demand creation, short educational clips, product discovery, and early trend signals.",
+          "Facebook: still useful for local communities, reviews, events, groups, and older audience segments in many markets.",
+          "Pinterest: useful for visual search, evergreen inspiration, ecommerce, recipes, design, travel, fashion, and planning-led queries.",
+        ],
+      },
+      {
+        id: "how-to-optimise-social-profiles",
+        heading: "How to optimise social profiles for SEO",
+        paragraphs: [
+          "Profile optimisation is the foundation. If the brand name, handles, bios, links, locations, descriptions, and visual identity are inconsistent, search engines and users receive a weaker entity signal.",
+          {
+            text: "At a technical level, a website can also use Organization or Person structured data with sameAs references to connect official social profiles to the main entity. Schema.org describes sameAs as a URL that unambiguously indicates the identity of the item.",
+            links: [
+              {
+                text: "sameAs",
+                href: "https://schema.org/sameAs",
+              },
+            ],
+          },
+        ],
+        numberedSteps: [
+          "Use a consistent brand, person, or organisation name across platforms.",
+          "Keep handles as consistent as possible, especially for branded search clarity.",
+          "Write bios that clearly explain who you help, what you do, and the topics you cover.",
+          "Link back to the most relevant website page, not always only the homepage.",
+          "Keep location, contact, and business information consistent where relevant.",
+          "Use profile images and banners that match the wider brand identity.",
+          "Add official social profile links to the website and structured data where appropriate.",
+          "Refresh pinned posts, featured links, playlists, and highlights so the first impression is current.",
+        ],
+      },
+      {
+        id: "content-strategy",
+        heading: "A social content strategy that supports SEO",
+        paragraphs: [
+          "The best social media strategy for SEO starts with assets worth discovering. That could be a guide, tool, dataset, template, case study, video, original opinion, research breakdown, or practical checklist.",
+          "From there, social content should distribute and reframe the asset. One article can become a LinkedIn post, a short video, a YouTube explainer, a carousel, a Reddit discussion prompt, a newsletter section, and a series of FAQs. Each format should add something useful for that platform rather than simply pointing back to the article.",
+          "The strongest signal is usefulness. If social posts help people understand a problem, make a decision, compare options, or do something more effectively, they are more likely to earn engagement that matters: saves, replies, shares, branded searches, mentions, links, and qualified traffic.",
+        ],
+        bullets: [
+          "Turn strong website content into native social formats.",
+          "Use social comments and questions to improve website FAQs and article sections.",
+          "Repurpose videos into embedded website assets with transcripts and schema where useful.",
+          "Create original data, tools, templates, and opinion-led content that people have a reason to reference.",
+          "Use employee and expert voices where trust matters more than brand polish.",
+          "Track which social topics lead to branded search, assisted conversions, links, and enquiries.",
+        ],
+      },
+      {
+        id: "measurement",
+        heading: "How to measure social media's SEO impact",
+        paragraphs: [
+          "The biggest measurement mistake is expecting social media to behave like last-click organic search. Social often works earlier in the journey. It creates awareness, trust, memory, and demand before a user searches, visits, converts, or mentions the brand elsewhere.",
+          "Measurement should connect platform metrics with search and business outcomes. A post with fewer likes but strong saves, profile visits, branded searches, demo requests, newsletter signups, or link pickup may be more valuable than a viral post that attracts the wrong audience.",
+        ],
+        bullets: [
+          "Track branded search growth in Google Search Console.",
+          "Review social referral traffic and assisted conversions in GA4.",
+          "Monitor unlinked brand mentions, backlinks, newsletter mentions, and podcast references.",
+          "Watch profile rankings and branded SERP coverage.",
+          "Use UTM parameters for important campaign links.",
+          "Compare social topics against organic search impressions, queries, and content updates.",
+          "Track AI search visibility manually or with specialist tools where budget allows.",
+        ],
+        closingParagraphs: [
+          "Social media is not a replacement for technical SEO, content strategy, or link building. It is the distribution, conversation, and evidence layer that helps people and search systems understand why a brand deserves attention.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Does social media directly improve Google rankings?",
+        answer:
+          "Not in the simple sense of likes or follower counts acting as direct ranking factors. Social media usually supports SEO indirectly through discovery, branded searches, content distribution, links, mentions, reputation, and entity consistency.",
+      },
+      {
+        question: "Can social media content appear in search results?",
+        answer:
+          "Yes. Social profiles, YouTube videos, Reddit threads, LinkedIn posts, Instagram content, TikTok results, and other platform pages can appear in search results depending on the query, platform accessibility, and search intent.",
+      },
+      {
+        question: "Why does social media matter more in the AI era?",
+        answer:
+          "AI systems often draw from public web content and sources that show real experience, discussion, and up-to-date context. Social platforms and communities can become part of the evidence layer around a brand, person, product, or topic.",
+      },
+      {
+        question: "Which social platform is best for SEO?",
+        answer:
+          "It depends on the audience and topic. YouTube is especially strong for search-led video discovery, LinkedIn is useful for B2B authority, Reddit and forums reveal real user language, and visual platforms can support product, local, creator, and lifestyle discovery.",
+      },
+      {
+        question: "Should every website add social profile schema?",
+        answer:
+          "If the profiles are official and important to the entity, structured data with sameAs references can help connect the website to those profiles. It should be accurate, consistent, and supported by visible links where appropriate.",
+      },
+      {
+        question: "How should SEO and social teams work together?",
+        answer:
+          "SEO teams can provide search intent, content gaps, priority topics, and measurement. Social teams can provide audience language, creative formats, distribution, community insight, and trend feedback. The strongest results happen when both teams plan around the same assets and business goals.",
+      },
+    ],
+  },
   {
     slug: "youtube-seo-in-2026",
     title: "YouTube SEO in 2026: Audits, Embeds, and Video Schema",

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Clock } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { ARTICLES } from "@/data/articles";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
@@ -15,10 +16,51 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
-const CATEGORIES = ["All", "AI Search", "Measurement"];
+const CATEGORY_QUERY_KEY = "category";
+
+const categoryToQueryValue = (category: string) => category.toLowerCase().replace(/&/g, "and").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+const categoryFromSearch = (search: string, categories: string[]) => {
+  const queryCategory = new URLSearchParams(search).get(CATEGORY_QUERY_KEY);
+
+  if (!queryCategory) {
+    return "All";
+  }
+
+  const matchingCategory = categories.find((category) => categoryToQueryValue(category) === queryCategory);
+  return matchingCategory ?? "All";
+};
 
 export default function Blog() {
   const [featured, ...rest] = ARTICLES;
+  const categories = useMemo(() => ["All", ...Array.from(new Set(ARTICLES.map((article) => article.category)))], []);
+  const [activeCategory, setActiveCategory] = useState(() =>
+    typeof window === "undefined" ? "All" : categoryFromSearch(window.location.search, categories),
+  );
+  const visiblePosts = activeCategory === "All" ? rest : ARTICLES.filter((article) => article.category === activeCategory);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setActiveCategory(categoryFromSearch(window.location.search, categories));
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, [categories]);
+
+  const updateCategory = (category: string) => {
+    setActiveCategory(category);
+
+    const url = new URL(window.location.href);
+
+    if (category === "All") {
+      url.searchParams.delete(CATEGORY_QUERY_KEY);
+    } else {
+      url.searchParams.set(CATEGORY_QUERY_KEY, categoryToQueryValue(category));
+    }
+
+    window.history.pushState({}, "", `${url.pathname}${url.search}${url.hash}`);
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -56,7 +98,6 @@ export default function Blog() {
           </motion.p>
         </motion.section>
 
-        {/* FEATURED POST */}
         <motion.section
           initial="hidden"
           whileInView="visible"
@@ -98,33 +139,38 @@ export default function Blog() {
           viewport={{ once: true }}
           variants={fadeUp}
           className="py-8 flex flex-wrap gap-2 border-b border-border"
+          aria-label="Filter articles by category"
         >
-          {CATEGORIES.map((cat, i) => (
-            <span
-              key={cat}
-              className={`font-mono text-xs px-3 py-1.5 border transition-colors cursor-default ${
-                i === 0
-                  ? "border-primary bg-primary/10 text-primary"
-                  : "border-border text-muted-foreground hover:border-primary/50"
-              }`}
-            >
-              {cat}
-            </span>
-          ))}
+          {categories.map((cat) => {
+            const isActive = activeCategory === cat;
+
+            return (
+              <button
+                type="button"
+                key={cat}
+                aria-pressed={isActive}
+                onClick={() => updateCategory(cat)}
+                className={`font-mono text-xs px-3 py-1.5 border transition-colors ${
+                  isActive
+                    ? "border-primary bg-primary/10 text-primary cursor-default"
+                    : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground cursor-pointer"
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
         </motion.div>
 
         {/* POST LIST */}
-        <motion.section
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={stagger}
+        <section
+          id="article-results"
+          aria-label={`${activeCategory} articles`}
           className="py-12 flex flex-col divide-y divide-border"
         >
-          {rest.map((post) => (
-            <motion.div
+          {visiblePosts.length > 0 ? visiblePosts.map((post) => (
+            <article
               key={post.slug}
-              variants={fadeUp}
               className="group py-8 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-start cursor-pointer hover:bg-card/40 transition-colors px-0 -mx-0"
             >
               <a href={`/blog/${post.slug}`}>
@@ -138,9 +184,11 @@ export default function Blog() {
                 <p className="text-muted-foreground leading-relaxed max-w-2xl text-sm">{post.excerpt}</p>
               </a>
               <ArrowUpRight className="w-5 h-5 text-muted-foreground group-hover:text-primary transition-colors shrink-0 mt-1 hidden md:block" />
-            </motion.div>
-          ))}
-        </motion.section>
+            </article>
+          )) : (
+            <p className="text-sm text-muted-foreground">No articles found for this category yet.</p>
+          )}
+        </section>
 
       </div>
       <SiteFooter />
