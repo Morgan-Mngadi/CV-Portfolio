@@ -1,4 +1,4 @@
-import { ARTICLES, type Article } from "@/data/articles";
+import { ARTICLES, articleParagraphText, type Article } from "@/data/articles";
 
 export const SITE_URL = "https://morgan-mngadi-portfolio.online";
 export const SITE_NAME = "Morgan Mngadi";
@@ -73,12 +73,17 @@ const articleText = (article: Article) => {
   const text: string[] = [article.title, article.excerpt, article.category];
 
   article.sections.forEach((section) => {
-    text.push(section.heading, ...section.paragraphs);
+    text.push(section.heading, ...section.paragraphs.map(articleParagraphText));
     text.push(...(section.bullets ?? []));
     text.push(...(section.numberedSteps ?? []));
-    text.push(...(section.closingParagraphs ?? []));
+    text.push(...(section.closingParagraphs ?? []).map(articleParagraphText));
     section.imageBlocks?.forEach((image) => text.push(image.alt, image.caption));
+    if (section.chart) {
+      text.push(section.chart.title, section.chart.subtitle, section.chart.axisLabel, section.chart.sourceLabel);
+      section.chart.rows.forEach((row) => text.push(row.label, String(row.value)));
+    }
     section.comparisonTable?.rows.forEach((row) => text.push(...row));
+    section.links?.forEach((link) => text.push(link.label));
   });
 
   article.faqs.forEach((faq) => text.push(faq.question, faq.answer));

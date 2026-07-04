@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, CalendarDays, Clock, Maximize2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
-import { ARTICLES, getArticle, type ArticleComparisonTable, type ArticleImage } from "@/data/articles";
+import { ARTICLES, getArticle, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleParagraph } from "@/data/articles";
 import {
   Dialog,
   DialogClose,
@@ -24,6 +24,131 @@ const stagger = {
   hidden: {},
   visible: { transition: { staggerChildren: 0.08 } },
 };
+
+const isExternalHref = (href: string) => /^https?:\/\//.test(href);
+
+function renderLinkedParagraph(paragraph: ArticleParagraph) {
+  if (typeof paragraph === "string") {
+    return paragraph;
+  }
+
+  const content = [];
+  let remainingText = paragraph.text;
+
+  paragraph.links.forEach((link) => {
+    const linkIndex = remainingText.indexOf(link.text);
+
+    if (linkIndex === -1) {
+      return;
+    }
+
+    const beforeLink = remainingText.slice(0, linkIndex);
+
+    if (beforeLink) {
+      content.push(beforeLink);
+    }
+
+    content.push(
+      isExternalHref(link.href) ? (
+        <a
+          key={`${link.href}-${content.length}`}
+          href={link.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
+        >
+          {link.text}
+        </a>
+      ) : (
+        <Link
+          key={`${link.href}-${content.length}`}
+          href={link.href}
+          className="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary"
+        >
+          {link.text}
+        </Link>
+      ),
+    );
+
+    remainingText = remainingText.slice(linkIndex + link.text.length);
+  });
+
+  if (remainingText) {
+    content.push(remainingText);
+  }
+
+  return content;
+}
+
+function ArticleBarChart({ chart }: { chart: ArticleChart }) {
+  const maxValue = Math.max(...chart.rows.map((row) => row.value), 1);
+  const ticks = [0, 2.5, 5, 7.5, 10];
+
+  return (
+    <figure className="mt-8 border border-border bg-card p-4 sm:p-6">
+      <div className="mb-6 border-b border-border pb-5">
+        <p className="font-mono text-xs uppercase tracking-widest text-primary">AI Citation Visibility</p>
+        <h3 className="mt-3 text-2xl font-medium tracking-tight text-foreground">{chart.title}</h3>
+        <p className="mt-2 text-sm text-muted-foreground">{chart.subtitle}</p>
+      </div>
+
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-y-0 left-[7.5rem] right-0 hidden sm:grid grid-cols-4">
+          {[0, 1, 2, 3].map((line) => (
+            <span key={line} className="border-l border-border/70" />
+          ))}
+        </div>
+
+        <div className="relative z-10 flex flex-col gap-2">
+          {chart.rows.map((row, index) => {
+            const width = `${Math.min(100, (row.value / maxValue) * 100)}%`;
+            const isWikipedia = row.label === "wikipedia.org";
+
+            return (
+              <div
+                key={row.label}
+                className="grid grid-cols-[7.5rem_1fr] items-center gap-3 sm:grid-cols-[7.5rem_1fr_3.25rem]"
+              >
+                <div className={`truncate font-mono text-[0.7rem] sm:text-xs ${isWikipedia ? "text-primary" : "text-muted-foreground"}`}>
+                  {row.label}
+                </div>
+                <div className="h-7 border border-border bg-background/80 p-1">
+                  <motion.div
+                    className={isWikipedia ? "h-full bg-primary" : "h-full bg-muted-foreground/35"}
+                    initial={{ width: 0 }}
+                    whileInView={{ width }}
+                    viewport={{ once: true, margin: "-80px" }}
+                    transition={{ duration: 0.65, delay: index * 0.025, ease: "easeOut" }}
+                    aria-label={`${row.label}: ${row.value}%`}
+                  />
+                </div>
+                <div className={`hidden text-right font-mono text-[0.7rem] sm:block ${isWikipedia ? "text-primary" : "text-muted-foreground"}`}>
+                  {row.value.toFixed(1)}%
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="mt-4 hidden grid-cols-[7.5rem_1fr_3.25rem] items-center gap-3 sm:grid">
+          <span />
+          <div className="grid grid-cols-5 font-mono text-[0.65rem] text-muted-foreground">
+            {ticks.map((tick) => (
+              <span key={tick} className={tick === 0 ? "text-left" : "text-right"}>
+                {tick === 0 ? "0" : `${tick}%`}
+              </span>
+            ))}
+          </div>
+          <span />
+        </div>
+      </div>
+
+      <figcaption className="mt-5 border-t border-border pt-4 font-mono text-xs leading-relaxed text-muted-foreground">
+        {chart.axisLabel}. {chart.sourceLabel}
+      </figcaption>
+    </figure>
+  );
+}
 
 function ScrollableComparisonTable({ table }: { table: ArticleComparisonTable }) {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -229,8 +354,8 @@ export default function BlogArticle() {
                   <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-5">{section.heading}</h2>
                   <div className="flex flex-col gap-4">
                     {section.paragraphs.map((paragraph) => (
-                      <p key={paragraph} className="text-muted-foreground leading-relaxed">
-                        {paragraph}
+                      <p key={typeof paragraph === "string" ? paragraph : paragraph.text} className="text-muted-foreground leading-relaxed">
+                        {renderLinkedParagraph(paragraph)}
                       </p>
                     ))}
                   </div>
@@ -255,6 +380,9 @@ export default function BlogArticle() {
                   )}
                   {section.comparisonTable && (
                     <ScrollableComparisonTable table={section.comparisonTable} />
+                  )}
+                  {section.chart && (
+                    <ArticleBarChart chart={section.chart} />
                   )}
                   {section.imageBlocks && (
                     <div className={section.imageLayout === "grid" ? "mt-8 grid grid-cols-1 gap-6 md:grid-cols-2" : "mt-8 flex flex-col gap-8"}>
@@ -298,16 +426,52 @@ export default function BlogArticle() {
                   {section.closingParagraphs && (
                     <div className="mt-6 flex flex-col gap-4">
                       {section.closingParagraphs.map((paragraph) => (
-                        <p key={paragraph} className="text-muted-foreground leading-relaxed">
-                          {paragraph}
+                        <p key={typeof paragraph === "string" ? paragraph : paragraph.text} className="text-muted-foreground leading-relaxed">
+                          {renderLinkedParagraph(paragraph)}
                         </p>
                       ))}
                     </div>
                   )}
                   {section.link && (
-                    <Link href={section.link.href} className="mt-6 inline-flex font-mono text-xs uppercase tracking-widest text-primary hover:underline">
-                      {section.link.label}
-                    </Link>
+                    isExternalHref(section.link.href) ? (
+                      <a
+                        href={section.link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-6 inline-flex font-mono text-xs uppercase tracking-widest text-primary hover:underline"
+                      >
+                        {section.link.label}
+                      </a>
+                    ) : (
+                      <Link href={section.link.href} className="mt-6 inline-flex font-mono text-xs uppercase tracking-widest text-primary hover:underline">
+                        {section.link.label}
+                      </Link>
+                    )
+                  )}
+                  {section.links && (
+                    <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                      {section.links.map((link) => (
+                        isExternalHref(link.href) ? (
+                          <a
+                            key={link.href}
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex font-mono text-xs uppercase tracking-widest text-primary hover:underline"
+                          >
+                            {link.label}
+                          </a>
+                        ) : (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            className="inline-flex font-mono text-xs uppercase tracking-widest text-primary hover:underline"
+                          >
+                            {link.label}
+                          </Link>
+                        )
+                      ))}
+                    </div>
                   )}
                 </motion.section>
               ))}

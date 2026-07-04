@@ -1,18 +1,33 @@
+export type ArticleTextLink = {
+  text: string;
+  href: string;
+};
+
+export type ArticleParagraph = string | {
+  text: string;
+  links: ArticleTextLink[];
+};
+
 export type ArticleSection = {
   id: string;
   heading: string;
-  paragraphs: string[];
+  paragraphs: ArticleParagraph[];
   bullets?: string[];
   numberedSteps?: string[];
   imageBlocks?: ArticleImage[];
   imageLayout?: string;
+  chart?: ArticleChart;
   comparisonTable?: ArticleComparisonTable;
   imagePlaceholder?: string;
-  closingParagraphs?: string[];
+  closingParagraphs?: ArticleParagraph[];
   link?: {
     href: string;
     label: string;
   };
+  links?: {
+    href: string;
+    label: string;
+  }[];
 };
 
 export type ArticleImage = {
@@ -24,6 +39,17 @@ export type ArticleImage = {
 export type ArticleComparisonTable = {
   columns: string[];
   rows: string[][];
+};
+
+export type ArticleChart = {
+  title: string;
+  subtitle: string;
+  axisLabel: string;
+  sourceLabel: string;
+  rows: {
+    label: string;
+    value: number;
+  }[];
 };
 
 export type ArticleFaq = {
@@ -51,18 +77,26 @@ const WORDS_PER_MINUTE = 200;
 
 const countWords = (text: string) => text.match(/[A-Za-z0-9]+(?:[-'][A-Za-z0-9]+)*/g)?.length ?? 0;
 
+export const articleParagraphText = (paragraph: ArticleParagraph) =>
+  typeof paragraph === "string" ? paragraph : paragraph.text;
+
 const calculateReadTime = (article: ArticleInput) => {
   const visibleText: string[] = [article.title, article.excerpt];
 
   article.sections.forEach((section) => {
-    visibleText.push(section.heading, ...section.paragraphs);
+    visibleText.push(section.heading, ...section.paragraphs.map(articleParagraphText));
     visibleText.push(...(section.bullets ?? []));
     visibleText.push(...(section.numberedSteps ?? []));
-    visibleText.push(...(section.closingParagraphs ?? []));
+    visibleText.push(...(section.closingParagraphs ?? []).map(articleParagraphText));
 
     section.imageBlocks?.forEach((image) => {
       visibleText.push(image.caption);
     });
+
+    if (section.chart) {
+      visibleText.push(section.chart.title, section.chart.subtitle, section.chart.axisLabel, section.chart.sourceLabel);
+      section.chart.rows.forEach((row) => visibleText.push(row.label, String(row.value)));
+    }
 
     if (section.imagePlaceholder) {
       visibleText.push(section.imagePlaceholder);
@@ -76,6 +110,8 @@ const calculateReadTime = (article: ArticleInput) => {
     if (section.link) {
       visibleText.push(section.link.label);
     }
+
+    section.links?.forEach((link) => visibleText.push(link.label));
   });
 
   article.faqs.forEach((faq) => {
@@ -92,6 +128,562 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 });
 
 const ARTICLE_INPUTS: ArticleInput[] = [
+  {
+    slug: "youtube-seo-in-2026",
+    title: "YouTube SEO in 2026: Audits, Embeds, and Video Schema",
+    excerpt:
+      "A practical guide to YouTube SEO in 2026, covering channel audits, video optimisation, embedded YouTube videos, and VideoObject schema markup.",
+    category: "Video SEO",
+    date: "Jul 2026",
+    sections: [
+      {
+        id: "what-youtube-seo-is",
+        heading: "What YouTube SEO is in 2026",
+        paragraphs: [
+          "YouTube SEO is the process of making videos and channels easier to discover, understand, watch, and trust across YouTube, Google Search, Google video surfaces, and wider AI-assisted discovery.",
+          "It is not only about adding tags or repeating keywords in a title. Good YouTube SEO connects audience intent, video packaging, content quality, retention, channel authority, website embeds, and structured data into one system.",
+          "In 2026, YouTube SEO sits between search, content strategy, brand building, and off-page SEO. A useful video can rank on YouTube, appear in Google results, support AI visibility, earn branded searches, and make website pages more engaging.",
+        ],
+        bullets: [
+          "Optimise the video title, description, thumbnail, chapters, transcript, and on-video content around real user intent.",
+          "Improve watch behaviour by making the opening clear, useful, and aligned with the promise of the title and thumbnail.",
+          "Use playlists and channel structure to group related topics.",
+          "Support video discovery from the website with embedded videos, helpful surrounding content, and schema markup.",
+          "Measure performance through views, retention, search traffic, referral clicks, leads, branded search, and assisted conversions.",
+        ],
+        link: {
+          href: "/blog/off-page-seo-in-2026",
+          label: "Read how YouTube fits into off-page SEO",
+        },
+      },
+      {
+        id: "benefits-of-youtube-seo",
+        heading: "The benefits of YouTube SEO",
+        paragraphs: [
+          "The biggest benefit of YouTube SEO is discoverability. People use YouTube to learn, compare, review, troubleshoot, and validate whether they trust a person, brand, product, or service.",
+          "For businesses and specialists, YouTube can also support authority. A well-structured video can demonstrate expertise faster than a page of copy, especially when the user needs to see a process, explanation, product, location, or result.",
+        ],
+        bullets: [
+          "Increases visibility across YouTube search, suggested videos, Google Search, video results, and Google Discover where eligible.",
+          "Builds trust by showing expertise, personality, process, and proof in a more human format.",
+          "Supports website engagement when videos are embedded on relevant pages.",
+          "Creates another discovery path for users who prefer watching before reading or enquiring.",
+          "Can support branded demand when users discover the channel before searching for the brand directly.",
+          "Provides reusable content that can be repurposed into articles, clips, social posts, FAQs, and sales enablement material.",
+        ],
+      },
+      {
+        id: "how-to-audit-a-youtube-channel",
+        heading: "How to audit a YouTube channel",
+        paragraphs: [
+          "A YouTube SEO audit should start with the channel as a whole before moving into individual videos. The goal is to understand whether the channel has a clear topic focus, strong packaging, useful metadata, and content that earns attention after the click.",
+          {
+            text: "Tools can speed up the first pass. TubePilot's YouTube Channel Audit tool describes itself as a free tool for analysing channel performance and helping optimise growth and engagement. TubeRanker also provides a YouTube audit tool that can be used as part of a channel review workflow.",
+            links: [
+              {
+                text: "TubePilot's YouTube Channel Audit tool",
+                href: "https://tubepilot.ai/tools/youtube-channel-audit/",
+              },
+              {
+                text: "TubeRanker",
+                href: "https://tuberanker.com/youtube-audit",
+              },
+            ],
+          },
+          "The tool output should not replace judgement. A useful audit connects tool findings with actual search intent, audience behaviour, channel positioning, and business goals.",
+        ],
+        numberedSteps: [
+          "Review the channel positioning: name, handle, banner, profile image, about section, links, and topic clarity.",
+          "Check whether the channel has logical playlists and a clear content architecture.",
+          "Review top videos by views, watch time, traffic source, retention, click-through rate, and conversions where available.",
+          "Audit video titles for intent, clarity, differentiation, and promise accuracy.",
+          "Review thumbnails for readability, contrast, subject clarity, and consistency across the channel.",
+          "Check descriptions for useful summaries, links, timestamps, chapters, and supporting resources.",
+          "Review captions, transcripts, and spoken content to see whether the video actually covers the search intent.",
+          "Compare competing channels and videos to understand what formats, topics, lengths, and angles are already working.",
+          "Prioritise fixes by potential impact: packaging, topic gaps, weak descriptions, missing chapters, poor embeds, and missing schema.",
+        ],
+      },
+      {
+        id: "video-level-optimisation",
+        heading: "How to optimise individual YouTube videos",
+        paragraphs: [
+          "A video audit looks at whether each video earns the click and then satisfies the viewer. If a video has a good topic but weak packaging, it may never get watched. If the packaging is strong but the content does not deliver quickly, retention will suffer.",
+          "The strongest optimisation usually starts before upload. Plan the target query, audience problem, opening hook, video structure, chapters, and supporting page before the video goes live.",
+        ],
+        bullets: [
+          "Use a clear title that matches the viewer's problem or desired outcome.",
+          "Design thumbnails that can be understood quickly on mobile and desktop.",
+          "Write descriptions that summarise the video, include useful links, and add context without stuffing keywords.",
+          "Add chapters with accurate timestamps so users can navigate the video quickly.",
+          "Use captions or transcripts where possible to support accessibility and content understanding.",
+          "Mention the main topic naturally in the spoken intro and deliver value early.",
+          "Use end screens, playlists, and pinned comments to guide the next useful action.",
+        ],
+      },
+      {
+        id: "embedded-youtube-videos",
+        heading: "Embedded YouTube videos on websites",
+        paragraphs: [
+          "Embedded YouTube videos can strengthen a webpage when the video genuinely supports the page intent. A product demo, tutorial, explainer, webinar clip, case study, or walkthrough can help users understand something faster than text alone.",
+          "The mistake is embedding videos as decoration. A video should sit near relevant copy, answer the same search intent as the page, and have enough surrounding context for users and search engines to understand why it is there.",
+          "From an SEO perspective, embedded videos can improve engagement and help a page qualify for richer video understanding when the page is crawlable, the video is visible, and the right structured data is present.",
+        ],
+        bullets: [
+          "Place the video close to the section it supports rather than hiding it at the bottom of the page.",
+          "Add a short intro explaining what the viewer will learn or see.",
+          "Include a transcript or summary for accessibility, scannability, and search context.",
+          "Use a strong static thumbnail or YouTube thumbnail that clearly represents the video.",
+          "Lazy-load embeds where possible so the video does not hurt page performance.",
+          "Make the video responsive so it works properly on mobile.",
+          "Avoid embedding several heavy videos on one page unless they are genuinely useful.",
+        ],
+      },
+      {
+        id: "video-schema-markup",
+        heading: "Video schema markup",
+        paragraphs: [
+          {
+            text: "Video schema helps search engines understand video content on a webpage. Google's video structured data documentation explains that VideoObject markup can influence details shown in video results, such as the description, thumbnail URL, upload date, and duration, and can make it easier for Google to find the video.",
+            links: [
+              {
+                text: "Google's video structured data documentation",
+                href: "https://developers.google.com/search/docs/appearance/structured-data/video",
+              },
+            ],
+          },
+          "For embedded YouTube videos, the schema should describe the video that appears on the page and should match the visible content. Do not add video schema for a video that is hidden, irrelevant, blocked, or not actually useful to the page.",
+          {
+            text: "A practical VideoObject setup usually includes the video name, description, thumbnailUrl, uploadDate, duration where available, and embedUrl. If you need a quicker starting point, the TechnicalSEO Schema Markup Generator can help create a draft before you validate and adjust it for the page.",
+            links: [
+              {
+                text: "TechnicalSEO Schema Markup Generator",
+                href: "https://technicalseo.com/tools/schema-markup-generator/",
+              },
+            ],
+          },
+        ],
+        comparisonTable: {
+          columns: ["Schema Field", "Why It Matters", "Implementation Note"],
+          rows: [
+            ["name", "Tells search engines the video title.", "Match the visible video title or a clear page-level version of it."],
+            ["description", "Explains what the video covers.", "Keep it accurate and aligned with the page copy."],
+            ["thumbnailUrl", "Provides the preview image Google can associate with the video.", "Use a crawlable thumbnail URL."],
+            ["uploadDate", "Clarifies when the video was published.", "Use ISO 8601 date format."],
+            ["duration", "Helps describe video length.", "Use ISO 8601 duration format such as PT3M24S."],
+            ["embedUrl", "Points to the embedded player.", "For YouTube, use the YouTube embed URL for the video."],
+            ["hasPart or timestamps", "Can support key moments when implemented correctly.", "Use only when the chapters are accurate and useful."],
+          ],
+        },
+        closingParagraphs: [
+          "After adding video schema, test it with Google's Rich Results Test and inspect the page in Search Console once it is live. Schema is not a ranking shortcut, but it helps search systems interpret the video more accurately.",
+        ],
+      },
+      {
+        id: "youtube-seo-workflow",
+        heading: "A practical YouTube SEO workflow",
+        paragraphs: [
+          "The best YouTube SEO workflow connects the channel, the video, and the website page. Treat the video as part of the wider organic search system rather than a standalone upload.",
+        ],
+        numberedSteps: [
+          "Choose the audience problem or search intent before recording.",
+          "Research competing YouTube and Google results for the topic.",
+          "Plan the video structure, hook, chapters, and supporting website page.",
+          "Optimise the title, thumbnail, description, chapters, captions, and playlist placement.",
+          "Embed the video on the most relevant webpage with useful surrounding copy.",
+          "Add VideoObject schema where the page contains an indexable, useful embedded video.",
+          "Measure channel metrics and website outcomes together.",
+          "Update titles, thumbnails, descriptions, embeds, and schema as performance data comes in.",
+        ],
+        closingParagraphs: [
+          "YouTube SEO in 2026 is not only a creator tactic. It is part of modern organic visibility. When videos, webpages, schema, and audience intent work together, YouTube can support search discovery, trust, engagement, and business outcomes.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is YouTube SEO?",
+        answer:
+          "YouTube SEO is the process of optimising videos and channels so they are easier to discover, understand, watch, and trust across YouTube, Google Search, video results, and wider organic discovery surfaces.",
+      },
+      {
+        question: "What should a YouTube SEO audit include?",
+        answer:
+          "A YouTube SEO audit should review channel positioning, playlists, titles, thumbnails, descriptions, chapters, captions, retention, traffic sources, competing videos, embeds, and any video schema used on the website.",
+      },
+      {
+        question: "Which tools can help with a YouTube audit?",
+        answer:
+          "Tools such as TubePilot's YouTube Channel Audit and TubeRanker's YouTube Audit can help with the first pass, but the findings should still be reviewed against search intent, audience behaviour, and business goals.",
+      },
+      {
+        question: "Do embedded YouTube videos help SEO?",
+        answer:
+          "They can help when the video supports the page intent, improves engagement, is visible to users, has useful surrounding context, and is supported by accurate VideoObject schema where appropriate.",
+      },
+      {
+        question: "What is VideoObject schema?",
+        answer:
+          "VideoObject schema is structured data that describes a video on a webpage, including details such as the name, description, thumbnail, upload date, duration, and embed URL.",
+      },
+      {
+        question: "Should every embedded YouTube video have schema markup?",
+        answer:
+          "No. Add video schema when the video is important to the page, visible to users, relevant to the page content, and accurately described by the markup.",
+      },
+    ],
+  },
+  {
+    slug: "wikipedia-for-seo-and-knowledge-graphs",
+    title: "Wikipedia for SEO, Knowledge Graphs, and AI Search",
+    excerpt:
+      "A practical look at what Wikipedia is, why it matters for SEO, how the backlink value has changed, and why it still matters in the AI search age.",
+    category: "Authority Building",
+    date: "Jul 2026",
+    sections: [
+      {
+        id: "what-wikipedia-is",
+        heading: "What Wikipedia is",
+        paragraphs: [
+          "Wikipedia is a free, community-edited online encyclopedia. Its purpose is not to promote brands, sell products, or help marketers build backlinks. Its purpose is to document notable topics using reliable, independent sources.",
+          "That distinction matters for SEO. Wikipedia is powerful because it is trusted, heavily referenced, structured, and widely used across the web. But it is not a place where every business, person, product, or campaign automatically belongs.",
+          "A Wikipedia page usually needs notability. That means the subject should have meaningful coverage from independent sources, not only its own website, social profiles, press releases, or paid placements.",
+        ],
+      },
+      {
+        id: "why-wikipedia-matters-for-seo",
+        heading: "Why Wikipedia matters for SEO",
+        paragraphs: [
+          "From an SEO perspective, Wikipedia matters less as a ranking shortcut and more as an authority and entity signal. It can help search systems understand what a topic is, how it relates to other topics, and which sources support that understanding.",
+          "For well-known people, organisations, places, books, films, public figures, products, and concepts, Wikipedia often becomes part of the public evidence layer around that entity. It can influence how users validate information and how search engines connect facts across the web.",
+          "The benefit is not simply traffic from Wikipedia. The bigger benefit is credibility, entity clarity, and the possibility of supporting wider visibility in search features that depend on structured understanding.",
+        ],
+        bullets: [
+          "It can support entity recognition when a subject is notable and well documented.",
+          "It can help users validate public information about a person, organisation, place, or topic.",
+          "It can contribute to the broader source ecosystem around a brand or entity.",
+          "It can send referral traffic when a citation is genuinely useful.",
+          "It can support trust when it aligns with independent coverage, structured data, Wikidata, and consistent brand information elsewhere.",
+        ],
+      },
+      {
+        id: "knowledge-graphs",
+        heading: "Wikipedia and search engine knowledge graphs",
+        paragraphs: [
+          "A knowledge graph is a structured way of understanding entities and the relationships between them. Instead of only matching words on pages, search engines use entity understanding to connect people, organisations, places, topics, products, and facts.",
+          "Wikipedia and Wikidata are important in this context because they provide structured, widely referenced information about notable entities. They are not the only sources search engines use, but they can be part of the evidence that helps systems understand what an entity is and how it connects to other entities.",
+          "This is why Wikipedia often appears around Knowledge Panels, entity results, and fact-based search experiences. It helps create a clearer public record, especially when it is supported by other reliable sources.",
+        ],
+        comparisonTable: {
+          columns: ["Element", "Role in Search Understanding", "SEO Implication"],
+          rows: [
+            [
+              "Wikipedia",
+              "Provides encyclopedic context, citations, and public explanations of notable entities.",
+              "Can support credibility and entity clarity, but should not be used as a promotional page.",
+            ],
+            [
+              "Wikidata",
+              "Stores structured facts about entities and relationships in a machine-readable way.",
+              "Can help reinforce entity consistency when information is accurate and properly sourced.",
+            ],
+            [
+              "Knowledge Graph",
+              "Connects entities and facts so search engines can understand meaning beyond keywords.",
+              "Makes consistent entity signals, reliable sources, schema, and public mentions more important.",
+            ],
+          ],
+        },
+      },
+      {
+        id: "backlinking-has-changed",
+        heading: "What changed from a backlinking perspective",
+        paragraphs: [
+          "Years ago, many SEOs treated Wikipedia as a dream backlink target because the domain had enormous authority. That mindset created abuse. People tried to insert links for ranking value, not because the link genuinely improved the article.",
+          "Wikipedia responded by making external links nofollow. That means Wikipedia should not be treated as a clean follow-link strategy or a way to pass traditional link equity.",
+          "This does not make Wikipedia worthless for SEO. It changes the reason it matters. The value is now closer to citation quality, referral discovery, entity validation, and knowledge graph support than direct PageRank-style link building.",
+        ],
+        bullets: [
+          "Do not add Wikipedia links for self-promotion or backlink value.",
+          "Do not create or edit a page unless the subject has genuine notability and independent coverage.",
+          "A nofollow citation can still support discovery and trust when it is relevant.",
+          "The best SEO outcome comes from becoming citation-worthy, not forcing a link into an article.",
+          "If the source would not improve the Wikipedia article for readers, it probably should not be there.",
+        ],
+      },
+      {
+        id: "impact-in-the-ai-age",
+        heading: "Wikipedia in the AI search age",
+        paragraphs: [
+          "In the AI search age, Wikipedia matters because AI systems and search engines need reliable context about entities. AI Overviews, answer engines, assistants, and LLM-powered discovery experiences all depend on understanding who or what something is, what it is connected to, and which sources support that understanding.",
+          "That does not mean having a Wikipedia page guarantees AI visibility. It does not. But a well-sourced Wikipedia presence, supported by Wikidata, structured data, credible mentions, and consistent information across the web, can strengthen the broader entity footprint that AI systems may use when forming answers.",
+          "The new opportunity is not to game Wikipedia. The opportunity is to build public evidence. Strong content, independent coverage, digital PR, original data, useful tools, and accurate structured information all make it easier for both search engines and AI systems to understand a brand or topic.",
+        ],
+        bullets: [
+          "AI systems need entity context, not only keyword-optimised pages.",
+          "Wikipedia can act as one public trust source for notable entities.",
+          "Wikidata can reinforce structured facts when information is accurate.",
+          "Independent sources matter because Wikipedia depends on external evidence.",
+          "Brands should focus on consistency across their website, schema, social profiles, PR coverage, directories, and knowledge sources.",
+        ],
+        chart: {
+          title: "Top Cited Domains on LLMs",
+          subtitle: "ChatGPT, Google AI Mode, and Perplexity: October 2025",
+          axisLabel: "Percentage of LLM responses with a citation",
+          sourceLabel: "Theme-adapted visual recreation based on Semrush's study of 230K prompts in October 2025.",
+          rows: [
+            { label: "reddit.com", value: 9.7 },
+            { label: "linkedin.com", value: 8.9 },
+            { label: "wikipedia.org", value: 7.6 },
+            { label: "medium.com", value: 4.8 },
+            { label: "youtube.com", value: 4.1 },
+            { label: "google.com", value: 4.0 },
+            { label: "nih.gov", value: 4.0 },
+            { label: "forbes.com", value: 3.3 },
+            { label: "amazon.com", value: 2.6 },
+            { label: "microsoft.com", value: 2.5 },
+            { label: "arxiv.org", value: 2.5 },
+            { label: "prnewswire.com", value: 2.1 },
+            { label: "blog.google", value: 1.9 },
+            { label: "facebook.com", value: 1.8 },
+            { label: "quora.com", value: 1.8 },
+            { label: "moldstud.com", value: 1.6 },
+            { label: "apple.com", value: 1.5 },
+            { label: "mdpi.com", value: 1.4 },
+            { label: "g2.com", value: 1.4 },
+            { label: "instagram.com", value: 1.4 },
+          ],
+        },
+        link: {
+          href: "https://www.semrush.com/blog/most-cited-domains-ai/",
+          label: "View the Semrush AI citations study",
+        },
+      },
+      {
+        id: "how-to-approach-wikipedia-for-seo",
+        heading: "How to approach Wikipedia for SEO",
+        paragraphs: [
+          "The safest way to approach Wikipedia is to stop thinking like a link builder and start thinking like an editor. The question is not, can I get a backlink? The question is, does this source help the public understand a notable topic more accurately?",
+          "For most businesses, the better SEO strategy is not to force a Wikipedia page. It is to build the kind of independent evidence that would make the business, person, product, or topic genuinely notable over time.",
+        ],
+        numberedSteps: [
+          "Check whether the subject has independent, reliable coverage from credible sources.",
+          "Avoid using press releases, owned content, paid placements, or thin mentions as the main evidence.",
+          "Use Schema.org markup on the official website, and keep it aligned with public entity sources such as Wikidata, Wikipedia, social profiles, business listings, and credible third-party coverage.",
+          "Build authority through digital PR, useful tools, original research, industry coverage, and credible citations.",
+          "Review Wikidata only where there is a legitimate entity record and accurate sourced information.",
+          "Treat Wikipedia citations as public evidence and referral opportunities, not ranking shortcuts.",
+        ],
+        closingParagraphs: [
+          "Wikipedia is still relevant to SEO, but the value has shifted. It is no longer about chasing a powerful backlink. It is about entity clarity, trustworthy public evidence, and the way search engines and AI systems understand the web.",
+        ],
+        link: {
+          href: "/blog/off-page-seo-in-2026",
+          label: "Read the related Off-Page SEO article",
+        },
+      },
+    ],
+    faqs: [
+      {
+        question: "Is Wikipedia good for SEO?",
+        answer:
+          "Yes, but not mainly because of backlink value. Wikipedia can support SEO through trust, entity clarity, referral traffic, citations, and its role in the wider public knowledge ecosystem.",
+      },
+      {
+        question: "Are Wikipedia backlinks follow or nofollow?",
+        answer:
+          "Wikipedia external links are generally nofollow, so they should not be treated as a traditional follow backlink strategy.",
+      },
+      {
+        question: "Can any business create a Wikipedia page?",
+        answer:
+          "No. A subject usually needs notability supported by reliable, independent sources. Owned content, press releases, and promotional mentions are usually not enough.",
+      },
+      {
+        question: "How does Wikipedia connect to Google's Knowledge Graph?",
+        answer:
+          "Wikipedia and Wikidata can be part of the public source ecosystem that helps search systems understand notable entities, relationships, and facts, although search engines use many sources and do not rely on Wikipedia alone.",
+      },
+      {
+        question: "Does Wikipedia help AI visibility?",
+        answer:
+          "It can help indirectly when it strengthens entity understanding and public evidence, but it does not guarantee AI Overview or LLM visibility. It works best alongside credible mentions, schema, Wikidata, social profiles, and consistent brand information.",
+      },
+      {
+        question: "What is the right Wikipedia strategy for SEO?",
+        answer:
+          "Build citation-worthy evidence first. Focus on notability, independent coverage, accurate entity information, and useful public sources instead of trying to force backlinks.",
+      },
+    ],
+  },
+  {
+    slug: "off-page-seo-in-2026",
+    title: "Off-Page SEO Is More Than Link Building",
+    excerpt:
+      "A practical view of off-page SEO in 2026, covering link building, YouTube SEO, Wikipedia, social media, and how authority is built beyond your own website.",
+    category: "Authority Building",
+    date: "Jul 2026",
+    sections: [
+      {
+        id: "what-off-page-seo-means",
+        heading: "What off-page SEO means in 2026",
+        paragraphs: [
+          "Off-page SEO is the work that helps a website build authority, trust, and discoverability outside of its own pages. It includes backlinks, brand mentions, digital PR, local citations, social visibility, video discovery, reviews, and the wider signals that help people and search engines understand whether a brand is credible.",
+          "In 2026, off-page SEO is less about chasing one magic ranking factor and more about building a strong footprint across the places where people discover, compare, and validate businesses. Search behaviour is spread across Google, YouTube, social platforms, AI answers, directories, communities, and publications.",
+          "The goal is not only to get links. The goal is to become easier to find, easier to trust, and easier to reference.",
+        ],
+      },
+      {
+        id: "link-building",
+        heading: "Link building remains the foundation",
+        paragraphs: [
+          "Link building is still one of the clearest off-page SEO disciplines because links connect your site to the wider web. A relevant link from a trusted website can support rankings, referral traffic, brand discovery, and topical authority.",
+          "The important shift is quality. Strong link building is not about buying random placements or chasing every directory that accepts submissions. It is about creating great content, tools, data, resources, or stories that give other websites a real reason to reference you.",
+          "Digital PR, credible business directories, partner mentions, and useful industry resources are often stronger than old-school link outreach because they create value beyond the backlink itself.",
+        ],
+        bullets: [
+          "Prioritise links from websites with topical, local, or industry relevance.",
+          "Use digital PR when you have a story, data point, expert quote, tool, or useful asset worth covering.",
+          "Work with PR teams or partner agencies so SEO can support announcements, campaigns, interviews, and media opportunities.",
+          "Treat paid or sponsored placements carefully and qualify them correctly with sponsored or nofollow attributes.",
+          "Measure links alongside referral traffic, branded search movement, and real business outcomes.",
+        ],
+        link: {
+          href: "/blog/link-building-in-2026",
+          label: "Read the full Link Building in 2026 article",
+        },
+      },
+      {
+        id: "youtube-seo",
+        heading: "YouTube SEO is part of off-page visibility",
+        paragraphs: [
+          "YouTube matters because it is both a discovery platform and a search engine in its own right. People use it to learn, compare, troubleshoot, review products, understand services, and decide whether they trust a person or brand.",
+          "From an SEO perspective, YouTube can support off-page authority in a few ways. It can increase brand visibility, earn search demand, drive referral traffic, occupy more search result surfaces, and give people another format for understanding your expertise.",
+          "A good YouTube SEO approach starts with intent. The video title, description, chapters, thumbnail, and spoken content should all make the topic clear. The video should answer a real question, not only exist because the brand wants to publish more content.",
+        ],
+        bullets: [
+          "Research questions people ask before they buy, compare, or request help.",
+          "Use clear video titles that match the topic and user intent.",
+          "Write descriptions that summarise the value and link to useful supporting pages where relevant.",
+          "Use chapters so users and search systems can understand the structure of the video.",
+          "Turn strong website content into helpful video explainers, demos, walkthroughs, or opinion pieces.",
+          "Track YouTube impact through views, engagement, referral clicks, assisted conversions, and branded search lift.",
+        ],
+      },
+      {
+        id: "google-business-profile-and-bing-places",
+        heading: "Google Business Profile and Bing Places strengthen local trust",
+        paragraphs: [
+          "For local and service-area businesses, Google Business Profile and Bing Places are some of the most practical off-page SEO assets to maintain. They help a business appear where people are already searching: map results, local packs, branded searches, and discovery searches for products or services nearby.",
+          "A complete profile does more than show a name and phone number. It helps customers confirm opening hours, service areas, categories, reviews, photos, products, services, booking options, and the correct website before they decide to enquire.",
+          "Google Business Profile will usually get most of the attention because Google Search and Maps dominate local discovery in many markets. Bing Places still matters because Bing powers its own search experience and can support visibility across Microsoft surfaces where customers may still compare local options.",
+        ],
+        bullets: [
+          "Claim and verify the listing instead of leaving business details unmanaged.",
+          "Keep the business name, address, phone number, website, categories, and service areas consistent with the website and other directories.",
+          "Add strong photos, service details, products, opening hours, and useful updates where relevant.",
+          "Respond to reviews professionally and avoid fake or incentivised reviews.",
+          "Use profile insights alongside Search Console, GA4, call tracking, and lead data to understand local demand.",
+          "Treat these profiles as trust assets, not only citation boxes.",
+        ],
+      },
+      {
+        id: "wikipedia",
+        heading: "Wikipedia is useful, but not a backlink shortcut",
+        paragraphs: [
+          "Wikipedia often comes up in off-page SEO conversations because it carries huge trust and visibility. The mistake is treating it like a simple backlink tactic.",
+          "Wikipedia external links are generally nofollow, so they should not be viewed as a clean way to pass ranking authority. They can still matter for discovery, referral traffic, entity understanding, and source visibility, but only when the reference is genuinely useful and appropriate.",
+          "The right way to think about Wikipedia is credibility, not manipulation. If your brand, research, tool, or content becomes a legitimate source that deserves to be cited, that is a signal of authority in the real world. If the only goal is to place a link, it is the wrong approach.",
+        ],
+        bullets: [
+          "Do not use Wikipedia as a link-building shortcut.",
+          "Only cite sources that genuinely support the page topic and meet editorial expectations.",
+          "Understand that nofollow links can still support discovery and trust, even if they are not traditional authority-passing backlinks.",
+          "Focus on becoming citation-worthy through useful research, data, tools, and public evidence.",
+        ],
+        link: {
+          href: "/blog/wikipedia-for-seo-and-knowledge-graphs",
+          label: "Read the full Wikipedia for SEO article",
+        },
+      },
+      {
+        id: "social-media",
+        heading: "Social media supports demand and discovery",
+        paragraphs: [
+          "Social media is not traditional link building, and most social links are not treated like editorial backlinks. But social media still matters for off-page SEO because it can create awareness, demand, distribution, trust, and content discovery.",
+          "A useful post can lead to branded searches. A strong opinion can lead to a journalist quote. A practical thread can lead to newsletter mentions. A case study can lead to podcast invites, partner conversations, or links from people who discovered the work socially first.",
+          "Social content can also support wider search visibility because platform posts, videos, discussions, and profiles can appear in SERPs and contribute to the broader entity signals that AI Overviews and LLM-powered discovery systems may use to understand a brand, person, or topic.",
+          "The mistake is measuring social only by whether the link passes SEO value. The stronger question is whether social activity helps the right people find, trust, share, reference, and search for the brand.",
+        ],
+        bullets: [
+          "Use social media to distribute strong content, tools, case studies, research, and expert commentary.",
+          "Repurpose articles into short posts, carousels, videos, and practical explainers.",
+          "Engage with journalists, industry peers, partners, and communities where useful conversations already happen.",
+          "Optimise social profiles and recurring content themes so they reinforce the same entities, services, topics, and expertise found on the website.",
+          "Track branded search, referral traffic, assisted conversions, mentions, and content shares instead of only follower growth.",
+          "Keep messaging consistent so social profiles, website content, directory listings, and PR mentions reinforce the same expertise.",
+        ],
+      },
+      {
+        id: "how-to-approach-off-page-seo",
+        heading: "How to approach off-page SEO in 2026",
+        paragraphs: [
+          "The strongest off-page SEO strategy starts with the brand's real strengths. What expertise can be proven? What assets are worth referencing? Which stories are worth telling? Which platforms do customers already use to validate decisions?",
+          "Once those answers are clear, the off-page work becomes more focused. Link building, YouTube SEO, Wikipedia, and social media stop being separate tactics and become different ways of helping the market discover and trust the same core value.",
+        ],
+        numberedSteps: [
+          "Audit the current off-page footprint: backlinks, mentions, directories, YouTube presence, social profiles, and branded search demand.",
+          "Create linkable assets such as guides, tools, studies, case studies, templates, local resources, or useful explainers.",
+          "Use digital PR and partner collaboration to place strong assets in front of relevant publications and audiences.",
+          "Build or improve YouTube content around questions, demos, comparisons, and expertise-led topics.",
+          "Claim and maintain Google Business Profile and Bing Places listings for accurate local visibility and trust.",
+          "Review Wikipedia and knowledge sources only where there is a legitimate citation or entity opportunity.",
+          "Use social media to distribute content, create conversations, and increase branded demand.",
+          "Measure visibility, referral traffic, branded search, mentions, assisted conversions, and link quality together.",
+        ],
+        closingParagraphs: [
+          "Off-page SEO in 2026 is really about authority in the open web. Links still matter, but they work best when they are supported by useful content, credible mentions, video visibility, social discovery, and a brand footprint that feels trustworthy wherever people encounter it.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is off-page SEO?",
+        answer:
+          "Off-page SEO is the work done outside your own website to build authority, trust, discovery, and demand. It includes link building, digital PR, business directories, YouTube visibility, social media, mentions, reviews, and other external trust signals.",
+      },
+      {
+        question: "Is link building still part of off-page SEO in 2026?",
+        answer:
+          "Yes. Link building is still a major part of off-page SEO, but the focus should be on relevant, credible links earned through useful content, tools, PR, partnerships, and legitimate citations.",
+      },
+      {
+        question: "Does YouTube help SEO?",
+        answer:
+          "YouTube can support SEO by increasing brand visibility, answering search intent in video format, driving referral traffic, earning branded searches, and helping a brand occupy more discovery surfaces.",
+      },
+      {
+        question: "Do Google Business Profile and Bing Places help off-page SEO?",
+        answer:
+          "Yes. They support local discovery, map visibility, trust, reviews, business information consistency, and branded validation outside your own website.",
+      },
+      {
+        question: "Are Wikipedia links good for SEO?",
+        answer:
+          "Wikipedia links can support discovery and credibility, but they should not be treated as a shortcut for passing authority because external links are generally nofollow.",
+      },
+      {
+        question: "Do social media links count as backlinks?",
+        answer:
+          "Social links are usually not the same as editorial backlinks. Their value is more often in distribution, awareness, branded search demand, relationship building, and the chance that other people discover and reference your content.",
+      },
+      {
+        question: "What should an off-page SEO strategy focus on first?",
+        answer:
+          "Start with assets worth referencing, then use link building, PR, directories, YouTube, Wikipedia where appropriate, and social media to increase visibility and trust around those assets.",
+      },
+    ],
+  },
   {
     slug: "link-building-in-2026",
     title: "Link Building in 2026: What Still Works",
@@ -196,12 +788,14 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         paragraphs: [
           "Digital PR is one of the most effective link-building routes because it earns attention rather than asking for a link directly. The link is a by-product of a useful story, data point, campaign, expert quote, local angle, or newsworthy asset.",
           "This is where authority building becomes closer to brand building. A publication is more likely to mention and link to a business when there is a strong reason: original research, a helpful tool, a founder insight, a timely comment, a community initiative, or a genuinely interesting story.",
+          "As an SEO specialist, this is also where collaboration matters. Working with PR teams inside your company, or with partner agencies already running media and communications work, can create link-building opportunities that would be difficult to find through cold outreach alone.",
           "Digital PR is ideal because it can create opportunities beyond the backlink itself. A strong campaign can open doors for media mentions, expert commentary, industry relationships, referral traffic, and future collaborations.",
           "Digital PR is not always quick, and it is not guaranteed. But when it works, the links tend to be more defensible because they come from editorial judgement rather than a link placement transaction.",
         ],
         numberedSteps: [
           "Find the topics where your expertise, data, or opinion can add something useful.",
           "Create a story, content asset, or tool that journalists, industry writers, or local publications would care about.",
+          "Speak to internal PR teams or partner agencies so SEO can support planned announcements, campaigns, interviews, and media opportunities.",
           "Build a focused media list instead of blasting every publication you can find.",
           "Pitch the angle clearly, with a short summary, useful evidence, and why it matters now.",
           "Make it easy for the writer to cite your brand, link to the source, or ask follow-up questions.",
