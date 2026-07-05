@@ -143,6 +143,187 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 
 const ARTICLE_INPUTS: ArticleInput[] = [
   {
+    slug: "google-business-profile-bing-places-2026",
+    title: "Google Business Profile and Bing Places in 2026",
+    excerpt:
+      "A practical guide to Google Business Profile and Bing Places in 2026, covering local visibility, trust, reviews, AI search, and lead quality.",
+    metaDescription:
+      "Learn how Google Business Profile and Bing Places support local SEO, trust, reviews, AI visibility, and leads in 2026.",
+    category: "Local SEO",
+    date: "Jul 2026",
+    sections: [
+      {
+        id: "what-they-are",
+        heading: "What Google Business Profile and Bing Places are",
+        paragraphs: [
+          "Google Business Profile and Bing Places are local business listings that help search engines, map products, and customers understand where a business is, what it offers, when it is open, and how people can contact it.",
+          "Google Business Profile supports visibility across Google Search and Google Maps. Bing Places supports local visibility across Bing and Microsoft-powered search experiences. For local businesses, service-area businesses, clinics, stores, agencies, trades, restaurants, and professional services, these profiles are often some of the most visible off-page SEO assets.",
+          {
+            text: "They also sit naturally inside an off-page SEO strategy because they are public trust signals outside the website. The website still matters, but profiles help validate business details where users are already comparing options.",
+            links: [
+              {
+                text: "off-page SEO strategy",
+                href: "/blog/off-page-seo-in-2026",
+              },
+            ],
+          },
+        ],
+        bullets: [
+          "Business name, address, phone number, website, opening hours, and service areas.",
+          "Primary and secondary categories that help search engines understand relevance.",
+          "Products, services, menus, appointments, booking links, photos, and updates.",
+          "Customer reviews, review responses, questions, and local reputation signals.",
+          "Map visibility for branded, category, and near-me searches.",
+        ],
+      },
+      {
+        id: "benefits",
+        heading: "The benefits from an SEO perspective",
+        paragraphs: [
+          "The most obvious benefit is local visibility. A well-maintained Google Business Profile can help a business appear in map results, local packs, branded searches, and discovery searches where users are looking for nearby products or services.",
+          "Bing Places is usually less discussed, but it still matters. It supports visibility across Bing and Microsoft search surfaces, which can be valuable for audiences who use Microsoft products at work, default browser search, desktop search, or Copilot-adjacent discovery paths.",
+          "The deeper benefit is trust. A user can quickly check reviews, hours, location, photos, services, and contact options before visiting a website or making a call. That makes profile quality part of conversion quality, not only search visibility.",
+        ],
+        comparisonTable: {
+          columns: ["Benefit", "Why It Matters", "What To Optimise"],
+          rows: [
+            ["Local visibility", "Profiles can appear in map packs, branded searches, and nearby discovery queries.", "Categories, service areas, location data, products, services, and photos."],
+            ["Trust and proof", "Reviews, photos, and responses help users validate whether the business is active and credible.", "Review strategy, response quality, current images, and accurate business details."],
+            ["Conversion paths", "Users can call, request directions, book, message, or visit the website from the profile.", "Phone number, booking links, appointment URLs, CTAs, and tracked website links."],
+            ["Entity consistency", "Consistent information helps search systems connect the business across the web.", "Name, address, phone, website, categories, schema, and directory consistency."],
+            ["AI readiness", "AI assistants need accurate business facts before they can recommend, compare, or contact businesses.", "Fresh hours, availability signals, products, services, reviews, and contact options."],
+          ],
+        },
+      },
+      {
+        id: "how-they-matter-in-ai-search",
+        heading: "Why they matter more in the AI era",
+        paragraphs: [
+          "AI search is changing local discovery from typing short keywords into asking complete questions. A user may ask for the best nearby option, compare businesses, check whether a product is in stock, or ask an assistant to help complete part of the task.",
+          {
+            text: "Google's agentic shopping update shows where this is heading. Google described a feature where users can ask Google to call nearby stores on their behalf to check whether products are in stock, what they cost, and whether there are special promotions.",
+            links: [
+              {
+                text: "Google's agentic shopping update",
+                href: "https://blog.google/products-and-platforms/products/shopping/agentic-checkout-holiday-ai-shopping/",
+              },
+            ],
+          },
+          "That makes accurate local business data more important. If AI systems are going to compare options, summarise choices, check availability, or help users take action, they need reliable facts about the business. Profiles with missing hours, weak categories, poor reviews, thin service information, or broken contact paths are at a disadvantage.",
+        ],
+        bullets: [
+          "AI assistants may rely on business data to answer local intent questions.",
+          "Accurate contact details become more important if AI systems help users call, book, or enquire.",
+          "Products, services, opening hours, and availability signals help assistants understand whether a business is a good match.",
+          "Reviews and review responses can influence how users and AI systems assess trust.",
+          "Consistent website, schema, directories, Google Business Profile, and Bing Places data can strengthen entity confidence.",
+        ],
+      },
+      {
+        id: "how-to-optimise-google-business-profile",
+        heading: "How to optimise Google Business Profile",
+        paragraphs: [
+          "Google Business Profile optimisation starts with accuracy. Before adding posts, photos, or extra detail, make sure the core business information is correct and aligned with the website.",
+          "The best profiles are useful to real customers. They answer practical questions quickly: what the business does, where it serves, when it is open, what it costs where relevant, what the experience looks like, and how to take the next step.",
+        ],
+        numberedSteps: [
+          "Claim and verify the profile.",
+          "Use the real business name and avoid keyword stuffing.",
+          "Choose the most accurate primary category and useful secondary categories.",
+          "Keep opening hours, holiday hours, address, service areas, phone number, and website URL current.",
+          "Add services, products, menus, appointment links, and booking options where relevant.",
+          "Upload real photos of the location, team, products, work, vehicles, or completed jobs.",
+          "Ask for reviews ethically and respond to reviews professionally.",
+          "Use UTM tracking on website links where it helps reporting.",
+          "Review profile insights alongside GA4, Search Console, call tracking, and lead data.",
+        ],
+      },
+      {
+        id: "how-to-optimise-bing-places",
+        heading: "How to optimise Bing Places",
+        paragraphs: [
+          "Bing Places should not be ignored just because Google gets most of the attention. It is a practical local citation and can support visibility across Microsoft search behaviour, especially for desktop users and work environments.",
+          "The simplest approach is to keep Bing Places aligned with Google Business Profile and the website. Consistency is the point. If Google, Bing, directories, schema, and the website all describe the business in the same way, the entity is easier to trust.",
+        ],
+        bullets: [
+          "Claim or import the listing and verify ownership.",
+          "Keep NAP details consistent with the website and Google Business Profile.",
+          "Use accurate categories rather than forcing irrelevant keywords.",
+          "Add photos, services, opening hours, payment details, and business descriptions where available.",
+          "Check the listing periodically after website, location, phone, or opening-hour changes.",
+          "Use Bing Places as part of a wider local citation and entity consistency routine.",
+        ],
+      },
+      {
+        id: "common-mistakes",
+        heading: "Common mistakes to avoid",
+        paragraphs: [
+          "Most profile issues are not advanced SEO problems. They are accuracy, maintenance, and trust problems. That is what makes them costly: they are easy to overlook, but they affect both discovery and conversion.",
+        ],
+        bullets: [
+          "Using categories that do not match the real business.",
+          "Leaving holiday hours, service areas, or phone numbers outdated.",
+          "Ignoring reviews or replying defensively.",
+          "Uploading stock-like images instead of real business photos.",
+          "Using different names, addresses, or phone numbers across directories.",
+          "Linking every profile to the homepage when a location or service page would be more useful.",
+          "Treating the profile as a one-time setup instead of an active local SEO asset.",
+        ],
+      },
+      {
+        id: "measurement",
+        heading: "How to measure profile impact",
+        paragraphs: [
+          "Measurement should combine profile data with website and business outcomes. Profile views or calls are useful, but they become more meaningful when compared with organic landing pages, leads, bookings, calls, direction requests, and revenue.",
+          "For SEO reporting, the goal is to show how local visibility supports real actions. A profile that drives calls, direction requests, appointment clicks, form submissions, and branded search growth is doing more than filling a citation checkbox.",
+        ],
+        bullets: [
+          "Use UTM parameters on profile website links.",
+          "Track calls, bookings, form submissions, and appointment clicks where possible.",
+          "Compare profile actions with GA4 landing page and conversion data.",
+          "Review Search Console branded and local query trends.",
+          "Monitor review growth, rating quality, and response consistency.",
+          "Check whether profile changes affect local pack visibility and lead quality.",
+        ],
+        closingParagraphs: [
+          "Google Business Profile and Bing Places are simple on the surface, but they are becoming more important as search becomes more local, more conversational, and more action-oriented. In 2026, they should be treated as living trust assets, not forgotten directory listings.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is Google Business Profile?",
+        answer:
+          "Google Business Profile is Google's local business listing system. It helps businesses manage how they appear across Google Search and Google Maps, including hours, reviews, photos, services, products, contact details, and website links.",
+      },
+      {
+        question: "What is Bing Places?",
+        answer:
+          "Bing Places is Microsoft's local business listing platform. It helps businesses manage local information that can appear across Bing and related Microsoft search experiences.",
+      },
+      {
+        question: "Do Google Business Profile and Bing Places help SEO?",
+        answer:
+          "Yes. They support local visibility, branded search trust, map discovery, reviews, entity consistency, and conversion paths such as calls, directions, bookings, and website visits.",
+      },
+      {
+        question: "Why are local profiles important for AI search?",
+        answer:
+          "AI assistants need reliable business facts before they can recommend, compare, contact, or help users take action. Accurate profiles give search and AI systems better information to work with.",
+      },
+      {
+        question: "Is Bing Places worth maintaining?",
+        answer:
+          "Yes, especially for businesses that want consistent local visibility across Microsoft search surfaces. It is usually a low-effort way to improve entity consistency and local coverage.",
+      },
+      {
+        question: "How often should business profiles be updated?",
+        answer:
+          "Review them whenever hours, services, products, locations, contact details, photos, or booking options change. For active businesses, a monthly review is a sensible baseline.",
+      },
+    ],
+  },
+  {
     slug: "social-media-seo-ai-era",
     title: "Social Media SEO in the AI Era",
     excerpt:
@@ -901,7 +1082,15 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         id: "google-business-profile-and-bing-places",
         heading: "Google Business Profile and Bing Places strengthen local trust",
         paragraphs: [
-          "For local and service-area businesses, Google Business Profile and Bing Places are some of the most practical off-page SEO assets to maintain. They help a business appear where people are already searching: map results, local packs, branded searches, and discovery searches for products or services nearby.",
+          {
+            text: "For local and service-area businesses, Google Business Profile and Bing Places are some of the most practical off-page SEO assets to maintain. They help a business appear where people are already searching: map results, local packs, branded searches, and discovery searches for products or services nearby.",
+            links: [
+              {
+                text: "Google Business Profile and Bing Places",
+                href: "/blog/google-business-profile-bing-places-2026",
+              },
+            ],
+          },
           "A complete profile does more than show a name and phone number. It helps customers confirm opening hours, service areas, categories, reviews, photos, products, services, booking options, and the correct website before they decide to enquire.",
           "Google Business Profile will usually get most of the attention because Google Search and Maps dominate local discovery in many markets. Bing Places still matters because Bing powers its own search experience and can support visibility across Microsoft surfaces where customers may still compare local options.",
         ],
