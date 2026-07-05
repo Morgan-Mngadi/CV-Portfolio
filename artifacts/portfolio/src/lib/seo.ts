@@ -16,20 +16,8 @@ export type SeoConfig = {
 
 export const absoluteUrl = (path: string) => `${SITE_URL}${path === "/" ? "" : path}`;
 
-const MAX_META_DESCRIPTION_LENGTH = 154;
-
 const normaliseMetaDescription = (description: string) => {
-  const trimmedDescription = description.replace(/\s+/g, " ").trim();
-
-  if (trimmedDescription.length <= MAX_META_DESCRIPTION_LENGTH) {
-    return trimmedDescription;
-  }
-
-  const truncatedDescription = trimmedDescription.slice(0, MAX_META_DESCRIPTION_LENGTH - 3);
-  const lastSpaceIndex = truncatedDescription.lastIndexOf(" ");
-  const cleanDescription = lastSpaceIndex > 80 ? truncatedDescription.slice(0, lastSpaceIndex) : truncatedDescription;
-
-  return `${cleanDescription.replace(/[.,;:!?-]+$/, "")}...`;
+  return description.replace(/\s+/g, " ").trim();
 };
 
 export const personSchema = {
@@ -202,7 +190,7 @@ export const seoByPath: Record<string, SeoConfig> = {
   "/about": {
     title: "About Morgan Mngadi | Technical SEO and Organic Search",
     description:
-      "Learn more about Morgan Mngadi, an SEO specialist with experience in technical SEO, search strategy, analytics, structured data, and agency led implementation.",
+      "Learn about Morgan Mngadi's SEO experience across technical SEO, search strategy, analytics, structured data, and agency implementation.",
     path: "/about",
     type: "profile",
     schema: [
@@ -326,7 +314,7 @@ export const seoByPath: Record<string, SeoConfig> = {
   "/projects/commuteza": {
     title: "CommuteZA Case Study | Technical SEO, AI Visibility and Search Systems",
     description:
-      "A technical SEO case study for CommuteZA covering headless CMS architecture, redirect logic, AI visibility, Lighthouse SEO, and early organic search signals.",
+      "A CommuteZA technical SEO case study covering headless CMS architecture, redirects, AI visibility, Lighthouse SEO, and search signals.",
     path: "/projects/commuteza",
     type: "article",
     schema: [
@@ -401,7 +389,7 @@ for (const article of ARTICLES) {
   const path = `/blog/${article.slug}`;
   seoByPath[path] = {
     title: `${article.title} | Morgan Mngadi`,
-    description: article.excerpt,
+    description: article.metaDescription ?? article.excerpt,
     path,
     type: "article",
     schema: [personSchema, articleSchema(article), faqSchema(article)],

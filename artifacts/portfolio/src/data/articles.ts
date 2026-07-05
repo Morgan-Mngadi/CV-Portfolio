@@ -53,6 +53,7 @@ export type ArticleChart = {
   subtitle: string;
   axisLabel: string;
   sourceLabel: string;
+  highlightedLabels?: string[];
   rows: {
     label: string;
     value: number;
@@ -68,6 +69,7 @@ export type Article = {
   slug: string;
   title: string;
   excerpt: string;
+  metaDescription?: string;
   category: string;
   date: string;
   readTime: string;
@@ -145,6 +147,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "Social Media SEO in the AI Era",
     excerpt:
       "A practical look at how social media affects SEO in 2026, from branded SERP visibility and content discovery to AI Overviews, LLM citations, and off-page authority.",
+    metaDescription:
+      "Learn how social media supports SEO, AI visibility, branded search, content discovery, and trust in the AI search era.",
     category: "Social Media SEO",
     date: "Jul 2026",
     sections: [
@@ -222,6 +226,35 @@ const ARTICLE_INPUTS: ArticleInput[] = [
           "Instagram and TikTok can influence discovery and branded demand, especially where visuals, locations, products, and creators matter.",
           "Quora, forums, and niche communities can reveal questions that deserve stronger website content.",
         ],
+        chart: {
+          title: "Social and Content Platforms Cited by LLMs",
+          subtitle: "ChatGPT, Google AI Mode, and Perplexity: October 2025",
+          axisLabel: "Percentage of LLM responses with a citation",
+          sourceLabel: "Theme-adapted visual recreation based on Semrush's study of 230K prompts in October 2025.",
+          highlightedLabels: ["linkedin.com", "youtube.com", "facebook.com", "instagram.com"],
+          rows: [
+            { label: "reddit.com", value: 9.7 },
+            { label: "linkedin.com", value: 8.9 },
+            { label: "wikipedia.org", value: 7.6 },
+            { label: "medium.com", value: 4.8 },
+            { label: "youtube.com", value: 4.1 },
+            { label: "google.com", value: 4.0 },
+            { label: "nih.gov", value: 4.0 },
+            { label: "forbes.com", value: 3.3 },
+            { label: "amazon.com", value: 2.6 },
+            { label: "microsoft.com", value: 2.5 },
+            { label: "arxiv.org", value: 2.5 },
+            { label: "prnewswire.com", value: 2.1 },
+            { label: "blog.google", value: 1.9 },
+            { label: "facebook.com", value: 1.8 },
+            { label: "quora.com", value: 1.8 },
+            { label: "moldstud.com", value: 1.6 },
+            { label: "apple.com", value: 1.5 },
+            { label: "mdpi.com", value: 1.4 },
+            { label: "g2.com", value: 1.4 },
+            { label: "instagram.com", value: 1.4 },
+          ],
+        },
         imageCarousel: {
           title: "Examples of Social Sources in AI Overviews",
           description:
@@ -375,6 +408,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "YouTube SEO in 2026: Audits, Embeds, and Video Schema",
     excerpt:
       "A practical guide to YouTube SEO in 2026, covering channel audits, video optimisation, embedded YouTube videos, and VideoObject schema markup.",
+    metaDescription:
+      "Learn YouTube SEO in 2026, including channel audits, embedded videos, optimisation tips, and VideoObject schema.",
     category: "Video SEO",
     date: "Jul 2026",
     sections: [
@@ -522,6 +557,52 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         ],
       },
       {
+        id: "youtube-seo-and-ai",
+        heading: "YouTube SEO and AI visibility",
+        paragraphs: [
+          "YouTube is becoming more important in AI-era search because video can provide demonstrations, opinions, product context, tutorials, reviews, and first-hand explanations that are difficult to replace with text alone.",
+          "AI systems and search experiences can use video content as part of the wider evidence layer around a topic. That does not mean every video will be cited, but it does mean optimised videos, transcripts, chapters, descriptions, embeds, and schema can make the content easier to interpret.",
+          "For SEO specialists, the practical opportunity is to treat YouTube as both a search platform and an AI visibility asset. The video should answer a real user need, while the surrounding website page, transcript, and structured data help search systems understand how the video fits into the topic.",
+        ],
+        bullets: [
+          "Use videos to demonstrate experience, not only to repeat a blog post in another format.",
+          "Include transcripts or summaries so search systems and users can understand the content quickly.",
+          "Add accurate chapters and timestamps for key moments.",
+          "Embed the video on a relevant page with helpful surrounding copy.",
+          "Use VideoObject schema when the embedded video is important to the page.",
+          "Monitor whether videos appear in Google results, AI Overviews, and referral paths from AI-assisted platforms.",
+        ],
+        chart: {
+          title: "YouTube in LLM Citation Visibility",
+          subtitle: "ChatGPT, Google AI Mode, and Perplexity: October 2025",
+          axisLabel: "Percentage of LLM responses with a citation",
+          sourceLabel: "Theme-adapted visual recreation based on Semrush's study of 230K prompts in October 2025.",
+          highlightedLabels: ["youtube.com"],
+          rows: [
+            { label: "reddit.com", value: 9.7 },
+            { label: "linkedin.com", value: 8.9 },
+            { label: "wikipedia.org", value: 7.6 },
+            { label: "medium.com", value: 4.8 },
+            { label: "youtube.com", value: 4.1 },
+            { label: "google.com", value: 4.0 },
+            { label: "nih.gov", value: 4.0 },
+            { label: "forbes.com", value: 3.3 },
+            { label: "amazon.com", value: 2.6 },
+            { label: "microsoft.com", value: 2.5 },
+            { label: "arxiv.org", value: 2.5 },
+            { label: "prnewswire.com", value: 2.1 },
+            { label: "blog.google", value: 1.9 },
+            { label: "facebook.com", value: 1.8 },
+            { label: "quora.com", value: 1.8 },
+            { label: "moldstud.com", value: 1.6 },
+            { label: "apple.com", value: 1.5 },
+            { label: "mdpi.com", value: 1.4 },
+            { label: "g2.com", value: 1.4 },
+            { label: "instagram.com", value: 1.4 },
+          ],
+        },
+      },
+      {
         id: "youtube-seo-workflow",
         heading: "A practical YouTube SEO workflow",
         paragraphs: [
@@ -580,6 +661,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "Wikipedia for SEO, Knowledge Graphs, and AI Search",
     excerpt:
       "A practical look at what Wikipedia is, why it matters for SEO, how the backlink value has changed, and why it still matters in the AI search age.",
+    metaDescription:
+      "Learn how Wikipedia affects SEO, Knowledge Graphs, backlinks, entity trust, and AI search visibility.",
     category: "Authority Building",
     date: "Jul 2026",
     sections: [
@@ -763,6 +846,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "Off-Page SEO Is More Than Link Building",
     excerpt:
       "A practical view of off-page SEO in 2026, covering link building, YouTube SEO, Wikipedia, social media, and how authority is built beyond your own website.",
+    metaDescription:
+      "Explore off-page SEO in 2026, from links and YouTube to Wikipedia, social media, local profiles, and brand authority.",
     category: "Authority Building",
     date: "Jul 2026",
     sections: [
@@ -931,6 +1016,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "Link Building in 2026: What Still Works",
     excerpt:
       "A practical look at modern link building, from sponsored links and guest posting to digital PR, business directories, and the difference between follow and nofollow backlinks.",
+    metaDescription:
+      "Learn what link building means in 2026, including digital PR, guest posting, directories, sponsored links, and nofollow links.",
     category: "Authority Building",
     date: "Jul 2026",
     sections: [
@@ -1458,6 +1545,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "AI Is Reshaping Search Reporting",
     excerpt:
       "AI search changes how people discover, compare, and decide. Organic reporting needs to account for visibility, assisted journeys, and answer engine presence.",
+    metaDescription:
+      "Learn how AI search changes SEO reporting, from visibility and assisted journeys to answer engine presence.",
     category: "AI Search",
     date: "Jun 2026",
     sections: [
@@ -1524,6 +1613,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "SEO Metrics That Businesses Actually Care About",
     excerpt:
       "Most businesses do not care about SEO metrics in isolation. They care about whether organic search creates demand, leads, purchases, and useful insight.",
+    metaDescription:
+      "Learn which SEO metrics matter to businesses, from organic leads and revenue to demand, insight, and technical impact.",
     category: "Measurement",
     date: "Jun 2026",
     sections: [
@@ -1591,6 +1682,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "GEO Is Not a Replacement for SEO",
     excerpt:
       "Generative engine optimisation is often framed as a new discipline. In practice, most of the durable work still comes from strong SEO fundamentals.",
+    metaDescription:
+      "Learn why GEO is not a replacement for SEO and why AI visibility still depends on strong search fundamentals.",
     category: "AI Search",
     date: "Jun 2026",
     sections: [
@@ -1758,6 +1851,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     title: "How to Set Up a Looker Studio Dashboard That Impresses Stakeholders",
     excerpt:
       "A practical guide to building a premium looking Looker Studio dashboard that makes organic performance easier to understand.",
+    metaDescription:
+      "Learn how to build a clear Looker Studio SEO dashboard that helps stakeholders understand organic performance.",
     category: "Measurement",
     date: "Jun 2026",
     archived: true,

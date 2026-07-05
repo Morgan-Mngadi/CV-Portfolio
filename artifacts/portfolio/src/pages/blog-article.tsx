@@ -95,6 +95,7 @@ function renderLinkedParagraph(paragraph: ArticleParagraph) {
 function ArticleBarChart({ chart }: { chart: ArticleChart }) {
   const maxValue = Math.max(...chart.rows.map((row) => row.value), 1);
   const ticks = [0, 2.5, 5, 7.5, 10];
+  const highlightedLabels = chart.highlightedLabels ?? ["wikipedia.org"];
 
   return (
     <figure className="mt-8 border border-border bg-card p-4 sm:p-6">
@@ -114,19 +115,19 @@ function ArticleBarChart({ chart }: { chart: ArticleChart }) {
         <div className="relative z-10 flex flex-col gap-2">
           {chart.rows.map((row, index) => {
             const width = `${Math.min(100, (row.value / maxValue) * 100)}%`;
-            const isWikipedia = row.label === "wikipedia.org";
+            const isHighlighted = highlightedLabels.includes(row.label);
 
             return (
               <div
                 key={row.label}
                 className="grid grid-cols-[7.5rem_1fr] items-center gap-3 sm:grid-cols-[7.5rem_1fr_3.25rem]"
               >
-                <div className={`truncate font-mono text-[0.7rem] sm:text-xs ${isWikipedia ? "text-primary" : "text-muted-foreground"}`}>
+                <div className={`truncate font-mono text-[0.7rem] sm:text-xs ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}>
                   {row.label}
                 </div>
                 <div className="h-7 border border-border bg-background/80 p-1">
                   <motion.div
-                    className={isWikipedia ? "h-full bg-primary" : "h-full bg-muted-foreground/35"}
+                    className={isHighlighted ? "h-full bg-primary" : "h-full bg-muted-foreground/35"}
                     initial={{ width: 0 }}
                     whileInView={{ width }}
                     viewport={{ once: true, margin: "-80px" }}
@@ -134,7 +135,7 @@ function ArticleBarChart({ chart }: { chart: ArticleChart }) {
                     aria-label={`${row.label}: ${row.value}%`}
                   />
                 </div>
-                <div className={`hidden text-right font-mono text-[0.7rem] sm:block ${isWikipedia ? "text-primary" : "text-muted-foreground"}`}>
+                <div className={`hidden text-right font-mono text-[0.7rem] sm:block ${isHighlighted ? "text-primary" : "text-muted-foreground"}`}>
                   {row.value.toFixed(1)}%
                 </div>
               </div>
