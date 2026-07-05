@@ -5,6 +5,13 @@ import { ARTICLES } from "@/data/articles";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 0 },
@@ -138,28 +145,51 @@ export default function Blog() {
           whileInView="visible"
           viewport={{ once: true }}
           variants={fadeUp}
-          className="py-8 flex flex-wrap gap-2 border-b border-border"
+          className="py-8 border-b border-border"
           aria-label="Filter articles by category"
         >
-          {categories.map((cat) => {
-            const isActive = activeCategory === cat;
-
-            return (
-              <button
-                type="button"
-                key={cat}
-                aria-pressed={isActive}
-                onClick={() => updateCategory(cat)}
-                className={`font-mono text-xs px-3 py-1.5 border transition-colors ${
-                  isActive
-                    ? "border-primary bg-primary/10 text-primary cursor-default"
-                    : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground cursor-pointer"
-                }`}
+          <div className="sm:hidden">
+            <label htmlFor="mobile-category-filter" className="mb-2 block font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              Filter articles
+            </label>
+            <Select value={activeCategory} onValueChange={updateCategory}>
+              <SelectTrigger
+                id="mobile-category-filter"
+                className="h-12 rounded-none border-border bg-card font-mono text-xs uppercase tracking-widest text-foreground"
               >
-                {cat}
-              </button>
-            );
-          })}
+                <SelectValue placeholder="Choose category" />
+              </SelectTrigger>
+              <SelectContent className="rounded-none border-border bg-card">
+                {categories.map((cat) => (
+                  <SelectItem key={cat} value={cat} className="rounded-none font-mono text-xs uppercase tracking-widest">
+                    {cat}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="hidden flex-wrap gap-2 sm:flex">
+            {categories.map((cat) => {
+              const isActive = activeCategory === cat;
+
+              return (
+                <button
+                  type="button"
+                  key={cat}
+                  aria-pressed={isActive}
+                  onClick={() => updateCategory(cat)}
+                  className={`font-mono text-xs px-3 py-1.5 border transition-colors ${
+                    isActive
+                      ? "border-primary bg-primary/10 text-primary cursor-default"
+                      : "border-border text-muted-foreground hover:border-primary/50 hover:text-foreground cursor-pointer"
+                  }`}
+                >
+                  {cat}
+                </button>
+              );
+            })}
+          </div>
         </motion.div>
 
         {/* POST LIST */}
