@@ -8,6 +8,16 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.resolve(__dirname, "..");
 const distRoot = path.join(projectRoot, "dist", "public");
 const template = await readFile(path.join(distRoot, "index.html"), "utf8");
+const deploymentId =
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  process.env.CF_PAGES_COMMIT_SHA ||
+  process.env.NETLIFY_COMMIT_REF ||
+  new Date().toISOString();
+const deploymentInfo = {
+  id: deploymentId,
+  generatedAt: new Date().toISOString(),
+};
+const deploymentMeta = `<meta name="app-build-id" content="${deploymentId}" />`;
 
 const outputPathForRoute = (route) => {
   if (route === "/") {
@@ -21,6 +31,7 @@ for (const route of routes) {
   const { html, head } = render(route);
   const output = template
     .replace(/<!--seo-start-->[\s\S]*?<!--seo-end-->/, `<!--seo-start-->\n    ${head}\n    <!--seo-end-->`)
+    .replace("<!--build-info-->", deploymentMeta)
     .replace("<!--app-html-->", html);
   const outputPath = outputPathForRoute(route);
 
@@ -31,5 +42,7 @@ for (const route of routes) {
     await writeFile(path.join(distRoot, "404.html"), output);
   }
 }
+
+await writeFile(path.join(distRoot, "deployment.json"), `${JSON.stringify(deploymentInfo, null, 2)}\n`);
 
 console.log(`Prerendered ${routes.length} routes.`);

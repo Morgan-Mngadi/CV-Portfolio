@@ -14,6 +14,7 @@ import { ScrollToTop } from "@/components/scroll-to-top";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { BackToTop } from "@/components/back-to-top";
 import { CookieConsent } from "@/components/cookie-consent";
+import { FreshDeploymentGuard } from "@/components/fresh-deployment-guard";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ function App({ ssrPath }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")} ssrPath={ssrPath}>
+          <FreshDeploymentGuard />
           <ScrollToTop />
           <ScrollProgress />
           <Router />
