@@ -1001,9 +1001,9 @@ const ARTICLE_INPUTS: ArticleInput[] = [
           "Wikipedia external links are generally nofollow, so they should not be treated as a traditional follow backlink strategy.",
       },
       {
-        question: "Can any business create a Wikipedia page?",
+        question: "Can anyone create a Wikipedia page?",
         answer:
-          "No. A subject usually needs notability supported by reliable, independent sources. Owned content, press releases, and promotional mentions are usually not enough.",
+          "Anyone can start or submit a draft, but not every page belongs on Wikipedia. The subject needs notability supported by reliable, independent sources, and the article must be neutral rather than promotional. Owned content, press releases, social profiles, and paid mentions are usually not enough. If you are writing about yourself, your business, or a client, Wikipedia treats that as a conflict of interest, so it is safer to disclose the connection and use the draft or edit-request process.",
       },
       {
         question: "How does Wikipedia connect to Google's Knowledge Graph?",
