@@ -547,6 +547,17 @@ export default function BlogArticle() {
                       </p>
                     ))}
                   </div>
+                  {section.notice && (
+                    <aside
+                      className="mt-6 border border-primary/50 bg-primary/[0.06] p-5 text-sm leading-relaxed text-foreground"
+                      aria-label="Important disclosure"
+                    >
+                      <span className="mb-2 block font-mono text-xs uppercase tracking-widest text-primary">
+                        Important disclosure
+                      </span>
+                      {section.notice}
+                    </aside>
+                  )}
                   {section.bullets && (
                     <ul className="mt-6 flex flex-col gap-3">
                       {section.bullets.map((item) => (

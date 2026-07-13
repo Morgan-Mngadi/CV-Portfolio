@@ -12,6 +12,7 @@ export type ArticleSection = {
   id: string;
   heading: string;
   paragraphs: ArticleParagraph[];
+  notice?: string;
   bullets?: string[];
   numberedSteps?: string[];
   imageBlocks?: ArticleImage[];
@@ -103,6 +104,7 @@ const calculateReadTime = (article: ArticleInput) => {
 
   article.sections.forEach((section) => {
     visibleText.push(section.heading, ...section.paragraphs.map(articleParagraphText));
+    if (section.notice) visibleText.push(section.notice);
     visibleText.push(...(section.bullets ?? []));
     visibleText.push(...(section.numberedSteps ?? []));
     visibleText.push(...(section.closingParagraphs ?? []).map(articleParagraphText));
@@ -209,7 +211,15 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         heading: "Less is more for decision-makers",
         paragraphs: [
           "More information does not automatically create more confidence. When every available metric is given the same visual weight, the reader has to work out what matters before they can even begin to interpret the result.",
-          "A useful recurring report is deliberately selective. It includes the smallest set of metrics needed to answer the business question, supported by enough detail to verify the conclusion. Everything else can sit on a drill-down page or in a supporting table.",
+          {
+            text: "A useful recurring report is deliberately selective. It includes the smallest set of metrics needed to answer the business question, supported by enough detail to verify the conclusion. Everything else can sit on a drill-down page or in a supporting table.",
+            links: [
+              {
+                text: "metrics needed to answer the business question",
+                href: "/blog/seo-metrics-that-businesses-care-about",
+              },
+            ],
+          },
           "The test is simple: if removing a chart would not change a decision, a takeaway, or a useful follow-up question, that chart may not belong on the main reporting page.",
         ],
         bullets: [
@@ -226,7 +236,15 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         paragraphs: [
           "For an English-speaking audience, the report should respect the familiar left-to-right reading pattern. The upper-left area is a strong starting point for the metric that matters most, followed by related measures in descending order of importance.",
           "This does not mean every reader follows an identical eye path. It means the layout should make the intended order obvious. A decision-maker should be able to scan from the primary outcome on the left, through the supporting trend or driver, and towards the key takeaway without searching the page.",
-          "For an ecommerce report, revenue or purchases may deserve the first position. For lead generation, qualified enquiries may come before sessions. For technical SEO, site health and critical errors may lead. The hierarchy should follow the decision, not the easiest metric to obtain.",
+          {
+            text: "For an ecommerce report, revenue or purchases may deserve the first position. For lead generation, qualified enquiries may come before sessions. For technical SEO, site health and critical errors may lead. The hierarchy should follow the decision, not the easiest metric to obtain.",
+            links: [
+              {
+                text: "lead generation",
+                href: "/blog/how-to-create-gtm-tags-for-leads",
+              },
+            ],
+          },
         ],
         bullets: [
           "Top left: the primary business or performance outcome.",
@@ -240,9 +258,23 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         id: "dashboard-example",
         heading: "A Looker Studio report in practice",
         paragraphs: [
-          "The draft Morgan Motors Q4 report below shows how one reporting system can organise several SEO questions without placing every metric on one page. It moves from technical health and backlink performance to organic visibility, page and query performance, revenue, leads, AI visibility, and recommendations.",
+          {
+            text: "The draft Morgan Motors Q4 report below shows how one reporting system can organise several SEO questions without placing every metric on one page. It moves from technical health and backlink performance to organic visibility, page and query performance, revenue, leads, AI visibility, and recommendations. Morgan Motors is a fictional example created solely to demonstrate the dashboard's design and functionality.",
+            links: [
+              {
+                text: "backlink performance",
+                href: "/blog/off-page-seo-in-2026",
+              },
+              {
+                text: "AI visibility",
+                href: "/blog/ai-is-reshaping-search-reporting",
+              },
+            ],
+          },
           "The most useful pattern is the separation between overview pages, focused performance pages, and key takeaways. In a recurring reporting process, the structure can remain stable while the date range, comparisons, commentary, and depth of analysis change with the reporting cadence. The video shows the dashboard in use, followed by a carousel of the complete report.",
         ],
+        notice:
+          "Disclosure: Morgan Motors and all data, metrics, results, trends, products, queries, revenue figures, leads, and performance claims shown in this report are entirely fictional. They do not represent a real company or actual business performance.",
         video: {
           src: "/article-videos/looker-studio-dashboard-demo.m4v",
           poster: "/article-images/morgan-motors-q4-report/page-01.jpg",
@@ -250,12 +282,12 @@ const ARTICLE_INPUTS: ArticleInput[] = [
           description:
             "The demonstration plays automatically when it enters view. Use the video controls to pause, replay, change the volume, or move through the recording.",
           caption:
-            "A walkthrough of the report's navigation and interactive dashboard experience. Use the speed selector to slow down or speed up the demonstration, or open it full screen for a larger view.",
+            "A walkthrough of the report's navigation and interactive dashboard experience using entirely fictional data. Use the speed selector to slow down or speed up the demonstration, or open it full screen for a larger view.",
         },
         imageCarousel: {
           title: "Morgan Motors Q4 dashboard walkthrough",
           description:
-            "A 19-page draft Looker Studio report demonstrating section hierarchy, headline KPIs, performance trends, detailed tables, key takeaways, and recommended actions.",
+            "A 19-page draft Looker Studio report using entirely fictional data to demonstrate section hierarchy, headline KPIs, performance trends, detailed tables, key takeaways, and recommended actions.",
           images: [
             {
               src: "/article-images/morgan-motors-q4-report/page-01.jpg",
@@ -2025,7 +2057,15 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         id: "how-to-report-it",
         heading: "How to report it",
         paragraphs: [
-          "A stronger organic report combines search visibility, AI visibility, and commercial outcomes. Google Search Console shows demand and query movement. GA4 shows behaviour after the click. Manual AI checks and third party monitoring can show whether the brand is present in generated answers.",
+          {
+            text: "A stronger organic report combines search visibility, AI visibility, and commercial outcomes. Google Search Console shows demand and query movement. GA4 shows behaviour after the click. Manual AI checks and third party monitoring can show whether the brand is present in generated answers.",
+            links: [
+              {
+                text: "stronger organic report",
+                href: "/blog/looker-studio-dashboards-for-reporting",
+              },
+            ],
+          },
           "Tools such as SEMrush and Similarweb can help report on AI visibility data, depending on the markets and features available. GA4 can also support this work through referral traffic, where visits from platforms such as ChatGPT, Perplexity, Copilot, or Gemini may appear as referring sources.",
           "The goal is not to flood a report with more numbers. The goal is to connect visibility to decisions, leads, purchases, and content priorities.",
         ],
@@ -2072,7 +2112,15 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         heading: "The metric problem",
         paragraphs: [
           "Rankings, impressions, clicks, and average position are useful diagnostic signals. They are not always useful boardroom language.",
-          "A business wants to know whether organic search is creating qualified demand, reducing paid dependency, supporting revenue, or uncovering customer intent. SEO reporting should translate technical signals into business meaning.",
+          {
+            text: "A business wants to know whether organic search is creating qualified demand, reducing paid dependency, supporting revenue, or uncovering customer intent. SEO reporting should translate technical signals into business meaning.",
+            links: [
+              {
+                text: "SEO reporting",
+                href: "/blog/looker-studio-dashboards-for-reporting",
+              },
+            ],
+          },
         ],
       },
       {
