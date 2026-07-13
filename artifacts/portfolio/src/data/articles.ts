@@ -169,7 +169,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
     sections: [
       {
         id: "reporting-should-not-start-from-scratch",
-        heading: "Recurring reporting should not start from scratch",
+        heading: "Recurring Reporting Should Not Start from Scratch",
         paragraphs: [
           "A reporting cycle can disappear into exporting data, rebuilding charts, checking formulas, formatting slides, and copying figures between documents. By the time the report is ready, too little time is left for the part that creates value: interpreting what happened and deciding what to do next.",
           "Looker Studio changes that rhythm. Once the data sources, calculated fields, filters, comparisons, and page structure are in place, the dashboard becomes a reusable reporting system. Whether the report is produced weekly, monthly, or quarterly, each cycle begins with an updated view rather than a blank page.",
@@ -178,7 +178,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
       },
       {
         id: "speed-creates-room-for-analysis",
-        heading: "Speed creates room for better analysis",
+        heading: "Speed Creates Room for Better Analysis",
         paragraphs: [
           "The real benefit of a faster dashboard is not simply that the report is delivered sooner. The benefit is that more of each reporting cycle can be spent thinking.",
           "A consistent dashboard makes week-on-week, month-on-month, quarter-on-quarter, and year-on-year comparisons easier because the definitions and visual structure do not change every time. Performance movements become quicker to spot, and the analyst can investigate the cause while the information is still timely.",
@@ -193,7 +193,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
       },
       {
         id: "key-takeaways-are-the-product",
-        heading: "The key takeaways are the product",
+        heading: "The Key Takeaways Are the Product",
         paragraphs: [
           "A dashboard can contain accurate charts and still fail as a report. Decision-makers rarely need a guided tour of every number. They need to know what changed, why it matters, and whether a decision or action is required.",
           "This is why a dedicated key takeaways area is so valuable. It turns data into a short narrative: the result, the likely driver, the business implication, and the recommended next step. The dashboard supplies the evidence, but the interpretation is what moves the conversation forward.",
@@ -208,7 +208,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
       },
       {
         id: "less-is-more",
-        heading: "Less is more for decision-makers",
+        heading: "Less Is More for Decision-Makers",
         paragraphs: [
           "More information does not automatically create more confidence. When every available metric is given the same visual weight, the reader has to work out what matters before they can even begin to interpret the result.",
           {
@@ -232,7 +232,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
       },
       {
         id: "design-for-left-to-right-reading",
-        heading: "Put the most important metrics on the left",
+        heading: "Put the Most Important Metrics on the Left",
         paragraphs: [
           "For an English-speaking audience, the report should respect the familiar left-to-right reading pattern. The upper-left area is a strong starting point for the metric that matters most, followed by related measures in descending order of importance.",
           "This does not mean every reader follows an identical eye path. It means the layout should make the intended order obvious. A decision-maker should be able to scan from the primary outcome on the left, through the supporting trend or driver, and towards the key takeaway without searching the page.",
@@ -256,7 +256,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
       },
       {
         id: "dashboard-example",
-        heading: "A Looker Studio report in practice",
+        heading: "A Looker Studio Report in Practice",
         paragraphs: [
           {
             text: "The draft Morgan Motors Q4 report below shows how one reporting system can organise several SEO questions without placing every metric on one page. It moves from technical health and backlink performance to organic visibility, page and query performance, revenue, leads, AI visibility, and recommendations. Morgan Motors is a fictional example created solely to demonstrate the dashboard's design and functionality.",
@@ -274,7 +274,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
           "The most useful pattern is the separation between overview pages, focused performance pages, and key takeaways. In a recurring reporting process, the structure can remain stable while the date range, comparisons, commentary, and depth of analysis change with the reporting cadence. The video shows the dashboard in use, followed by a carousel of the complete report.",
         ],
         notice:
-          "Disclosure: Morgan Motors and all data, metrics, results, trends, products, queries, revenue figures, leads, and performance claims shown in this report are entirely fictional. They do not represent a real company or actual business performance.",
+          "Disclosure: Morgan Motors and all data, metrics, results, trends, products, queries, revenue figures, leads, and performance claims shown in this report are entirely fictional. They do not represent a real company or actual business performance. The lorem ipsum beneath the headline metrics is placeholder copy showing where a short explanation of what each metric means would appear in a finished report.",
         video: {
           src: "/article-videos/looker-studio-dashboard-demo.m4v",
           poster: "/article-images/morgan-motors-q4-report/page-01.jpg",
@@ -389,7 +389,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
       },
       {
         id: "a-practical-reporting-workflow",
-        heading: "A practical reporting workflow",
+        heading: "A Practical Reporting Workflow",
         paragraphs: [
           "The dashboard should create a repeatable starting point, not remove professional judgement. A short quality and interpretation routine keeps weekly, monthly, and quarterly reports trustworthy and useful.",
         ],
@@ -404,7 +404,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
       },
       {
         id: "report-for-the-decision",
-        heading: "Report for the decision, not for the data source",
+        heading: "Report for the Decision, Not the Data Source",
         paragraphs: [
           "Looker Studio is valuable because it can bring several sources into a consistent, reusable view. Its bigger value is what that system makes possible: faster reporting, stronger comparisons, clearer communication, and more time for analysis.",
           "The best reporting dashboard is not the one with the most charts. It is the one that helps a decision-maker understand the situation quickly, trust the evidence, and know what deserves attention next.",
