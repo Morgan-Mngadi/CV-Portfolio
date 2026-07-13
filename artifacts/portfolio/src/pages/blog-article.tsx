@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Clock, Maximize2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
-import { ARTICLES, getArticle, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleImageCarousel, type ArticleParagraph } from "@/data/articles";
+import { ARTICLES, getArticle, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleImageCarousel, type ArticleParagraph, type ArticleVideo } from "@/data/articles";
 import {
   Dialog,
   DialogClose,
@@ -212,6 +212,118 @@ function ArticleImageCarouselBlock({
         <CarouselPrevious className="left-3 border-border bg-background/90 text-foreground hover:bg-card disabled:opacity-30" />
         <CarouselNext className="right-3 border-border bg-background/90 text-foreground hover:bg-card disabled:opacity-30" />
       </Carousel>
+    </figure>
+  );
+}
+
+const PLAYBACK_SPEEDS = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [playbackRate, setPlaybackRate] = useState(1);
+
+  useEffect(() => {
+    const element = videoRef.current;
+
+    if (!element) {
+      return;
+    }
+
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !prefersReducedMotion) {
+          void element.play().catch(() => {
+            // Native controls remain available if a browser blocks autoplay.
+          });
+        } else {
+          element.pause();
+        }
+      },
+      { threshold: 0.45 },
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+      element.pause();
+    };
+  }, []);
+
+  const updatePlaybackRate = (rate: number) => {
+    setPlaybackRate(rate);
+
+    if (videoRef.current) {
+      videoRef.current.playbackRate = rate;
+    }
+  };
+
+  const openFullScreen = () => {
+    const element = containerRef.current;
+
+    if (element?.requestFullscreen) {
+      void element.requestFullscreen();
+    }
+  };
+
+  return (
+    <figure className="mt-8 border border-border bg-card p-3 sm:p-5">
+      <div className="mb-4 border-b border-border pb-4">
+        <p className="font-mono text-xs uppercase tracking-widest text-primary">Dashboard Demo</p>
+        <h3 className="mt-2 text-xl font-medium tracking-tight text-foreground">{video.title}</h3>
+        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{video.description}</p>
+      </div>
+
+      <div ref={containerRef} className="bg-black p-1 sm:p-2">
+        <video
+          ref={videoRef}
+          controls
+          muted
+          playsInline
+          preload="metadata"
+          poster={video.poster}
+          className="aspect-video w-full bg-black object-contain"
+          aria-label={video.title}
+          onRateChange={(event) => setPlaybackRate(event.currentTarget.playbackRate)}
+        >
+          <source src={video.src} type="video/mp4" />
+          Your browser does not support embedded video playback.
+        </video>
+      </div>
+
+      <div className="mt-3 flex flex-col gap-3 border-t border-border pt-3 sm:flex-row sm:items-center sm:justify-between">
+        <figcaption className="text-xs leading-relaxed text-muted-foreground sm:max-w-xl">
+          {video.caption}
+        </figcaption>
+        <div className="flex shrink-0 flex-wrap items-center gap-2">
+          <label htmlFor="article-video-speed" className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            Speed
+          </label>
+          <select
+            id="article-video-speed"
+            value={playbackRate}
+            onChange={(event) => updatePlaybackRate(Number(event.target.value))}
+            className="h-10 border border-border bg-background px-3 font-mono text-xs text-foreground focus:border-primary focus:outline-none"
+            aria-label="Video playback speed"
+          >
+            {PLAYBACK_SPEEDS.map((speed) => (
+              <option key={speed} value={speed}>
+                {speed}x
+              </option>
+            ))}
+          </select>
+          <button
+            type="button"
+            onClick={openFullScreen}
+            className="inline-flex h-10 items-center justify-center gap-2 border border-border bg-background px-3 font-mono text-xs uppercase tracking-widest text-foreground transition-colors hover:border-primary hover:text-primary"
+          >
+            <Maximize2 className="h-4 w-4" />
+            Full screen
+          </button>
+        </div>
+      </div>
     </figure>
   );
 }
@@ -486,6 +598,9 @@ export default function BlogArticle() {
                         </figure>
                       ))}
                     </div>
+                  )}
+                  {section.video && (
+                    <ArticleVideoBlock video={section.video} />
                   )}
                   {section.imageCarousel && (
                     <ArticleImageCarouselBlock carousel={section.imageCarousel} onSelectImage={openLightbox} />

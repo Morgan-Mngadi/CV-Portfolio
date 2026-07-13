@@ -17,6 +17,7 @@ export type ArticleSection = {
   imageBlocks?: ArticleImage[];
   imageLayout?: string;
   imageCarousel?: ArticleImageCarousel;
+  video?: ArticleVideo;
   chart?: ArticleChart;
   comparisonTable?: ArticleComparisonTable;
   imagePlaceholder?: string;
@@ -41,6 +42,14 @@ export type ArticleImageCarousel = {
   title: string;
   description: string;
   images: ArticleImage[];
+};
+
+export type ArticleVideo = {
+  src: string;
+  poster?: string;
+  title: string;
+  description: string;
+  caption: string;
 };
 
 export type ArticleComparisonTable = {
@@ -107,6 +116,10 @@ const calculateReadTime = (article: ArticleInput) => {
       section.imageCarousel.images.forEach((image) => visibleText.push(image.alt, image.caption));
     }
 
+    if (section.video) {
+      visibleText.push(section.video.title, section.video.description, section.video.caption);
+    }
+
     if (section.chart) {
       visibleText.push(section.chart.title, section.chart.subtitle, section.chart.axisLabel, section.chart.sourceLabel);
       section.chart.rows.forEach((row) => visibleText.push(row.label, String(row.value)));
@@ -142,6 +155,253 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 });
 
 const ARTICLE_INPUTS: ArticleInput[] = [
+  {
+    slug: "looker-studio-dashboards-for-reporting",
+    title: "Why Looker Studio Dashboards Make Reporting Faster and More Useful",
+    excerpt:
+      "A well-designed Looker Studio dashboard makes weekly, monthly, and quarterly reporting faster while giving decision-makers a clearer view of what changed, why it matters, and what to do next.",
+    metaDescription:
+      "Learn how Looker Studio dashboards speed up recurring reporting, sharpen key takeaways, and help decision-makers focus on the metrics that matter.",
+    category: "Measurement",
+    date: "Jul 2026",
+    sections: [
+      {
+        id: "reporting-should-not-start-from-scratch",
+        heading: "Recurring reporting should not start from scratch",
+        paragraphs: [
+          "A reporting cycle can disappear into exporting data, rebuilding charts, checking formulas, formatting slides, and copying figures between documents. By the time the report is ready, too little time is left for the part that creates value: interpreting what happened and deciding what to do next.",
+          "Looker Studio changes that rhythm. Once the data sources, calculated fields, filters, comparisons, and page structure are in place, the dashboard becomes a reusable reporting system. Whether the report is produced weekly, monthly, or quarterly, each cycle begins with an updated view rather than a blank page.",
+          "That does not make reporting automatic. It makes the repetitive part faster, so the analyst can spend more time checking anomalies, connecting changes to business activity, and writing useful takeaways.",
+        ],
+      },
+      {
+        id: "speed-creates-room-for-analysis",
+        heading: "Speed creates room for better analysis",
+        paragraphs: [
+          "The real benefit of a faster dashboard is not simply that the report is delivered sooner. The benefit is that more of each reporting cycle can be spent thinking.",
+          "A consistent dashboard makes week-on-week, month-on-month, quarter-on-quarter, and year-on-year comparisons easier because the definitions and visual structure do not change every time. Performance movements become quicker to spot, and the analyst can investigate the cause while the information is still timely.",
+        ],
+        bullets: [
+          "Connect recurring data sources once and refresh the same reporting framework for every reporting cycle.",
+          "Keep metric definitions and comparisons consistent across reporting periods.",
+          "Spot unusual gains, declines, gaps, and tracking issues earlier.",
+          "Spend the saved time validating the data and explaining what it means.",
+          "Deliver insights while there is still time for the business to respond.",
+        ],
+      },
+      {
+        id: "key-takeaways-are-the-product",
+        heading: "The key takeaways are the product",
+        paragraphs: [
+          "A dashboard can contain accurate charts and still fail as a report. Decision-makers rarely need a guided tour of every number. They need to know what changed, why it matters, and whether a decision or action is required.",
+          "This is why a dedicated key takeaways area is so valuable. It turns data into a short narrative: the result, the likely driver, the business implication, and the recommended next step. The dashboard supplies the evidence, but the interpretation is what moves the conversation forward.",
+        ],
+        numberedSteps: [
+          "State the most important change in plain language.",
+          "Add the comparison or evidence that supports it.",
+          "Explain the likely cause without overstating certainty.",
+          "Connect the change to revenue, leads, visibility, risk, or another business outcome.",
+          "Recommend the next action, owner, or question to investigate.",
+        ],
+      },
+      {
+        id: "less-is-more",
+        heading: "Less is more for decision-makers",
+        paragraphs: [
+          "More information does not automatically create more confidence. When every available metric is given the same visual weight, the reader has to work out what matters before they can even begin to interpret the result.",
+          "A useful recurring report is deliberately selective. It includes the smallest set of metrics needed to answer the business question, supported by enough detail to verify the conclusion. Everything else can sit on a drill-down page or in a supporting table.",
+          "The test is simple: if removing a chart would not change a decision, a takeaway, or a useful follow-up question, that chart may not belong on the main reporting page.",
+        ],
+        bullets: [
+          "Prioritise business outcomes before channel activity metrics.",
+          "Use one chart to answer one clear question.",
+          "Avoid repeating the same message in a scorecard, chart, and table.",
+          "Keep supporting detail available without forcing it into the first view.",
+          "Use colour sparingly so that exceptions and important movements stand out.",
+        ],
+      },
+      {
+        id: "design-for-left-to-right-reading",
+        heading: "Put the most important metrics on the left",
+        paragraphs: [
+          "For an English-speaking audience, the report should respect the familiar left-to-right reading pattern. The upper-left area is a strong starting point for the metric that matters most, followed by related measures in descending order of importance.",
+          "This does not mean every reader follows an identical eye path. It means the layout should make the intended order obvious. A decision-maker should be able to scan from the primary outcome on the left, through the supporting trend or driver, and towards the key takeaway without searching the page.",
+          "For an ecommerce report, revenue or purchases may deserve the first position. For lead generation, qualified enquiries may come before sessions. For technical SEO, site health and critical errors may lead. The hierarchy should follow the decision, not the easiest metric to obtain.",
+        ],
+        bullets: [
+          "Top left: the primary business or performance outcome.",
+          "Across the top: two or three supporting KPIs, ordered by importance.",
+          "Centre: the trend or comparison that explains direction over time.",
+          "Right-hand side: concise key takeaways and the action required.",
+          "Lower down: detailed tables, segments, diagnostic metrics, and supporting evidence.",
+        ],
+      },
+      {
+        id: "dashboard-example",
+        heading: "A Looker Studio report in practice",
+        paragraphs: [
+          "The draft Morgan Motors Q4 report below shows how one reporting system can organise several SEO questions without placing every metric on one page. It moves from technical health and backlink performance to organic visibility, page and query performance, revenue, leads, AI visibility, and recommendations.",
+          "The most useful pattern is the separation between overview pages, focused performance pages, and key takeaways. In a recurring reporting process, the structure can remain stable while the date range, comparisons, commentary, and depth of analysis change with the reporting cadence. The video shows the dashboard in use, followed by a carousel of the complete report.",
+        ],
+        video: {
+          src: "/article-videos/looker-studio-dashboard-demo.m4v",
+          poster: "/article-images/morgan-motors-q4-report/page-01.jpg",
+          title: "Looker Studio dashboard functionality",
+          description:
+            "The demonstration plays automatically when it enters view. Use the video controls to pause, replay, change the volume, or move through the recording.",
+          caption:
+            "A walkthrough of the report's navigation and interactive dashboard experience. Use the speed selector to slow down or speed up the demonstration, or open it full screen for a larger view.",
+        },
+        imageCarousel: {
+          title: "Morgan Motors Q4 dashboard walkthrough",
+          description:
+            "A 19-page draft Looker Studio report demonstrating section hierarchy, headline KPIs, performance trends, detailed tables, key takeaways, and recommended actions.",
+          images: [
+            {
+              src: "/article-images/morgan-motors-q4-report/page-01.jpg",
+              alt: "Cover of the Morgan Motors Q4 2025 Looker Studio report.",
+              caption: "Report cover and scope for the Q4 reporting period.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-02.jpg",
+              alt: "Technical audit section divider in the Morgan Motors report.",
+              caption: "A clear divider introduces the technical audit section.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-03.jpg",
+              alt: "Technical SEO dashboard with site health, errors, warnings, trend and key takeaways.",
+              caption: "Headline health metrics appear first, followed by the trend, issue detail, and takeaways.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-04.jpg",
+              alt: "Backlink audit section divider in the Morgan Motors report.",
+              caption: "The backlink audit begins as a separate reporting question.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-05.jpg",
+              alt: "Backlink dashboard with backlink totals, referring domains, new links and trend data.",
+              caption: "Backlink KPIs are supported by trend and referring-domain detail.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-06.jpg",
+              alt: "Organic search performance section divider.",
+              caption: "A section divider resets the context before organic search performance.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-07.jpg",
+              alt: "Organic search dashboard showing clicks, impressions, average position and key takeaways.",
+              caption: "Core Search Console metrics lead into trends, device context, and interpretation.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-08.jpg",
+              alt: "Query performance section divider.",
+              caption: "Query performance is separated from the high-level organic overview.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-09.jpg",
+              alt: "Query performance tables for the quarter and individual months.",
+              caption: "Detailed query tables provide evidence without crowding the main KPI page.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-10.jpg",
+              alt: "Page performance section divider.",
+              caption: "Landing-page analysis is introduced as its own diagnostic view.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-11.jpg",
+              alt: "Landing-page performance tables for the quarter and individual months.",
+              caption: "Page-level tables help identify which content and product pages drove the result.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-12.jpg",
+              alt: "Organic search revenue section divider.",
+              caption: "The report then shifts from search activity to business value.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-13.jpg",
+              alt: "Organic revenue dashboard with purchases, revenue, users, trends, brands and products sold.",
+              caption: "Purchases and revenue are placed prominently, with product and brand detail underneath.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-14.jpg",
+              alt: "Organic search leads section divider.",
+              caption: "Lead performance follows as a distinct business outcome.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-15.jpg",
+              alt: "Organic lead dashboard with total leads, enquiries, email clicks and key takeaways.",
+              caption: "Lead KPIs, trends, actions and takeaways are combined on one focused page.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-16.jpg",
+              alt: "AI visibility performance section divider.",
+              caption: "AI visibility is treated as a separate emerging measurement area.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-17.jpg",
+              alt: "AI visibility dashboard with visibility score, citations, mentions and platform performance.",
+              caption: "AI visibility measures are paired with platform and source detail.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-18.jpg",
+              alt: "Suggestions section divider in the Morgan Motors report.",
+              caption: "The report closes by moving from evidence to recommendations.",
+            },
+            {
+              src: "/article-images/morgan-motors-q4-report/page-19.jpg",
+              alt: "SEO suggestions organised into on-page, off-page and technical workstreams.",
+              caption: "Recommended actions are grouped into clear SEO workstreams.",
+            },
+          ],
+        },
+      },
+      {
+        id: "a-practical-reporting-workflow",
+        heading: "A practical reporting workflow",
+        paragraphs: [
+          "The dashboard should create a repeatable starting point, not remove professional judgement. A short quality and interpretation routine keeps weekly, monthly, and quarterly reports trustworthy and useful.",
+        ],
+        numberedSteps: [
+          "Refresh the connected sources and confirm that the reporting dates are correct.",
+          "Check tracking health, data completeness, and any unexpected breaks before interpreting results.",
+          "Compare the primary KPIs with the previous equivalent period and add a longer-term or year-on-year baseline where it improves the analysis.",
+          "Investigate the few movements that could affect a decision or reveal an opportunity.",
+          "Write three to five key takeaways in plain language and attach an action where appropriate.",
+          "Review the first page once more and remove anything that competes with the main message.",
+        ],
+      },
+      {
+        id: "report-for-the-decision",
+        heading: "Report for the decision, not for the data source",
+        paragraphs: [
+          "Looker Studio is valuable because it can bring several sources into a consistent, reusable view. Its bigger value is what that system makes possible: faster reporting, stronger comparisons, clearer communication, and more time for analysis.",
+          "The best reporting dashboard is not the one with the most charts. It is the one that helps a decision-maker understand the situation quickly, trust the evidence, and know what deserves attention next.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "How does Looker Studio save time in recurring reporting?",
+        answer:
+          "It keeps connected data, calculations, filters, comparisons, and visual layouts in one reusable report. The analyst can refresh and validate the dashboard instead of rebuilding it for every weekly, monthly, or quarterly cycle.",
+      },
+      {
+        question: "How many metrics should a reporting dashboard include?",
+        answer:
+          "There is no fixed number. Use the smallest set that explains the main business outcome, its direction, and the likely drivers. Move diagnostic detail to supporting pages or tables.",
+      },
+      {
+        question: "Why put the most important metric on the left?",
+        answer:
+          "English-speaking audiences are accustomed to scanning from left to right, so the upper-left area is a natural place to begin the visual hierarchy. The layout should then guide the reader towards supporting evidence and key takeaways.",
+      },
+      {
+        question: "Can a dashboard replace written commentary?",
+        answer:
+          "No. A dashboard makes the evidence easier to access, but concise commentary is still needed to explain what changed, why it matters, and what action should follow.",
+      },
+    ],
+  },
   {
     slug: "google-business-profile-bing-places-2026",
     title: "Google Business Profile and Bing Places in 2026",
@@ -2032,82 +2292,6 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         question: "When should a GTM event become a GA4 key event?",
         answer:
           "Only when the action represents meaningful progress towards a business goal, such as a lead, route enquiry, purchase, or other high value conversion.",
-      },
-    ],
-  },
-  {
-    slug: "how-to-set-up-looker-studio-dashboard-stakeholders",
-    title: "How to Set Up a Looker Studio Dashboard That Impresses Stakeholders",
-    excerpt:
-      "A practical guide to building a premium looking Looker Studio dashboard that makes organic performance easier to understand.",
-    metaDescription:
-      "Learn how to build a clear Looker Studio SEO dashboard that helps stakeholders understand organic performance.",
-    category: "Measurement",
-    date: "Jun 2026",
-    archived: true,
-    sections: [
-      {
-        id: "start-with-the-user",
-        heading: "Start with the stakeholder",
-        paragraphs: [
-          "A premium dashboard is not just a nice looking report. It is a report that helps a stakeholder understand what changed, why it changed, and what should happen next.",
-          "Before designing the page, decide who will use it. A founder, SEO manager, paid media lead, and agency client may all need different levels of detail.",
-        ],
-      },
-      {
-        id: "build-a-clear-layout",
-        heading: "Build a clear layout",
-        paragraphs: [
-          "The best dashboards guide the eye. Put headline metrics at the top, filters where users expect them, and deeper tables or charts further down the page.",
-        ],
-        numberedSteps: [
-          "Start with the headline KPI or business question.",
-          "Add filters for segment, channel, page type, or date range.",
-          "Use charts to explain trends and tables to show detail.",
-          "Add short commentary boxes where the data needs interpretation.",
-          "Keep colours, spacing, and typography consistent across the report.",
-        ],
-        imagePlaceholder: "Add a screenshot of the dashboard overview, showing filters, KPI cards, tables, and charts.",
-      },
-      {
-        id: "make-roi-easy-to-see",
-        heading: "Make ROI easy to see",
-        paragraphs: [
-          "Stakeholders care about visibility, but they care even more about business impact. A dashboard should make it easy to connect organic activity to leads, purchases, revenue, or meaningful user actions.",
-          "For SEO, this means combining Search Console visibility with GA4 behaviour and conversion data where possible. The report should not only say traffic went up. It should help explain whether the increase mattered.",
-        ],
-        bullets: [
-          "Show organic revenue, leads, or key events where available.",
-          "Separate branded and non branded search where useful.",
-          "Use commentary to explain the action behind the numbers.",
-          "Avoid vanity metrics unless they support a decision.",
-        ],
-      },
-      {
-        id: "premium-feel",
-        heading: "What creates a premium feel",
-        paragraphs: [
-          "A premium dashboard feels calm, deliberate, and easy to scan. It does not need heavy decoration. It needs clear hierarchy, useful filters, tidy spacing, and charts that answer real questions.",
-          "It is fair to write about premium dashboard design if you focus on business clarity, not only aesthetics. The value is in making performance easier to understand and act on.",
-        ],
-        imagePlaceholder: "Add a screenshot or recreated sample of a polished dashboard page with anonymised data.",
-      },
-    ],
-    faqs: [
-      {
-        question: "Can an SEO dashboard look premium without custom design software?",
-        answer:
-          "Yes. Strong layout, consistent colours, clear typography, and good commentary can make Looker Studio feel professional without extra design tools.",
-      },
-      {
-        question: "What should be above the fold in a dashboard?",
-        answer:
-          "The most important KPI, the key filters, and a quick view of performance direction should be visible first.",
-      },
-      {
-        question: "Should dashboard screenshots use real client data?",
-        answer:
-          "Only if you have permission. Otherwise, anonymise the data or recreate the layout with sample information.",
       },
     ],
   },
