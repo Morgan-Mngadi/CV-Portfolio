@@ -101,6 +101,8 @@ const CLIENT_LOGOS = [
   { name: "The Capital", src: "/client-logos/the-capital.png" },
   { name: "Seabourne Logistics", src: "/client-logos/seabourne-logistics.png" },
   { name: "The Courier Guy", src: "/client-logos/the-courier-guy.png" },
+  { name: "Yaskawa", src: "/client-logos/yaskawa.png" },
+  { name: "SPAR2U", src: "/client-logos/spar2u.png" },
 ];
 
 const SEARCH_FOCUS_AREAS = [
@@ -605,7 +607,7 @@ export default function Home() {
             </div>
           </div>
 
-          <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-px bg-border border border-border">
+          <motion.div variants={stagger} className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-px bg-border border border-border">
             {CLIENT_LOGOS.map((client) => (
               <motion.div
                 key={client.name}
