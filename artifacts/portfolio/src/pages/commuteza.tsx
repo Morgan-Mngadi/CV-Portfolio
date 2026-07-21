@@ -35,7 +35,7 @@ const CONTENTS = [
 const METRICS = [
   { value: "10,000+", label: "Google impressions" },
   { value: "5,000+", label: "Bing impressions" },
-  { value: "3,000+", label: "Bing AI Overview impressions" },
+  { value: "3,000+", label: "Bing AI impressions from two articles" },
   { value: "30 days", label: "To a Copilot AI mention" },
 ];
 

@@ -32,6 +32,33 @@ const stagger = {
   visible: { transition: { staggerChildren: 0.08 } },
 };
 
+const ARTICLE_CTA_COPY: Record<string, { title: string; description: string }> = {
+  "AI Search": {
+    title: "Want to strengthen your visibility in AI search?",
+    description: "Let’s explore how your content and technical foundations can earn more mentions and citations across AI-powered search.",
+  },
+  "Authority Building": {
+    title: "Want to build stronger search authority?",
+    description: "Let’s turn useful content, credible citations, and off-page signals into a sustainable authority-building strategy.",
+  },
+  "Local SEO": {
+    title: "Want more customers to find you locally?",
+    description: "Let’s improve your local search presence, business profiles, citations, and location-focused content.",
+  },
+  Measurement: {
+    title: "Want clearer insight from your SEO data?",
+    description: "Let’s build measurement and reporting that connects search performance to decisions and business outcomes.",
+  },
+  "Social Media SEO": {
+    title: "Want social activity to support search growth?",
+    description: "Let’s connect content discovery, brand visibility, and social signals with a practical organic search strategy.",
+  },
+  "Video SEO": {
+    title: "Want your videos to earn more search visibility?",
+    description: "Let’s improve how your video content is structured, discovered, and connected to your wider search strategy.",
+  },
+};
+
 const isExternalHref = (href: string) => /^https?:\/\//.test(href);
 
 type LightboxState = {
@@ -445,6 +472,10 @@ export default function BlogArticle() {
   }
 
   const moreArticles = ARTICLES.filter((item) => item.slug !== article.slug).slice(0, 3);
+  const ctaCopy = ARTICLE_CTA_COPY[article.category] ?? {
+    title: "Want to apply these ideas to your search strategy?",
+    description: "Let’s talk about how this approach could support your website, content, analytics, or digital product.",
+  };
   const selectedImage = lightbox?.images[lightbox.index] ?? null;
   const canShowPreviousImage = Boolean(lightbox && lightbox.index > 0);
   const canShowNextImage = Boolean(lightbox && lightbox.index < lightbox.images.length - 1);
@@ -489,7 +520,7 @@ export default function BlogArticle() {
             </motion.p>
           </header>
 
-          <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-10 lg:gap-16 py-14">
+          <div className="grid grid-cols-1 gap-10 py-14 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[200px_minmax(0,1fr)_240px] xl:gap-8">
             <motion.aside variants={fadeUp} className="flex flex-col gap-5 lg:sticky lg:top-20 lg:self-start">
               <section aria-labelledby="article-author" className="border border-border bg-card p-5">
                 <h2 id="article-author" className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
@@ -681,26 +712,14 @@ export default function BlogArticle() {
                 </motion.section>
               ))}
 
-              <motion.section id="faq" variants={fadeUp} className="scroll-mt-24 pb-14">
-                <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-6">FAQ</h2>
-                <div className="flex flex-col divide-y divide-border border border-border">
-                  {article.faqs.map((faq) => (
-                    <section key={faq.question} className="p-6 bg-card">
-                      <h3 className="font-medium mb-3">{faq.question}</h3>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
-                    </section>
-                  ))}
-                </div>
-              </motion.section>
-
-              <motion.section variants={fadeUp} className="border-y border-border py-10 mb-10">
+              <motion.section variants={fadeUp} className="border-y border-border py-10 mb-10 xl:hidden">
                 <div className="border border-primary/40 bg-card p-6 md:p-8">
                   <p className="font-mono text-xs uppercase tracking-widest text-primary mb-4">Let’s Connect</p>
                   <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">
-                    Want to Talk Search, Analytics, or Digital Products?
+                    {ctaCopy.title}
                   </h2>
                   <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-                    I’m interested in thoughtful conversations around technical SEO, analytics, GTM, GA4, organic growth, and product-led search systems.
+                    {ctaCopy.description}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-3">
                     <Link
@@ -726,6 +745,18 @@ export default function BlogArticle() {
                       Get in Touch
                     </a>
                   </div>
+                </div>
+              </motion.section>
+
+              <motion.section id="faq" variants={fadeUp} className="scroll-mt-24 pb-14">
+                <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-6">FAQ</h2>
+                <div className="flex flex-col divide-y divide-border border border-border">
+                  {article.faqs.map((faq) => (
+                    <section key={faq.question} className="p-6 bg-card">
+                      <h3 className="font-medium mb-3">{faq.question}</h3>
+                      <p className="text-sm text-muted-foreground leading-relaxed">{faq.answer}</p>
+                    </section>
+                  ))}
                 </div>
               </motion.section>
 
@@ -778,6 +809,42 @@ export default function BlogArticle() {
                 </Link>
               </motion.footer>
             </div>
+
+            <motion.aside variants={fadeUp} className="hidden xl:block xl:sticky xl:top-24 xl:self-start">
+              <section aria-labelledby="article-sidebar-cta" className="border border-primary bg-primary p-6 text-primary-foreground shadow-lg shadow-primary/10">
+                <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary-foreground/75">Let’s Connect</p>
+                <h2 id="article-sidebar-cta" className="text-2xl font-medium leading-tight tracking-tight">
+                  {ctaCopy.title}
+                </h2>
+                <p className="mt-4 text-sm leading-relaxed text-primary-foreground/80">
+                  {ctaCopy.description}
+                </p>
+                <div className="mt-6 flex flex-col gap-3">
+                  <a
+                    id="article-sidebar-book-intro-call"
+                    href="https://cal.com/morgan-mngadi-18ixti/intro-call"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 bg-background px-4 py-3 text-sm font-medium text-foreground transition-colors hover:bg-background/90"
+                  >
+                    <CalendarDays className="h-4 w-4" /> Book a Call
+                  </a>
+                  <a
+                    id="article-sidebar-contact-email"
+                    href="mailto:morganmngadi@gmail.com"
+                    className="inline-flex items-center justify-center border border-primary-foreground/50 px-4 py-3 text-sm font-medium transition-colors hover:border-primary-foreground hover:bg-primary-foreground/10"
+                  >
+                    Get in Touch
+                  </a>
+                  <Link
+                    href="/areas-of-expertise"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-primary-foreground/80 transition-colors hover:text-primary-foreground"
+                  >
+                    Explore Expertise <ArrowUpRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </section>
+            </motion.aside>
           </div>
         </motion.article>
       </main>
