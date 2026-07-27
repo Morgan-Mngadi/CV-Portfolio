@@ -5,6 +5,7 @@ import { Link } from "wouter";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { AnimatedMetric } from "@/components/animated-metric";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 0 },
@@ -242,7 +243,7 @@ export default function About() {
               { value: "2x", label: "Award contributions" },
             ].map((s) => (
               <motion.div key={s.label} variants={fadeUp} className="min-h-[108px] border-r border-b border-border p-5 last:border-r-0 lg:border-b-0">
-                <span className="text-3xl font-medium text-primary tabular-nums">{s.value}</span>
+                <AnimatedMetric value={s.value} className="text-3xl font-medium text-primary tabular-nums" />
                 <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest mt-2 block leading-tight">{s.label}</span>
               </motion.div>
             ))}

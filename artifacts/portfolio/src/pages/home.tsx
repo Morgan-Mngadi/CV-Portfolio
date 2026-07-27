@@ -8,6 +8,7 @@ import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { AnimatedMetric } from "@/components/animated-metric";
 import {
   SiGoogleanalytics,
   SiGoogletagmanager,
@@ -328,7 +329,7 @@ export default function Home() {
               { label: "Award contributions", value: "2×" },
             ].map((stat) => (
               <motion.div key={stat.label} variants={fadeUp} className="flex flex-col">
-                <span className="text-4xl font-medium text-primary tabular-nums">{stat.value}</span>
+                <AnimatedMetric value={stat.value} className="text-4xl font-medium text-primary tabular-nums" />
                 <span className="font-mono text-xs text-muted-foreground uppercase tracking-widest mt-1">{stat.label}</span>
               </motion.div>
             ))}
@@ -417,7 +418,7 @@ export default function Home() {
                 className="group relative p-8 md:p-10 bg-card hover:bg-primary/5 transition-colors overflow-hidden"
               >
                 <div className="absolute top-0 left-0 w-full h-0.5 bg-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="text-4xl md:text-5xl font-medium text-primary tabular-nums mb-3 tracking-tight">{metric.value}</div>
+                <AnimatedMetric value={metric.value} className="block text-4xl md:text-5xl font-medium text-primary tabular-nums mb-3 tracking-tight" />
                 <div className="font-medium mb-2">{metric.label}</div>
                 <div className="font-mono text-xs text-muted-foreground leading-relaxed">{metric.sub}</div>
               </motion.div>

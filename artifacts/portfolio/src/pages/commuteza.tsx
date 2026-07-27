@@ -3,6 +3,7 @@ import { ExternalLink } from "lucide-react";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { AnimatedMetric } from "@/components/animated-metric";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 0 },
@@ -163,7 +164,7 @@ export default function CommuteZA() {
           <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 border border-border divide-y sm:divide-y-0 divide-border mt-8">
             {METRICS.map((metric) => (
               <motion.div key={metric.label} variants={fadeUp} className="bg-card min-h-44 p-8 border-b border-border odd:sm:border-r last:border-b-0 [&:nth-last-child(-n+2)]:sm:border-b-0">
-                <div className="text-4xl font-medium text-primary tabular-nums whitespace-nowrap mb-3">{metric.value}</div>
+                <AnimatedMetric value={metric.value} className="block text-4xl font-medium text-primary tabular-nums whitespace-nowrap mb-3" />
                 <div className="font-mono text-sm text-muted-foreground">{metric.label}</div>
               </motion.div>
             ))}
