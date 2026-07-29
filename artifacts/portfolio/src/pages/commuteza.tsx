@@ -261,8 +261,8 @@ export default function CommuteZA() {
         </CaseStudySection>
 
             <CaseStudySection id="reflection" number="15" title="Reflection">
-              <motion.p variants={fadeUp}>CommuteZA has become more than a side project. It is a practical way to turn lived experience into a useful product and to test how technical SEO, information architecture and software development work together in a live environment.</motion.p>
-              <motion.p variants={fadeUp}>The first four months have provided encouraging evidence, but the most valuable result is the learning loop: build, release, observe and improve around genuine commuter needs.</motion.p>
+              <motion.p variants={fadeUp}>Building CommuteZA required me to think beyond SEO. I used keyword research to validate demand like a business, made technical decisions around the CMS, APIs and rendering, and considered how the product would be measured through analytics. The project strengthened my ability to connect business goals, search strategy, development and data within one product.</motion.p>
+              <Highlight>It changed how I see SEO: not as something added after a website is built, but as a function that can influence what gets built, how it is built and how success is measured.</Highlight>
               <motion.a variants={fadeUp} href="https://commuteza.co.za/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary font-medium hover:underline">
                 Explore CommuteZA <ExternalLink className="w-4 h-4" />
               </motion.a>
