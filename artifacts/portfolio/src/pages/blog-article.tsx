@@ -407,6 +407,15 @@ function ScrollableComparisonTable({ table }: { table: ArticleComparisonTable })
 
   return (
     <div className="mt-8">
+      <div
+        className={`mb-2 flex items-center justify-end gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-primary transition-opacity duration-300 ${
+          isScrollable ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        aria-hidden={!isScrollable}
+      >
+        <span>Scroll horizontally to see all columns</span>
+        <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+      </div>
       <div ref={scrollRef} onScroll={scheduleThumbUpdate} className="overflow-x-auto border border-border bg-card">
         <table className="w-full min-w-[720px] border-collapse text-left text-sm">
           <thead className="border-b border-primary/30 bg-primary/10">
@@ -448,7 +457,7 @@ function ScrollableComparisonTable({ table }: { table: ArticleComparisonTable })
       </div>
       <div
         aria-hidden="true"
-        className={`relative mt-2 h-0.5 w-24 overflow-hidden bg-border transition-opacity duration-300 md:hidden ${
+        className={`relative mt-2 h-0.5 w-24 overflow-hidden bg-border transition-opacity duration-300 ${
           isScrollable ? "opacity-100" : "opacity-0"
         }`}
       >

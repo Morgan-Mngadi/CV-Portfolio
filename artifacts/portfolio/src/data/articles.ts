@@ -158,6 +158,191 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 
 const ARTICLE_INPUTS: ArticleInput[] = [
   {
+    slug: "site-impression-vs-url-impression-looker-studio",
+    title: "Site Impression vs URL Impression in Looker Studio",
+    excerpt:
+      "The Google Search Console connector offers two tables that look similar but aggregate search performance differently. Here is how Site Impression and URL Impression differ, why their totals may not match, and which one to use in your dashboard.",
+    metaDescription:
+      "Learn the difference between Site Impression and URL Impression in the Looker Studio Google Search Console connector, including aggregation, metrics, search types, and use cases.",
+    category: "Measurement",
+    date: "Jul 2026",
+    sections: [
+      {
+        id: "two-options-one-important-decision",
+        heading: "Two Options, One Important Reporting Decision",
+        paragraphs: [
+          "When you connect Google Search Console to Looker Studio, the connector asks you to choose between two tables: Site Impression and URL Impression. The labels can make this look like a minor setup choice, but each option represents a different way of aggregating the same search performance data.",
+          "Site Impression groups performance at property level. URL Impression groups it at page level. This affects how impressions, clicks, click-through rate and average position are calculated when more than one page from your site appears for the same query.",
+          "The right choice therefore depends on the question your dashboard needs to answer. Site Impression is better for understanding the overall search visibility of the property. URL Impression is required when the analysis needs to identify which landing pages earned that visibility.",
+        ],
+        imageBlocks: [
+          {
+            src: "/article-images/search-console-site-impression-looker-studio.png",
+            alt: "Looker Studio Google Search Console connector with Site Impression selected",
+            caption: "Site Impression can be connected for web, image, video and news search types.",
+          },
+          {
+            src: "/article-images/search-console-url-impression-looker-studio.png",
+            alt: "Looker Studio Google Search Console connector with URL Impression selected",
+            caption: "URL Impression adds page-level reporting and also supports Discover and Google News.",
+          },
+        ],
+      },
+      {
+        id: "site-impression",
+        heading: "What Site Impression Means",
+        paragraphs: [
+          "Site Impression aggregates results by Search Console property. If two or more URLs from the same property appear on one results page for the same query, the property records one impression rather than a separate impression for every URL.",
+          "Position is based on the highest-ranking result from the property. If your pages appear in positions two, five and eight, the property-level position for that appearance is two. This makes Site Impression the closest choice when you want headline metrics that align with the property-level chart in the Search Console Performance report.",
+          "Because the page is not the unit of aggregation, this table is not designed to answer landing-page questions. It is useful for query, country, device, date and property-level trend analysis where the main concern is how the site performed as a whole.",
+        ],
+        bullets: [
+          "Use it for executive scorecards and overall organic search trends.",
+          "Use it to analyse queries without splitting one search appearance across several URLs.",
+          "Use it when reconciling headline totals with the property-level Search Console chart.",
+          "Do not use it when the report must show which landing page generated the result.",
+        ],
+      },
+      {
+        id: "url-impression",
+        heading: "What URL Impression Means",
+        paragraphs: [
+          "URL Impression aggregates performance by canonical page. When several pages from the property appear in the same set of results, each unique URL can record its own impression, click and position.",
+          "This table exposes the landing-page dimension, making it possible to evaluate individual pages, templates, directories and content groups. It is the practical choice for finding pages that receive many impressions but few clicks, comparing branded and non-branded landing pages, or measuring the effect of page-level SEO changes.",
+          "Search Console generally assigns performance to the canonical URL selected by Google. The URL shown in the data may therefore differ from the exact URL a user saw or the URL you expected to receive credit.",
+        ],
+        bullets: [
+          "Use it for landing-page tables and page-level scorecards.",
+          "Use it to group performance by folders, templates or content types.",
+          "Use it for page and query analysis, including cannibalisation investigations.",
+          "Use it when the report needs Discover or Google News data.",
+        ],
+      },
+      {
+        id: "side-by-side-comparison",
+        heading: "Site Impression and URL Impression Compared",
+        paragraphs: [
+          "Both tables provide the familiar Search Console metrics: clicks, impressions, CTR and average position. The difference is the level at which those metrics are counted.",
+        ],
+        comparisonTable: {
+          columns: ["Reporting question", "Site Impression", "URL Impression"],
+          rows: [
+            ["Aggregation level", "Search Console property", "Canonical page or URL"],
+            ["If several pages appear", "The property is counted once", "Each unique page can be counted"],
+            ["Position", "Highest position held by the property", "Highest position held by each page"],
+            ["Landing-page dimension", "Not available", "Available"],
+            ["Best use", "Overall search visibility and query trends", "Landing-page and content performance"],
+            ["Supported search types", "Web, image, video and news", "Web, image, video, news, Discover and Google News"],
+          ],
+        },
+        closingParagraphs: [
+          "The search types shown by the connector also differ. Site Impression supports web, image, video and news. URL Impression supports those four options plus Discover and googleNews. In this context, news means the News tab in Google Search, while googleNews refers to results from news.google.com and the Google News app.",
+        ],
+      },
+      {
+        id: "why-the-numbers-do-not-match",
+        heading: "Why the Numbers May Not Match",
+        paragraphs: [
+          "A common mistake is to place Site Impression and URL Impression scorecards next to each other and assume that one is wrong when the numbers differ. A difference can be expected because the two sources are answering different counting questions.",
+          "Imagine one search results page contains three URLs from the same property. At property level, that appearance can count as one impression and use the highest position. At page level, it can count as one impression for each of the three URLs, with a separate position assigned to each page.",
+          "This is why URL Impression totals can be higher and why CTR or average position can differ from Site Impression. The gap is not a Looker Studio calculation error. It is a consequence of property aggregation versus page aggregation.",
+        ],
+        notice:
+          "Do not blend or compare the two tables as though their metrics share the same grain. Define the reporting question first, then use one aggregation consistently for the scorecard or analysis.",
+      },
+      {
+        id: "which-one-should-you-use",
+        heading: "Which Data Source Should You Use?",
+        paragraphs: [
+          "Use Site Impression when the question begins with “How did the website perform?” Use URL Impression when it begins with “Which page performed?” That simple distinction solves most setup decisions.",
+          "A complete SEO dashboard may legitimately use both as separate data sources. The overview page can use Site Impression for property-level clicks, impressions, CTR, position and query trends. A landing-page section can use URL Impression for page tables, content groups and page-level opportunity analysis.",
+        ],
+        comparisonTable: {
+          columns: ["Dashboard requirement", "Recommended table"],
+          rows: [
+            ["Headline organic search KPIs", "Site Impression"],
+            ["Overall query performance", "Site Impression"],
+            ["Country or device trends for the property", "Site Impression"],
+            ["Landing-page performance", "URL Impression"],
+            ["Page and query combinations", "URL Impression"],
+            ["Content directory or template reporting", "URL Impression"],
+            ["Discover or Google News reporting", "URL Impression"],
+          ],
+        },
+      },
+      {
+        id: "recommended-setup",
+        heading: "A Practical Looker Studio Setup",
+        paragraphs: [
+          "Create and clearly name two data sources if your report needs both levels of detail. Names such as “GSC — Site Impression — Web” and “GSC — URL Impression — Web” make the aggregation visible to anyone editing the report later.",
+          "Keep the property-level KPIs and page-level tables in clearly labelled sections. Avoid reusing a scorecard without checking which source powers it, and do not expect a filter based on Landing Page to control charts using Site Impression because that dimension does not exist at property level.",
+        ],
+        numberedSteps: [
+          "Connect the Search Console property and choose Site Impression with the required search type.",
+          "Rename the source so its aggregation and search type are explicit.",
+          "Connect the property again and choose URL Impression for page-level reporting.",
+          "Use Site Impression for overview metrics and URL Impression for landing-page analysis.",
+          "Add a short dashboard note explaining why totals can differ between sections.",
+          "Validate charts against the equivalent aggregation in Search Console before publishing.",
+        ],
+      },
+      {
+        id: "final-takeaway",
+        heading: "The Final Takeaway",
+        paragraphs: [
+          "Site Impression and URL Impression are not interchangeable versions of the same table. Site Impression explains how the property appeared in search. URL Impression explains how individual pages appeared.",
+          "Choosing the correct aggregation makes a Looker Studio dashboard easier to validate and prevents false discrepancy investigations. Start with the business question, match it to the appropriate level of detail, and label the source clearly so the meaning of every metric remains visible.",
+        ],
+        links: [
+          {
+            href: "https://docs.cloud.google.com/looker/docs/studio/connect-to-search-console",
+            label: "Google: Connect Looker Studio to Search Console",
+          },
+          {
+            href: "https://support.google.com/webmasters/answer/17011364",
+            label: "Google: Property vs page aggregation",
+          },
+          {
+            href: "https://developers.google.com/webmaster-tools/v1/searchanalytics/query",
+            label: "Google: Search Analytics API reference",
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What is the main difference between Site Impression and URL Impression?",
+        answer:
+          "Site Impression aggregates Search Console performance at property level, while URL Impression aggregates it by canonical page. Site Impression is suited to overall visibility; URL Impression is suited to landing-page analysis.",
+      },
+      {
+        question: "Why are URL Impression totals different from Site Impression totals?",
+        answer:
+          "When several pages from one property appear for the same search, Site Impression can count the property once while URL Impression counts each unique page separately. Position and CTR can also differ because they are calculated at different aggregation levels.",
+      },
+      {
+        question: "Which table should I use for a landing-page report?",
+        answer:
+          "Use URL Impression because it includes the landing-page dimension and calculates performance at page level.",
+      },
+      {
+        question: "Which table should I use for headline Search Console KPIs?",
+        answer:
+          "Use Site Impression when the goal is to report the property's overall clicks, impressions, CTR and average position in a way that aligns with property-level aggregation.",
+      },
+      {
+        question: "Can I use Site Impression and URL Impression in the same dashboard?",
+        answer:
+          "Yes. Use separate, clearly named data sources and keep property-level scorecards distinct from page-level tables. Do not treat the two aggregations as directly interchangeable.",
+      },
+      {
+        question: "Which option supports Discover and Google News?",
+        answer:
+          "URL Impression supports Discover and Google News in addition to web, image, video and news. Site Impression supports web, image, video and news.",
+      },
+    ],
+  },
+  {
     slug: "looker-studio-dashboards-for-reporting",
     title: "Why Looker Studio Dashboards Make Reporting Faster and More Useful",
     excerpt:
