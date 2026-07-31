@@ -158,10 +158,189 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 
 const ARTICLE_INPUTS: ArticleInput[] = [
   {
+    slug: "why-seos-love-wordpress",
+    title: "Why SEOs Love WordPress",
+    excerpt:
+      "WordPress gives SEO teams a practical balance of control, speed and accessibility. Its content model, flexible templates and plugin ecosystem make everyday optimisation easier without removing the need for technical judgement.",
+    metaDescription:
+      "Learn why SEOs love WordPress, from flexible content and URLs to Yoast SEO, the Redirection plugin, scalable workflows, and technical SEO control.",
+    category: "Technical SEO",
+    date: "Jul 2026",
+    archived: true,
+    sections: [
+      {
+        id: "built-for-publishing",
+        heading: "WordPress Was Built for Publishing",
+        paragraphs: [
+          "SEOs love WordPress because it makes the work of publishing, organising and improving content accessible. A marketer can create a page, edit headings, update copy, add internal links, change an image and publish an improvement without waiting for a developer to deploy every small change.",
+          "That speed matters. SEO is rarely a one-off project. Search demand changes, content becomes outdated, products evolve and performance data reveals new opportunities. A content management system that supports frequent iteration allows the website to improve alongside the strategy.",
+          "WordPress also has a familiar structure built around posts, pages, categories, tags, media and users. These components give teams a starting point for organising content and defining editorial responsibilities, while themes and custom post types can extend the model for more complex websites.",
+        ],
+      },
+      {
+        id: "control-over-seo-foundations",
+        heading: "Control Over the SEO Foundations",
+        paragraphs: [
+          "WordPress makes many foundational SEO elements relatively easy to control. Sites can use readable permalink structures, hierarchical categories, editable page slugs and templates that apply consistent markup across large groups of pages.",
+          "The platform can support title tags, meta descriptions, canonical tags, robots directives, XML sitemaps, structured data, breadcrumbs and social sharing metadata. Some of this comes from WordPress itself, some from the theme, and some from an SEO plugin.",
+          "This flexibility is valuable because SEO requirements are rarely identical across every page type. A product, article, location page and author archive may each need different templates, metadata rules and indexation decisions.",
+        ],
+        bullets: [
+          "Readable and customisable permalink structures.",
+          "Reusable templates for consistent headings, metadata and structured content.",
+          "Categories, tags and custom taxonomies for organising related information.",
+          "Media fields for alternative text, captions and image management.",
+          "User roles that separate writing, editing and administration responsibilities.",
+        ],
+      },
+      {
+        id: "yoast",
+        heading: "Yoast Makes Everyday SEO Easier",
+        paragraphs: [
+          "Yoast is one of the reasons WordPress feels approachable to SEO teams. The Yoast SEO plugin brings common search controls into the editing experience, allowing users to manage titles, meta descriptions, canonical URLs and indexation settings without editing a template directly.",
+          "Yoast can generate XML sitemaps and add structured data that helps search engines interpret the website. It also provides content and readability feedback. These checks can be useful prompts, especially for less experienced writers, but a green indicator is not proof that a page deserves to rank.",
+          "The plugin is most useful when its defaults are configured around the website's actual content model. Teams should decide which post types and taxonomies belong in search, define title templates deliberately, review canonical behaviour and avoid enabling features simply because they are available.",
+        ],
+        notice:
+          "Yoast is a control layer, not an SEO strategy. Search intent, information quality, internal linking, technical performance and authority still require human decisions.",
+        link: {
+          href: "https://wordpress.org/plugins/wordpress-seo/",
+          label: "View Yoast SEO on WordPress.org",
+        },
+      },
+      {
+        id: "redirection",
+        heading: "Redirection Protects URLs When Content Changes",
+        paragraphs: [
+          "Websites change constantly. Articles are consolidated, products are removed, page names improve and entire sections are reorganised. Without a redirect plan, those changes can create broken links, poor user journeys and lost value from URLs that have already earned links or search visibility.",
+          "Redirection is a popular WordPress plugin that lets teams create and manage redirects from the administration area without requiring direct access to Apache or Nginx configuration. It can also monitor 404 errors, record redirect activity and support bulk imports and exports.",
+          "That visibility makes migration and maintenance work more manageable. An SEO can map an old URL to its most relevant replacement, identify frequently requested missing pages and check whether redirect rules are being used.",
+        ],
+        bullets: [
+          "Create 301 redirects when a page permanently moves.",
+          "Monitor 404 requests and prioritise errors that affect real users or valuable links.",
+          "Import redirect maps during migrations or large URL changes.",
+          "Export and review rules to find outdated redirects, chains or unnecessary complexity.",
+          "Keep a record of why important redirects were introduced.",
+        ],
+        closingParagraphs: [
+          "A redirect should still be intentional. Sending every missing URL to the homepage creates a confusing experience and can hide genuine problems. The best destination is a close replacement that satisfies the purpose of the old page.",
+        ],
+        link: {
+          href: "https://wordpress.org/plugins/redirection/",
+          label: "View Redirection on WordPress.org",
+        },
+      },
+      {
+        id: "editorial-workflows",
+        heading: "SEO Fits Into the Editorial Workflow",
+        paragraphs: [
+          "A technically capable platform is only useful if people can operate it. WordPress allows SEO guidance to sit close to the publishing process, where writers and editors can act on it.",
+          "Reusable blocks can standardise calls to action, author information, comparison tables and supporting content. Custom fields can ensure important information is captured consistently. Preview, draft, scheduling and revision features help teams review work before it becomes public.",
+          "This creates an opportunity to turn SEO from a final approval step into part of how content is planned and produced. The CMS can guide contributors towards better titles, descriptive headings, useful links, complete media fields and consistent page structures.",
+        ],
+      },
+      {
+        id: "ecosystem",
+        heading: "A Large Ecosystem Makes Problems Easier to Solve",
+        paragraphs: [
+          "WordPress has a mature ecosystem of themes, plugins, developers, hosting providers, documentation and community support. When a team needs caching, image optimisation, multilingual content, structured fields, ecommerce or analytics integration, there is usually an established path to explore.",
+          "For SEO teams, this reduces the distance between identifying a problem and testing a solution. Developers are familiar with the platform, common integrations already exist and many technical questions have been encountered before.",
+          "WordPress is also open source, so teams are not limited to the interface provided by a closed website builder. A developer can modify templates, create custom functionality, expose content through APIs or use WordPress as a headless CMS when the project requires a different front end.",
+        ],
+      },
+      {
+        id: "wordpress-is-not-automatically-seo-friendly",
+        heading: "WordPress Is Not Automatically SEO-Friendly",
+        paragraphs: [
+          "The same flexibility that makes WordPress attractive can create problems. A poorly chosen theme may ship excessive JavaScript or weak semantic markup. Plugins can duplicate functionality, inject unnecessary assets, create conflicting canonical tags or slow down the site. Uncontrolled categories and tags can produce thin archive pages and unnecessary crawl paths.",
+          "Security, updates, backups, caching and hosting quality also matter. A neglected installation can become slow or vulnerable, regardless of how carefully the metadata is written.",
+          "This is why SEOs do not love WordPress because it guarantees rankings. They love it because a well-built WordPress site gives them meaningful control. The quality of the implementation still depends on the decisions made by the SEO, developer, designer, editor and site owner.",
+        ],
+        comparisonTable: {
+          columns: ["WordPress strength", "Potential risk", "Good practice"],
+          rows: [
+            ["Flexible plugins", "Overlapping features and additional code", "Install only what the site needs and audit plugins regularly."],
+            ["Categories and tags", "Thin or duplicated archive pages", "Design a deliberate taxonomy and index only useful archives."],
+            ["Editable URLs", "Broken links after slug changes", "Plan URL changes and manage permanent moves with Redirection."],
+            ["Themes and builders", "Slow pages or poor markup", "Test performance, accessibility and rendered HTML before committing."],
+            ["Easy publishing", "Low-quality content can scale quickly", "Use editorial standards, subject expertise and regular content reviews."],
+          ],
+        },
+      },
+      {
+        id: "what-seos-should-configure",
+        heading: "What SEOs Should Configure First",
+        paragraphs: [
+          "The best WordPress setup begins with decisions, not a long list of plugins. Define how the site will organise content, which templates should be indexable and who owns ongoing maintenance before optimising individual pages.",
+        ],
+        numberedSteps: [
+          "Choose a stable, readable permalink structure before publishing at scale.",
+          "Define the role of posts, pages, categories, tags and custom post types.",
+          "Configure Yoast around the content model, including titles, canonicals, sitemaps and indexation rules.",
+          "Set up Redirection and document how URL changes and 404 errors will be handled.",
+          "Review theme output for headings, internal links, schema, mobile usability and accessibility.",
+          "Establish performance, security, backup and update responsibilities.",
+          "Connect Search Console and analytics so decisions can be measured after launch.",
+        ],
+      },
+      {
+        id: "final-takeaway",
+        heading: "The Real Reason SEOs Love WordPress",
+        paragraphs: [
+          "SEOs love WordPress because it shortens the path between an insight and an improvement. Content can be updated quickly, templates can scale decisions, plugins such as Yoast and Redirection make important controls accessible, and developers can extend the platform when the standard setup is not enough.",
+          "Its advantage is not that SEO becomes automatic. Its advantage is that SEO can become part of the publishing system. When the platform is configured thoughtfully and maintained well, WordPress gives content, technical implementation and measurement a practical place to work together.",
+        ],
+        links: [
+          {
+            href: "https://wordpress.org/documentation/article/search-engine-optimization/",
+            label: "WordPress SEO documentation",
+          },
+          {
+            href: "https://wordpress.org/documentation/article/settings-permalinks-screen/",
+            label: "WordPress permalink documentation",
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Why is WordPress popular with SEO professionals?",
+        answer:
+          "WordPress makes content, URLs, templates and metadata relatively easy to manage. Its plugin and developer ecosystem also lets teams extend the platform for different technical and editorial requirements.",
+      },
+      {
+        question: "Does WordPress automatically make a website rank?",
+        answer:
+          "No. WordPress provides useful controls, but rankings still depend on relevance, content quality, crawlability, performance, internal linking, authority, user experience and competition.",
+      },
+      {
+        question: "What does Yoast do in WordPress?",
+        answer:
+          "Yoast SEO provides controls for titles, meta descriptions, canonical URLs and indexation settings. It can also generate XML sitemaps, add structured data and provide content and readability feedback.",
+      },
+      {
+        question: "What is the Redirection plugin used for?",
+        answer:
+          "Redirection manages URL redirects and can monitor 404 errors. It is useful when pages move, slugs change, content is consolidated or a website migration requires a larger redirect map.",
+      },
+      {
+        question: "Can too many WordPress plugins hurt SEO?",
+        answer:
+          "Yes. Poorly selected or overlapping plugins can add unnecessary code, slow down pages, introduce conflicting metadata or create security and maintenance risks. Plugins should be chosen deliberately and reviewed regularly.",
+      },
+      {
+        question: "Is WordPress suitable for large websites?",
+        answer:
+          "Yes, when its content model, infrastructure, caching, search, deployment process and governance are designed for the required scale. Large WordPress sites need more engineering and operational discipline than a small brochure site.",
+      },
+    ],
+  },
+  {
     slug: "site-impression-vs-url-impression-looker-studio",
     title: "Site Impression vs URL Impression in Looker Studio",
     excerpt:
-      "The Google Search Console connector offers two tables that look similar but aggregate search performance differently. Here is how Site Impression and URL Impression differ, why their totals may not match, and which one to use in your dashboard.",
+      "The Google Search Console connector offers two tables that aggregate performance differently. Here is why I prefer URL Impression for a more complete view of content performance, and why its totals are usually larger.",
     metaDescription:
       "Learn the difference between Site Impression and URL Impression in the Looker Studio Google Search Console connector, including aggregation, metrics, search types, and use cases.",
     category: "Measurement",
@@ -173,7 +352,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         paragraphs: [
           "When you connect Google Search Console to Looker Studio, the connector asks you to choose between two tables: Site Impression and URL Impression. The labels can make this look like a minor setup choice, but each option represents a different way of aggregating the same search performance data.",
           "Site Impression groups performance at property level. URL Impression groups it at page level. This affects how impressions, clicks, click-through rate and average position are calculated when more than one page from your site appears for the same query.",
-          "The right choice therefore depends on the question your dashboard needs to answer. Site Impression is better for understanding the overall search visibility of the property. URL Impression is required when the analysis needs to identify which landing pages earned that visibility.",
+          "Both can power top-level scorecards, but I prefer URL Impression as the main reporting source. It shows the contribution of individual pages, usually returns larger impression totals because each qualifying URL can be counted, and is the only one of the two options that supports Discover and Google News.",
         ],
         imageBlocks: [
           {
@@ -193,13 +372,13 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         heading: "What Site Impression Means",
         paragraphs: [
           "Site Impression aggregates results by Search Console property. If two or more URLs from the same property appear on one results page for the same query, the property records one impression rather than a separate impression for every URL.",
-          "Position is based on the highest-ranking result from the property. If your pages appear in positions two, five and eight, the property-level position for that appearance is two. This makes Site Impression the closest choice when you want headline metrics that align with the property-level chart in the Search Console Performance report.",
-          "Because the page is not the unit of aggregation, this table is not designed to answer landing-page questions. It is useful for query, country, device, date and property-level trend analysis where the main concern is how the site performed as a whole.",
+          "Position is based on the highest-ranking result from the property. If your pages appear in positions two, five and eight, the property-level position for that appearance is two. This makes Site Impression useful when the specific reporting question is how often the property appeared, with multiple URLs from that property deliberately deduplicated.",
+          "Because the page is not the unit of aggregation, this table is not designed to explain the full contribution of individual landing pages. Its lower totals are not necessarily wrong; they represent a narrower property-level counting method.",
         ],
         bullets: [
-          "Use it for executive scorecards and overall organic search trends.",
           "Use it to analyse queries without splitting one search appearance across several URLs.",
-          "Use it when reconciling headline totals with the property-level Search Console chart.",
+          "Use it when reconciling metrics with the property-level chart in Search Console.",
+          "Use it when the objective is specifically to deduplicate multiple results from the same property.",
           "Do not use it when the report must show which landing page generated the result.",
         ],
       },
@@ -208,11 +387,12 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         heading: "What URL Impression Means",
         paragraphs: [
           "URL Impression aggregates performance by canonical page. When several pages from the property appear in the same set of results, each unique URL can record its own impression, click and position.",
-          "This table exposes the landing-page dimension, making it possible to evaluate individual pages, templates, directories and content groups. It is the practical choice for finding pages that receive many impressions but few clicks, comparing branded and non-branded landing pages, or measuring the effect of page-level SEO changes.",
+          "This table exposes the landing-page dimension, making it possible to evaluate individual pages, templates, directories and content groups. It can power top-level scorecards as well as detailed page tables, so it is not limited to landing-page reporting.",
+          "I consider URL Impression the more accurate representation of how the site's content is performing because it preserves the contribution of each page instead of deduplicating the property. It also supports Discover and Google News as separate selectable search types, extending the analysis beyond the four search types available with Site Impression.",
           "Search Console generally assigns performance to the canonical URL selected by Google. The URL shown in the data may therefore differ from the exact URL a user saw or the URL you expected to receive credit.",
         ],
         bullets: [
-          "Use it for landing-page tables and page-level scorecards.",
+          "Use it for top-level scorecards, landing-page tables and page-level trends.",
           "Use it to group performance by folders, templates or content types.",
           "Use it for page and query analysis, including cannibalisation investigations.",
           "Use it when the report needs Discover or Google News data.",
@@ -231,7 +411,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
             ["If several pages appear", "The property is counted once", "Each unique page can be counted"],
             ["Position", "Highest position held by the property", "Highest position held by each page"],
             ["Landing-page dimension", "Not available", "Available"],
-            ["Best use", "Overall search visibility and query trends", "Landing-page and content performance"],
+            ["Best use", "Deduplicated property visibility", "Overall content and landing-page performance"],
             ["Supported search types", "Web, image, video and news", "Web, image, video, news, Discover and Google News"],
           ],
         },
@@ -245,28 +425,32 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         paragraphs: [
           "A common mistake is to place Site Impression and URL Impression scorecards next to each other and assume that one is wrong when the numbers differ. A difference can be expected because the two sources are answering different counting questions.",
           "Imagine one search results page contains three URLs from the same property. At property level, that appearance can count as one impression and use the highest position. At page level, it can count as one impression for each of the three URLs, with a separate position assigned to each page.",
-          "This is why URL Impression totals can be higher and why CTR or average position can differ from Site Impression. The gap is not a Looker Studio calculation error. It is a consequence of property aggregation versus page aggregation.",
+          "This is why URL Impression totals are usually higher and why CTR or average position can differ from Site Impression. The gap is not a Looker Studio calculation error. It is a consequence of property aggregation versus page aggregation.",
+          "I also validate this by exporting the Performance report from Google Search Console to Google Sheets. When I review the page-level data in the Pages sheet, the larger impression total aligns with the URL Impression result in Looker Studio. The property-level Chart sheet can still show the lower, deduplicated total, so it is important to compare like with like.",
         ],
         notice:
-          "Do not blend or compare the two tables as though their metrics share the same grain. Define the reporting question first, then use one aggregation consistently for the scorecard or analysis.",
+          "A larger URL Impression total is not an inflated version of the Site Impression figure. It is a page-level count. Always compare it with the page-level export from Search Console rather than the property-level chart.",
       },
       {
-        id: "which-one-should-you-use",
-        heading: "Which Data Source Should You Use?",
+        id: "why-i-prefer-url-impression",
+        heading: "Why I Prefer URL Impression",
         paragraphs: [
-          "Use Site Impression when the question begins with “How did the website perform?” Use URL Impression when it begins with “Which page performed?” That simple distinction solves most setup decisions.",
-          "A complete SEO dashboard may legitimately use both as separate data sources. The overview page can use Site Impression for property-level clicks, impressions, CTR, position and query trends. A landing-page section can use URL Impression for page tables, content groups and page-level opportunity analysis.",
+          "I prefer URL Impression because it gives me a more complete and actionable representation of performance. I can use the same aggregation for top-level metrics and then move into the pages responsible for those results without changing the meaning of the data.",
+          "The impression total is usually bigger because multiple qualifying URLs are counted separately. For me, that is valuable information rather than duplication to remove: it shows how much visibility the site's individual pages collectively earned.",
+          "URL Impression also supports Discover and Google News. These are separate search types rather than figures automatically added to Web, but their availability makes URL Impression the stronger foundation for reporting content performance across more Google surfaces.",
+          "Site Impression still has a valid specialised use. I use it when I specifically want a deduplicated property-level view or need to reconcile a figure with the property-level chart in Search Console.",
         ],
         comparisonTable: {
           columns: ["Dashboard requirement", "Recommended table"],
           rows: [
-            ["Headline organic search KPIs", "Site Impression"],
-            ["Overall query performance", "Site Impression"],
-            ["Country or device trends for the property", "Site Impression"],
+            ["Top-level content performance KPIs", "URL Impression"],
+            ["Overall page visibility", "URL Impression"],
+            ["Country or device trends by page", "URL Impression"],
             ["Landing-page performance", "URL Impression"],
             ["Page and query combinations", "URL Impression"],
             ["Content directory or template reporting", "URL Impression"],
             ["Discover or Google News reporting", "URL Impression"],
+            ["Deduplicated property-level visibility", "Site Impression"],
           ],
         },
       },
@@ -274,16 +458,17 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         id: "recommended-setup",
         heading: "A Practical Looker Studio Setup",
         paragraphs: [
-          "Create and clearly name two data sources if your report needs both levels of detail. Names such as “GSC — Site Impression — Web” and “GSC — URL Impression — Web” make the aggregation visible to anyone editing the report later.",
-          "Keep the property-level KPIs and page-level tables in clearly labelled sections. Avoid reusing a scorecard without checking which source powers it, and do not expect a filter based on Landing Page to control charts using Site Impression because that dimension does not exist at property level.",
+          "I use URL Impression as the primary data source for scorecards, trend charts and landing-page analysis. If the report also needs a deduplicated property-level comparison, I add Site Impression as a second, clearly labelled source rather than treating it as the default.",
+          "Names such as “GSC — URL Impression — Web” and “GSC — Site Impression — Web” make the aggregation visible to anyone editing the report later. Discover and Google News should also be identified clearly because each is a separate search type.",
         ],
         numberedSteps: [
-          "Connect the Search Console property and choose Site Impression with the required search type.",
-          "Rename the source so its aggregation and search type are explicit.",
-          "Connect the property again and choose URL Impression for page-level reporting.",
-          "Use Site Impression for overview metrics and URL Impression for landing-page analysis.",
-          "Add a short dashboard note explaining why totals can differ between sections.",
-          "Validate charts against the equivalent aggregation in Search Console before publishing.",
+          "Connect the Search Console property and choose URL Impression with the required search type.",
+          "Rename the source so both its URL aggregation and search type are explicit.",
+          "Use URL Impression consistently for top-level scorecards and landing-page analysis.",
+          "Add separate URL Impression sources or use the Search type parameter when reporting Discover and Google News.",
+          "Add Site Impression only when a deduplicated property-level comparison is required.",
+          "Validate URL Impression totals against the page-level data in a Google Sheets export from Search Console.",
+          "Add a dashboard note explaining why URL Impression figures are usually larger than Site Impression figures.",
         ],
       },
       {
@@ -291,7 +476,8 @@ const ARTICLE_INPUTS: ArticleInput[] = [
         heading: "The Final Takeaway",
         paragraphs: [
           "Site Impression and URL Impression are not interchangeable versions of the same table. Site Impression explains how the property appeared in search. URL Impression explains how individual pages appeared.",
-          "Choosing the correct aggregation makes a Looker Studio dashboard easier to validate and prevents false discrepancy investigations. Start with the business question, match it to the appropriate level of detail, and label the source clearly so the meaning of every metric remains visible.",
+          "My preference is URL Impression because it provides the more complete view of content performance, its usually larger totals reflect the visibility earned by each page, and it supports Discover and Google News reporting. Exporting page-level Search Console data to Google Sheets provides a useful way to validate those figures.",
+          "Site Impression remains useful for the narrower question of deduplicated property visibility. Whichever source is used, label the aggregation and search type clearly so readers understand exactly what the metrics count.",
         ],
         links: [
           {
@@ -313,7 +499,7 @@ const ARTICLE_INPUTS: ArticleInput[] = [
       {
         question: "What is the main difference between Site Impression and URL Impression?",
         answer:
-          "Site Impression aggregates Search Console performance at property level, while URL Impression aggregates it by canonical page. Site Impression is suited to overall visibility; URL Impression is suited to landing-page analysis.",
+          "Site Impression aggregates Search Console performance at property level and deduplicates multiple results from the property. URL Impression aggregates by canonical page and preserves the contribution of each qualifying URL.",
       },
       {
         question: "Why are URL Impression totals different from Site Impression totals?",
@@ -326,9 +512,9 @@ const ARTICLE_INPUTS: ArticleInput[] = [
           "Use URL Impression because it includes the landing-page dimension and calculates performance at page level.",
       },
       {
-        question: "Which table should I use for headline Search Console KPIs?",
+        question: "Which table should I use for top-level Search Console KPIs?",
         answer:
-          "Use Site Impression when the goal is to report the property's overall clicks, impressions, CTR and average position in a way that aligns with property-level aggregation.",
+          "I prefer URL Impression for top-level KPIs because it provides a more complete view of page performance and can be used consistently from scorecards through to landing-page detail. Use Site Impression only when the KPI should deliberately deduplicate multiple URLs from the property.",
       },
       {
         question: "Can I use Site Impression and URL Impression in the same dashboard?",
