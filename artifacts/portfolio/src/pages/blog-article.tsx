@@ -1,5 +1,5 @@
 import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
-import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2 } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
 import { ARTICLES, getArticle, type ArticleAiFinding, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleImageCarousel, type ArticleIndexationChart, type ArticleParagraph, type ArticleVideo } from "@/data/articles";
@@ -396,6 +396,7 @@ function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playbackRate, setPlaybackRate] = useState(1);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const sourceType = video.src.toLowerCase().endsWith(".mov") ? "video/quicktime" : "video/mp4";
 
   useEffect(() => {
@@ -427,6 +428,15 @@ function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
     };
   }, []);
 
+  useEffect(() => {
+    const handleFullScreenChange = () => {
+      setIsFullScreen(document.fullscreenElement === containerRef.current);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullScreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullScreenChange);
+  }, []);
+
   const updatePlaybackRate = (rate: number) => {
     setPlaybackRate(rate);
 
@@ -443,6 +453,12 @@ function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
     }
   };
 
+  const exitFullScreen = () => {
+    if (document.fullscreenElement) {
+      void document.exitFullscreen();
+    }
+  };
+
   return (
     <figure className="mt-8 border border-border bg-card p-3 sm:p-5">
       <div className="mb-4 border-b border-border pb-4">
@@ -451,7 +467,18 @@ function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{video.description}</p>
       </div>
 
-      <div ref={containerRef} className="bg-black p-1 sm:p-2">
+      <div ref={containerRef} className="relative bg-black p-1 sm:p-2">
+        {isFullScreen && (
+          <button
+            type="button"
+            onClick={exitFullScreen}
+            className="absolute right-4 top-4 z-20 inline-flex h-11 w-11 items-center justify-center border border-white/30 bg-black/80 text-white backdrop-blur transition-colors hover:border-white/70 hover:bg-black"
+            aria-label="Exit full screen"
+            title="Exit full screen"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
         <video
           ref={videoRef}
           controls
@@ -698,9 +725,17 @@ export default function BlogArticle() {
             <motion.h1 variants={fadeUp} className="text-4xl md:text-6xl font-medium tracking-tight leading-tight mb-6 max-w-4xl">
               {article.title}
             </motion.h1>
-            <motion.p variants={fadeUp} className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
-              {article.excerpt}
-            </motion.p>
+            {article.heroAnswer ? (
+              <motion.aside variants={fadeUp} className="max-w-3xl border border-primary/60 bg-primary/[0.05] p-5 sm:p-6" aria-label="Short answer">
+                <p className="font-mono text-xs uppercase tracking-widest text-primary">Short Answer</p>
+                <p className="mt-3 text-xl font-medium leading-snug text-foreground sm:text-2xl">{article.heroAnswer.answer}</p>
+                <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">{article.heroAnswer.explanation}</p>
+              </motion.aside>
+            ) : (
+              <motion.p variants={fadeUp} className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+                {article.excerpt}
+              </motion.p>
+            )}
           </header>
 
           <div className="grid grid-cols-1 gap-10 py-14 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[200px_minmax(0,1fr)_240px] xl:gap-8">

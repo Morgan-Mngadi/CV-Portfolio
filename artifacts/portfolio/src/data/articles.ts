@@ -97,6 +97,11 @@ export type ArticleFaq = {
 export type Article = {
   slug: string;
   title: string;
+  metaTitle?: string;
+  heroAnswer?: {
+    answer: string;
+    explanation: string;
+  };
   excerpt: string;
   metaDescription?: string;
   category: string;
@@ -120,6 +125,10 @@ export const articleParagraphText = (paragraph: ArticleParagraph) =>
 
 const calculateReadTime = (article: ArticleInput) => {
   const visibleText: string[] = [article.title, article.excerpt];
+
+  if (article.heroAnswer) {
+    visibleText.push(article.heroAnswer.answer, article.heroAnswer.explanation);
+  }
 
   article.sections.forEach((section) => {
     visibleText.push(section.heading, ...section.paragraphs.map(articleParagraphText));
@@ -191,6 +200,12 @@ const ARTICLE_INPUTS: ArticleInput[] = [
   {
     slug: "can-ai-recommend-you-for-a-job-portfolio-indexation",
     title: "Can AI Recommend You for a Job? Why Your Portfolio Needs to Be Indexed",
+    metaTitle: "Can AI Recommend You for a Job? | Morgan Mngadi",
+    heroAnswer: {
+      answer: "Yes, but only from the evidence it can find.",
+      explanation:
+        "An indexed portfolio gives AI systems more context about your work, thinking and results than a CV alone. The quality of the recommendation depends on the quality and accuracy of that evidence.",
+    },
     excerpt:
       "A CV compresses your career. A portfolio expands it. Indexation makes that deeper evidence discoverable to recruiters, clients, collaborators, search engines, and AI systems.",
     metaDescription:
@@ -213,6 +228,33 @@ const ARTICLE_INPUTS: ArticleInput[] = [
           "Opinions, experiments, and industry thinking that reveal professional judgement.",
           "Lessons learned that demonstrate reflection rather than a polished result alone.",
         ],
+      },
+      {
+        id: "what-it-means-to-be-indexed",
+        heading: "What It Means for a Website to Be Indexed",
+        paragraphs: [
+          "A website is indexed when a search engine has processed its pages, understood enough of their content, and stored information about them in its searchable database. An indexed page is eligible to appear when someone searches for a relevant person, topic, project, or question.",
+          {
+            text: "Discovery, crawling, indexing, and ranking are related, but they are not the same thing. Google's explanation of how Search works separates the process into crawling, indexing, and serving search results.",
+            links: [
+              {
+                text: "Google's explanation of how Search works",
+                href: "https://developers.google.com/search/docs/fundamentals/how-search-works",
+              },
+            ],
+          },
+        ],
+        comparisonTable: {
+          columns: ["Stage", "What Happens", "What It Means for a Portfolio"],
+          rows: [
+            ["Discovery", "The search engine learns that a URL exists through links, a sitemap, or another source.", "Your portfolio page is known, but it may not have been visited yet."],
+            ["Crawling", "A crawler requests the page and reads or renders its accessible content.", "The page can be examined, provided technical barriers do not block access."],
+            ["Indexing", "The search engine analyses the page, selects a canonical version, and may store its information.", "The page becomes eligible to appear in relevant search results."],
+            ["Ranking", "The search engine decides whether the indexed page is useful and relevant for a particular search.", "Being indexed creates the opportunity to appear, but does not guarantee visibility or a high position."],
+          ],
+        },
+        notice:
+          "Indexed does not mean highly ranked. It means the page is available for retrieval. Its visibility still depends on relevance, quality, authority, competition, and the search being performed.",
       },
       {
         id: "why-indexation-matters",

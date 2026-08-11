@@ -106,6 +106,10 @@ const breadcrumbSchema = (path: string, title: string) => {
 const articleText = (article: Article) => {
   const text: string[] = [article.title, article.excerpt, article.category];
 
+  if (article.heroAnswer) {
+    text.push(article.heroAnswer.answer, article.heroAnswer.explanation);
+  }
+
   article.sections.forEach((section) => {
     text.push(section.heading, ...section.paragraphs.map(articleParagraphText));
     text.push(...(section.bullets ?? []));
@@ -489,7 +493,7 @@ export const seoByPath: Record<string, SeoConfig> = {
 for (const article of ARTICLES) {
   const path = `/blog/${article.slug}`;
   seoByPath[path] = {
-    title: `${article.title} | Morgan Mngadi`,
+    title: article.metaTitle ?? `${article.title} | Morgan Mngadi`,
     description: article.metaDescription ?? article.excerpt,
     path,
     type: "article",
