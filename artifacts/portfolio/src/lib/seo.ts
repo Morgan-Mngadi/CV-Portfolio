@@ -2,8 +2,8 @@ import { ARTICLES, articleParagraphText, type Article } from "@/data/articles";
 
 export const SITE_URL = "https://morgan-mngadi-portfolio.online";
 export const SITE_NAME = "Morgan Mngadi";
-export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/morgan-photo.png`;
 export const PERSON_IMAGE = `${SITE_URL}/morgan-author.png`;
+export const DEFAULT_SOCIAL_IMAGE = PERSON_IMAGE;
 
 export type SeoConfig = {
   title: string;
@@ -159,8 +159,7 @@ const articleDate = (date: string) => {
 
 const articleImage = (article: Article) => {
   if (article.socialImage) return absoluteUrl(article.socialImage);
-  const firstImage = article.sections.flatMap((section) => section.imageBlocks ?? [])[0];
-  return firstImage ? absoluteUrl(firstImage.src) : DEFAULT_SOCIAL_IMAGE;
+  return DEFAULT_SOCIAL_IMAGE;
 };
 
 const articleKeywords = (article: Article) =>
@@ -581,8 +580,8 @@ export const renderSeoHead = (path: string) => {
     `<meta property="og:type" content="${seo.type === "article" ? "article" : "website"}" />`,
     `<meta property="og:url" content="${escapeHtml(seo.canonical)}" />`,
     ...(seo.image ? [`<meta property="og:image" content="${escapeHtml(seo.image)}" />`] : []),
-    ...(seo.image ? [`<meta property="og:image:width" content="1200" />`] : []),
-    ...(seo.image ? [`<meta property="og:image:height" content="630" />`] : []),
+    ...(seo.image ? [`<meta property="og:image:width" content="800" />`] : []),
+    ...(seo.image ? [`<meta property="og:image:height" content="800" />`] : []),
     ...(seo.image ? [`<meta property="og:image:type" content="image/png" />`] : []),
     ...(seo.image ? [`<meta property="og:image:alt" content="${escapeHtml(seo.imageAlt)}" />`] : []),
     `<meta name="twitter:card" content="${seo.image ? "summary_large_image" : "summary"}" />`,

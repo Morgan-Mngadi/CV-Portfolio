@@ -88,8 +88,8 @@ export function Seo({ path }: SeoProps) {
         return meta;
       }, seo.image);
       const imageMeta = [
-        ["og:image:width", "1200"],
-        ["og:image:height", "630"],
+        ["og:image:width", "800"],
+        ["og:image:height", "800"],
         ["og:image:type", "image/png"],
         ["og:image:alt", seo.imageAlt],
       ];
