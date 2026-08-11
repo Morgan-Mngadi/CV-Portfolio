@@ -26,6 +26,11 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://morgan-mngadi-portfolio.online/blog/can-ai-recommend-you-for-a-job-portfolio-indexation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://morgan-mngadi-portfolio.online/blog/geo-is-not-a-replacement-for-seo</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -57,6 +62,11 @@
   </url>
   <url>
     <loc>https://morgan-mngadi-portfolio.online/blog/seo-metrics-that-businesses-care-about</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://morgan-mngadi-portfolio.online/blog/site-impression-vs-url-impression-looker-studio</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>

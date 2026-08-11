@@ -20,6 +20,8 @@ export type ArticleSection = {
   imageCarousel?: ArticleImageCarousel;
   video?: ArticleVideo;
   chart?: ArticleChart;
+  indexationChart?: ArticleIndexationChart;
+  aiFindings?: ArticleAiFinding[];
   comparisonTable?: ArticleComparisonTable;
   imagePlaceholder?: string;
   closingParagraphs?: ArticleParagraph[];
@@ -31,6 +33,23 @@ export type ArticleSection = {
     href: string;
     label: string;
   }[];
+};
+
+export type ArticleIndexationChart = {
+  indexedPages: number;
+  notIndexedPages: number;
+  sourceLabel: string;
+};
+
+export type ArticleAiFinding = {
+  status: "Overstated claim" | "Unsupported assumption" | "Partially accurate";
+  context?: string;
+  claim: string;
+  correction: string;
+  link?: {
+    href: string;
+    label: string;
+  };
 };
 
 export type ArticleImage = {
@@ -127,6 +146,18 @@ const calculateReadTime = (article: ArticleInput) => {
       section.chart.rows.forEach((row) => visibleText.push(row.label, String(row.value)));
     }
 
+    if (section.indexationChart) {
+      visibleText.push(
+        `${section.indexationChart.indexedPages} indexed pages`,
+        `${section.indexationChart.notIndexedPages} not indexed pages`,
+        section.indexationChart.sourceLabel,
+      );
+    }
+
+    section.aiFindings?.forEach((finding) => {
+      visibleText.push(finding.status, finding.context ?? "", finding.claim, finding.correction, finding.link?.label ?? "");
+    });
+
     if (section.imagePlaceholder) {
       visibleText.push(section.imagePlaceholder);
     }
@@ -157,6 +188,212 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 });
 
 const ARTICLE_INPUTS: ArticleInput[] = [
+  {
+    slug: "can-ai-recommend-you-for-a-job-portfolio-indexation",
+    title: "Can AI Recommend You for a Job? Why Your Portfolio Needs to Be Indexed",
+    excerpt:
+      "A CV compresses your career. A portfolio expands it. Indexation makes that deeper evidence discoverable to recruiters, clients, collaborators, search engines, and AI systems.",
+    metaDescription:
+      "Learn why an indexed portfolio helps recruiters and AI search discover your case studies, expertise, impact, and professional thinking.",
+    category: "AI Search",
+    date: "Aug 2026",
+    sections: [
+      {
+        id: "a-cv-compresses-a-portfolio-expands",
+        heading: "A CV Compresses Your Career. A Portfolio Expands It.",
+        paragraphs: [
+          "A CV is designed to be concise. It can show job titles, responsibilities, tools, and achievements, but it rarely has enough room to explain how someone thinks, solves problems, approaches uncertainty, or measures impact.",
+          "A portfolio can fill those gaps. Case studies can show the decisions behind a result. Articles can reveal how someone understands their industry. Project breakdowns can explain technical choices, trade-offs, lessons learned, and the commercial effect of the work.",
+          "That makes a portfolio more than a gallery or an extra link at the top of a CV. It becomes an evidence layer for a professional identity. Indexation is what makes that expanded evidence discoverable beyond the moments when someone manually clicks the link.",
+        ],
+        bullets: [
+          "Case studies that connect a problem, an approach, and an outcome.",
+          "Project breakdowns that make technical and strategic decisions visible.",
+          "Impact metrics that show what changed because of the work.",
+          "Opinions, experiments, and industry thinking that reveal professional judgement.",
+          "Lessons learned that demonstrate reflection rather than a polished result alone.",
+        ],
+      },
+      {
+        id: "why-indexation-matters",
+        heading: "Why Portfolio Indexation Matters",
+        paragraphs: [
+          "When a portfolio is indexed, its useful pages can appear when recruiters, hiring managers, potential clients, or collaborators research a person. That research might happen before an interview, after one, or before the person even knows an opportunity exists.",
+          "Someone may search a name, a project, an area of expertise, or whether a candidate has solved a particular problem. They may want to understand what distinguishes that person from another candidate or see evidence of the impact their work has created.",
+          "A portfolio that only exists as a CV link can still be valuable. But its evidence is mostly available to people who already have the document and choose to click. An indexed portfolio has more opportunities to be found through search and referenced by systems that retrieve public web content.",
+        ],
+        indexationChart: {
+          indexedPages: 16,
+          notIndexedPages: 0,
+          sourceLabel: "Theme-adapted recreation of this portfolio's Google Search Console Page indexing report, captured 11 August 2026.",
+        },
+        closingParagraphs: [
+          "In this portfolio's Search Console report, 16 pages were indexed and none were listed as not indexed. The growth in the chart reflects the expansion of the public evidence available for discovery: core portfolio pages, project work, and articles that explain the thinking behind the work.",
+        ],
+      },
+      {
+        id: "the-ai-search-experiment",
+        heading: "The AI Search Experiment: Can My Portfolio Answer Hiring Questions?",
+        paragraphs: [
+          "The next step is to test whether that indexed evidence can be retrieved and synthesised. For this experiment, I use my own portfolio across Google Search and AI Overview, ChatGPT, and Perplexity. The aim is not to ask AI for validation. It is to see what professional picture these systems can build from the pages available to them.",
+          "I approached the test like a hiring manager doing early research. Each question asks for a judgement, but the useful part is the trail of evidence behind the answer.",
+        ],
+        bullets: [
+          "Is Morgan a good fit for a Senior SEO Strategist role?",
+          "What makes Morgan different from another SEO specialist?",
+          "What commercial SEO experience does Morgan demonstrate?",
+          "What is the most impactful SEO work Morgan has done?",
+          "Does Morgan demonstrate technical SEO experience?",
+          "Has Morgan shown strategic or leadership capability?",
+        ],
+        notice:
+          "AI should not make hiring decisions. In this experiment it is only another interface for retrieving and synthesising publicly available professional evidence. Its output still needs human judgement, verification, and context.",
+        video: {
+          src: "/article-videos/portfolio-ai-discovery-experiment.m4v",
+          poster: "/article-images/ai-overconfident-assegai-claim.png",
+          title: "Testing portfolio discoverability with AI search",
+          description:
+            "This screen recording shows the portfolio experiment in practice. Use the player controls to pause, replay, change the volume, or move through the recording.",
+          caption:
+            "A practical test of how publicly available portfolio evidence can be retrieved and synthesised. The output is evidence to review critically, not a hiring decision or an independent verification of professional ability.",
+        },
+      },
+      {
+        id: "how-to-evaluate-the-answers",
+        heading: "The Answer Matters Less Than How It Was Formed",
+        paragraphs: [
+          "A positive AI answer is not proof that someone is right for a role. A negative or incomplete answer is not proof that they are not. The meaningful analysis is whether the response represents the source material accurately and makes its uncertainty visible.",
+          "Four claims from the experiment show the difference between evidence, inference, and overstatement.",
+        ],
+        aiFindings: [
+          {
+            status: "Overstated claim",
+            context: "AI made a reasonable inference, but pushed the evidence too far.",
+            claim: "“He won two Assegai Awards in 2024.”",
+            correction:
+              "I contributed to two award-winning campaigns at the 2024 Assegai Awards. That demonstrates recognised work, but does not mean I personally won both awards independently.",
+          },
+          {
+            status: "Unsupported assumption",
+            claim: "“He knows how to present to corporate executives.”",
+            correction:
+              "The portfolio shows agency and client-facing experience, but it does not directly prove this specific claim.",
+          },
+          {
+            status: "Partially accurate",
+            claim: "“No manual reports—he builds automated dashboards.”",
+            correction:
+              "The dashboards reduce reporting time, but insights, interpretation, and recommendations still require manual updates.",
+            link: {
+              href: "/blog/looker-studio-dashboards-for-reporting",
+              label: "Read the Looker Studio article",
+            },
+          },
+          {
+            status: "Partially accurate",
+            claim: "“He uses complex Google Analytics setups.”",
+            correction:
+              "Streamlined is more accurate: clear events, useful parameters, reliable triggers, and reporting built around business questions.",
+            link: {
+              href: "/blog/how-to-create-gtm-tags-for-leads",
+              label: "Read the GTM lead tracking article",
+            },
+          },
+        ],
+        closingParagraphs: [
+          "AI can retrieve real evidence and still exaggerate ownership, turn a plausible inference into a fact, or remove an important qualification. Every claim needs to be traced back to its source.",
+          "It can also miss relevant work entirely. Retrieval quality, page structure, internal links, and clear writing all influence the professional picture it produces.",
+        ],
+      },
+      {
+        id: "a-second-voice-in-the-interview",
+        heading: "A Portfolio Gives Your Work a Second Voice in the Interview",
+        paragraphs: [
+          "Interviews are imperfect. Someone may be nervous precisely because the opportunity matters to them, even though they are normally confident when speaking with clients or colleagues. Time pressure can flatten a detailed project into a rushed answer, and the best evidence may only come to mind after the call.",
+          "A portfolio gives the work another opportunity to speak. During an interview, a candidate can say: “I’ve dealt with a similar problem before. I’ve actually written a detailed case study about how I approached it on my portfolio.”",
+          "If an answer did not land as clearly as intended, that case study or article can also be sent afterwards as useful context. It gives the interviewer a more considered account of the challenge, the decisions, and the outcome.",
+          "The portfolio does not replace the interview. It supports it. The conversation provides live context and interaction; the portfolio provides durable evidence that can be reviewed without relying on memory or interview performance alone.",
+        ],
+      },
+      {
+        id: "professional-curiosity-and-credibility",
+        heading: "Professional Curiosity Is Difficult to Fit Into a CV",
+        paragraphs: [
+          "A thoughtful portfolio can demonstrate genuine interest in an industry, willingness to learn, an ability to teach, independent thinking, experimentation, and the skill to communicate complex ideas clearly. Those qualities are often visible across a body of work rather than in a single bullet point.",
+          "This is not an argument that people without portfolios care less about their careers. Many excellent professionals cannot publish client work, prefer other ways of contributing, or simply have not needed a public site.",
+          "A portfolio gives someone another opportunity to demonstrate how seriously and thoughtfully they engage with their profession. Publishing a useful analysis, documenting an experiment, or explaining a difficult decision makes that engagement observable.",
+        ],
+      },
+      {
+        id: "this-is-not-only-for-seos",
+        heading: "This Is Not Only Useful for SEO Professionals",
+        paragraphs: [
+          "The principle applies anywhere deeper work can be shown or explained. Developers can document architecture and trade-offs. Designers can show the reasoning behind a system. Analysts can explain how data changed a decision. Marketers can connect campaigns to commercial outcomes.",
+          "Writers, photographers, consultants, product professionals, and freelancers can all use a portfolio to make the quality and context of their work easier to understand. The format will differ, but the purpose is the same: create evidence that travels further than a short summary of responsibilities.",
+          "The SEO lesson is simply that building the portfolio is not enough. If appropriate public work cannot be crawled, indexed, understood, and connected, its discovery potential remains limited.",
+        ],
+      },
+      {
+        id: "make-your-portfolio-indexable",
+        heading: "How to Make Your Portfolio Indexable",
+        paragraphs: [
+          "Indexation starts with access, but technical access alone does not make a useful portfolio. Search engines need clear pages, consistent signals, and enough substance to understand why each page deserves to exist.",
+        ],
+        numberedSteps: [
+          "Ensure important portfolio, About, project, and article pages return a successful status and are available to search engine crawlers.",
+          "Create an XML sitemap, include the canonical version of each important URL, and submit it through Google Search Console.",
+          "Check canonical tags so pages point to the intended URL rather than accidentally consolidating into the wrong page.",
+          "Remove accidental noindex directives and confirm that robots.txt does not block pages or resources needed to understand them.",
+          "Write descriptive page titles and metadata that explain the work, expertise, or question each page covers.",
+          "Use one clear main heading, logical subheadings, readable copy, descriptive links, and accessible image text where appropriate.",
+          "Internally link important case studies and articles from relevant portfolio, About, project, and topic pages.",
+          "Keep your name, role, employer or client context, dates, and other professional information consistent across public profiles.",
+          "Add relevant structured data, such as Person, ProfilePage, Article, BreadcrumbList, or CreativeWork markup, where it accurately describes the page.",
+          "Publish useful evidence rather than thin pages. Explain the problem, your role, your reasoning, the result, and what you learned without exposing confidential information.",
+        ],
+        closingParagraphs: [
+          "Use Search Console's URL Inspection and Page indexing reports to confirm what Google can access. Indexation is not guaranteed simply because a URL appears in a sitemap, so revisit pages that remain undiscovered or excluded and investigate the reason.",
+          "The goal is not to publish everything or optimise a person into a set of keywords. It is to make accurate, useful professional evidence available in a form that people and retrieval systems can find and evaluate.",
+        ],
+      },
+      {
+        id: "your-work-should-be-findable",
+        heading: "Your Work Should Be Findable When You Are Not in the Room",
+        paragraphs: [
+          "A CV introduces the shape of a career. A portfolio can show the thinking, decisions, results, and curiosity inside it. Indexation gives that evidence a chance to surface when someone searches for a name, a skill, a project, or an answer to a professional problem.",
+          "AI-powered search makes this more visible because it can assemble evidence into a direct response. That convenience also creates risk: systems can miss context, make inferences, and sound more certain than the sources justify. The right response is not to treat AI as a hiring authority. It is to publish clear evidence and evaluate any synthesis critically.",
+          "Your portfolio cannot attend an interview for you. But it can keep explaining your work before the meeting, after the call, and whenever the right person begins looking.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Why does a portfolio need to be indexed?",
+        answer:
+          "Indexation allows eligible portfolio pages to appear in search and makes their public evidence easier for recruiters, clients, collaborators, and retrieval systems to discover beyond a direct CV link.",
+      },
+      {
+        question: "Can AI recommend someone for a job from their portfolio?",
+        answer:
+          "AI can retrieve and summarise public professional evidence, but it should not make hiring decisions. Its answers may contain gaps, inferences, or errors and should be checked against the underlying work by a human reviewer.",
+      },
+      {
+        question: "Does a portfolio replace a CV or interview?",
+        answer:
+          "No. A CV provides a concise career summary and an interview provides live context. A portfolio supports both with deeper, reviewable evidence of projects, thinking, impact, and communication.",
+      },
+      {
+        question: "How can I check whether my portfolio is indexed?",
+        answer:
+          "Use Google Search Console's Page indexing and URL Inspection reports, review your sitemap, and search for specific pages or your domain. A site search can be a quick clue, but Search Console provides more useful diagnostic information.",
+      },
+      {
+        question: "What should an indexable portfolio contain?",
+        answer:
+          "Prioritise substantial About, project, and case study pages that clarify the problem, your role, your decisions, measurable outcomes, and lessons learned. Add useful articles where they genuinely demonstrate expertise or professional thinking.",
+      },
+    ],
+  },
   {
     slug: "why-seos-love-wordpress",
     title: "Why SEOs Love WordPress",

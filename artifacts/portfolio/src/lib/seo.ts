@@ -2,7 +2,8 @@ import { ARTICLES, articleParagraphText, type Article } from "@/data/articles";
 
 export const SITE_URL = "https://morgan-mngadi-portfolio.online";
 export const SITE_NAME = "Morgan Mngadi";
-export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/morgan-photo.png`;
+export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/opengraph.jpg`;
+export const PERSON_IMAGE = `${SITE_URL}/morgan-author.png`;
 
 export type SeoConfig = {
   title: string;
@@ -12,6 +13,8 @@ export type SeoConfig = {
   image?: string;
   robots?: string;
   schema?: Record<string, unknown>[];
+  pageType?: "WebPage" | "ProfilePage" | "CollectionPage";
+  mainEntityId?: string;
 };
 
 export const absoluteUrl = (path: string) => `${SITE_URL}${path === "/" ? "" : path}`;
@@ -29,7 +32,7 @@ export const personSchema = {
   jobTitle: "SEO Specialist",
   url: SITE_URL,
   email: "mailto:morganmngadi@gmail.com",
-  image: DEFAULT_SOCIAL_IMAGE,
+  image: PERSON_IMAGE,
   sameAs: ["https://www.linkedin.com/in/morgan-mngadi/"],
   knowsAbout: [
     "Technical SEO",
@@ -58,9 +61,15 @@ export const websiteSchema = {
   },
 };
 
-const pageSchema = (path: string, title: string, description: string) => ({
+const pageSchema = (
+  path: string,
+  title: string,
+  description: string,
+  pageType: SeoConfig["pageType"] = "WebPage",
+  mainEntityId?: string,
+) => ({
   "@context": "https://schema.org",
-  "@type": "WebPage",
+  "@type": pageType,
   "@id": `${absoluteUrl(path)}#webpage`,
   url: absoluteUrl(path),
   name: title,
@@ -71,7 +80,28 @@ const pageSchema = (path: string, title: string, description: string) => ({
   about: {
     "@id": `${SITE_URL}/#person`,
   },
+  ...(mainEntityId ? { mainEntity: { "@id": mainEntityId } } : {}),
 });
+
+const breadcrumbSchema = (path: string, title: string) => {
+  const items = [
+    { name: "Home", url: SITE_URL },
+    ...(path.startsWith("/blog/") ? [{ name: "Blog", url: `${SITE_URL}/blog` }] : []),
+    { name: title.split(" | ")[0], url: absoluteUrl(path) },
+  ];
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "@id": `${absoluteUrl(path)}#breadcrumb`,
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
+  };
+};
 
 const articleText = (article: Article) => {
   const text: string[] = [article.title, article.excerpt, article.category];
@@ -90,6 +120,16 @@ const articleText = (article: Article) => {
       text.push(section.chart.title, section.chart.subtitle, section.chart.axisLabel, section.chart.sourceLabel);
       section.chart.rows.forEach((row) => text.push(row.label, String(row.value)));
     }
+    if (section.indexationChart) {
+      text.push(
+        `${section.indexationChart.indexedPages} indexed pages`,
+        `${section.indexationChart.notIndexedPages} not indexed pages`,
+        section.indexationChart.sourceLabel,
+      );
+    }
+    section.aiFindings?.forEach((finding) => {
+      text.push(finding.status, finding.context ?? "", finding.claim, finding.correction, finding.link?.label ?? "");
+    });
     section.comparisonTable?.rows.forEach((row) => text.push(...row));
     section.links?.forEach((link) => text.push(link.label));
   });
@@ -129,7 +169,7 @@ const readingTime = (readTime: string) => {
 
 const articleSchema = (article: Article) => ({
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": "BlogPosting",
   "@id": `${absoluteUrl(`/blog/${article.slug}`)}#article`,
   url: absoluteUrl(`/blog/${article.slug}`),
   headline: article.title,
@@ -149,12 +189,64 @@ const articleSchema = (article: Article) => ({
   publisher: {
     "@id": `${SITE_URL}/#person`,
   },
+  isPartOf: {
+    "@id": `${SITE_URL}/blog#blog`,
+  },
   mainEntityOfPage: {
     "@id": `${absoluteUrl(`/blog/${article.slug}`)}#webpage`,
   },
   datePublished: articleDate(article.date),
   dateModified: articleDate(article.date),
 });
+
+const articleVideoSchema = (article: Article) => {
+  const video = article.sections.find((section) => section.video)?.video;
+
+  if (!video?.poster) return null;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${absoluteUrl(`/blog/${article.slug}`)}#video`,
+    name: video.title,
+    description: video.description,
+    thumbnailUrl: [absoluteUrl(video.poster)],
+    uploadDate: articleDate(article.date),
+    contentUrl: absoluteUrl(video.src),
+    isPartOf: {
+      "@id": `${absoluteUrl(`/blog/${article.slug}`)}#article`,
+    },
+  };
+};
+
+const blogSchema = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "@id": `${SITE_URL}/blog#blog`,
+  name: "SEO Perspectives",
+  description: "Articles on AI search, SEO measurement, technical SEO systems, and organic search reporting by Morgan Mngadi.",
+  url: `${SITE_URL}/blog`,
+  author: {
+    "@id": `${SITE_URL}/#person`,
+  },
+  blogPost: ARTICLES.map((article) => ({
+    "@id": `${absoluteUrl(`/blog/${article.slug}`)}#article`,
+  })),
+};
+
+const blogItemListSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "@id": `${SITE_URL}/blog#articles`,
+  name: "Morgan Mngadi SEO articles",
+  numberOfItems: ARTICLES.length,
+  itemListElement: ARTICLES.map((article, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    name: article.title,
+    url: absoluteUrl(`/blog/${article.slug}`),
+  })),
+};
 
 const faqSchema = (article: Article) => ({
   "@context": "https://schema.org",
@@ -185,6 +277,8 @@ export const seoByPath: Record<string, SeoConfig> = {
       "Portfolio of Morgan Mngadi, an SEO specialist focused on organic search growth for product and service-led businesses.",
     path: "/",
     type: "profile",
+    pageType: "ProfilePage",
+    mainEntityId: `${SITE_URL}/#person`,
     schema: [personSchema, websiteSchema],
   },
   "/about": {
@@ -193,6 +287,8 @@ export const seoByPath: Record<string, SeoConfig> = {
       "Learn about Morgan Mngadi's SEO experience across technical SEO, search strategy, analytics, structured data, and agency implementation.",
     path: "/about",
     type: "profile",
+    pageType: "ProfilePage",
+    mainEntityId: `${SITE_URL}/#person`,
     schema: [
       personSchema,
       {
@@ -246,12 +342,14 @@ export const seoByPath: Record<string, SeoConfig> = {
       "Explore Morgan Mngadi's areas of expertise across technical SEO, analytics, GTM, GA4, organic growth, AI visibility, reporting, and CommuteZA.",
     path: "/areas-of-expertise",
     type: "website",
+    pageType: "CollectionPage",
+    mainEntityId: `${SITE_URL}/#person`,
     schema: [
       personSchema,
       {
         "@context": "https://schema.org",
         "@type": "AboutPage",
-        "@id": `${SITE_URL}/areas-of-expertise#webpage`,
+        "@id": `${SITE_URL}/areas-of-expertise#expertise-overview`,
         name: "Areas of Expertise",
         about: [
           "Technical SEO",
@@ -317,6 +415,7 @@ export const seoByPath: Record<string, SeoConfig> = {
       "A CommuteZA technical SEO case study covering headless CMS architecture, redirects, AI visibility, Lighthouse SEO, and search signals.",
     path: "/projects/commuteza",
     type: "article",
+    mainEntityId: `${SITE_URL}/projects/commuteza#case-study`,
     schema: [
       personSchema,
       {
@@ -381,7 +480,9 @@ export const seoByPath: Record<string, SeoConfig> = {
       "Articles on AI search, SEO measurement, technical SEO systems, and organic search reporting by Morgan Mngadi.",
     path: "/blog",
     type: "website",
-    schema: [personSchema, websiteSchema],
+    pageType: "CollectionPage",
+    mainEntityId: `${SITE_URL}/blog#blog`,
+    schema: [personSchema, websiteSchema, blogSchema, blogItemListSchema],
   },
 };
 
@@ -392,7 +493,13 @@ for (const article of ARTICLES) {
     description: article.metaDescription ?? article.excerpt,
     path,
     type: "article",
-    schema: [personSchema, articleSchema(article), faqSchema(article)],
+    mainEntityId: `${absoluteUrl(path)}#article`,
+    schema: [
+      personSchema,
+      articleSchema(article),
+      faqSchema(article),
+      ...(articleVideoSchema(article) ? [articleVideoSchema(article)!] : []),
+    ],
   };
 }
 
@@ -405,12 +512,12 @@ const schemaKey = (schema: Record<string, unknown>) => {
   return typeof id === "string" ? id : `${String(type)}-${JSON.stringify(schema)}`;
 };
 
-const withSitewidePersonSchema = (schema: Record<string, unknown>[]) => {
+const withSitewideSchemas = (schema: Record<string, unknown>[]) => {
   const seen = new Set<string>();
   const [primarySchema, ...additionalSchema] = schema;
   const schemaWithPerson = primarySchema
-    ? [primarySchema, personSchema, ...additionalSchema]
-    : [personSchema, ...additionalSchema];
+    ? [primarySchema, websiteSchema, personSchema, ...additionalSchema]
+    : [websiteSchema, personSchema, ...additionalSchema];
 
   return schemaWithPerson.filter((item) => {
     const key = schemaKey(item);
@@ -428,7 +535,10 @@ export const getSeoConfig = (path: string) => {
   const normalisedPath = path === "" ? "/" : path.replace(/\/$/, "") || "/";
   const config = seoByPath[normalisedPath] ?? seoByPath["/"];
   const description = normaliseMetaDescription(config.description);
-  const page = pageSchema(config.path, config.title, description);
+  const page = pageSchema(config.path, config.title, description, config.pageType, config.mainEntityId);
+  const breadcrumb = config.path === "/" || config.path === "/404"
+    ? null
+    : breadcrumbSchema(config.path, config.title);
 
   return {
     ...config,
@@ -436,7 +546,7 @@ export const getSeoConfig = (path: string) => {
     canonical: absoluteUrl(config.path),
     image: config.image ?? DEFAULT_SOCIAL_IMAGE,
     robots: config.robots ?? "index, follow",
-    schema: withSitewidePersonSchema([page, ...(config.schema ?? [])]),
+    schema: withSitewideSchemas([page, ...(breadcrumb ? [breadcrumb] : []), ...(config.schema ?? [])]),
   };
 };
 

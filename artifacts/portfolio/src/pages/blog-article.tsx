@@ -1,8 +1,8 @@
-import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Clock, Maximize2 } from "lucide-react";
+import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
+import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
-import { ARTICLES, getArticle, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleImageCarousel, type ArticleParagraph, type ArticleVideo } from "@/data/articles";
+import { ARTICLES, getArticle, type ArticleAiFinding, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleImageCarousel, type ArticleIndexationChart, type ArticleParagraph, type ArticleVideo } from "@/data/articles";
 import {
   Dialog,
   DialogClose,
@@ -21,6 +21,7 @@ import NotFound from "@/pages/not-found";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import authorPhotoSrc from "@assets/Untitled_design-Photoroom_1779786532347.png";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 0 },
@@ -56,6 +57,14 @@ const ARTICLE_CTA_COPY: Record<string, { title: string; description: string }> =
   "Video SEO": {
     title: "Want your videos to earn more search visibility?",
     description: "Let’s improve how your video content is structured, discovered, and connected to your wider search strategy.",
+  },
+};
+
+const ARTICLE_SLUG_CTA_COPY: Record<string, { title: string; description: string }> = {
+  "can-ai-recommend-you-for-a-job-portfolio-indexation": {
+    title: "Already have a portfolio but aren't sure whether search engines can actually find it?",
+    description:
+      "I help professionals improve the technical SEO and discoverability of their portfolio websites, including indexation, metadata, structured data, and search visibility.",
   },
 };
 
@@ -190,6 +199,144 @@ function ArticleBarChart({ chart }: { chart: ArticleChart }) {
   );
 }
 
+function AnimatedInteger({ value }: { value: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, (latest) => Math.round(latest));
+
+  useEffect(() => {
+    if (!isInView) return;
+    const controls = animate(count, value, { duration: 1.15, ease: "easeOut" });
+    return controls.stop;
+  }, [count, isInView, value]);
+
+  return <motion.span ref={ref}>{rounded}</motion.span>;
+}
+
+function ArticleIndexationChartBlock({ chart }: { chart: ArticleIndexationChart }) {
+  const bars = [1, 8, 8, 8, 8, 8, 8, 8, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16, 16];
+
+  return (
+    <figure className="mt-8 overflow-hidden border border-border bg-card">
+      <div className="grid sm:grid-cols-2">
+        <div className="border-b border-border bg-muted/40 p-5 sm:border-b-0 sm:border-r sm:p-6">
+          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <span className="grid h-5 w-5 place-items-center border border-muted-foreground/60"><Check className="h-3.5 w-3.5" /></span>
+            Not indexed
+          </p>
+          <p className="mt-5 text-5xl font-medium tabular-nums text-foreground"><AnimatedInteger value={chart.notIndexedPages} /></p>
+          <p className="mt-2 text-sm text-muted-foreground">No reasons</p>
+        </div>
+        <div className="border-b border-primary/30 bg-primary/55 p-5 text-foreground sm:border-b-0 sm:p-6">
+          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-foreground/75">
+            <span className="grid h-5 w-5 place-items-center border border-foreground/55"><Check className="h-3.5 w-3.5" /></span>
+            Indexed
+          </p>
+          <p className="mt-5 text-5xl font-medium tabular-nums"><AnimatedInteger value={chart.indexedPages} /></p>
+          <p className="mt-2 text-sm text-foreground/70">Pages available in search</p>
+        </div>
+      </div>
+
+      <div className="p-4 sm:p-6">
+        <div className="mb-5 flex items-end justify-between gap-4 border-b border-border pb-4">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-widest text-primary">Page indexation</p>
+            <h3 className="mt-2 text-xl font-medium tracking-tight text-foreground">Indexed portfolio pages over time</h3>
+          </div>
+          <span className="hidden font-mono text-xs text-muted-foreground sm:block">May–Aug 2026</span>
+        </div>
+
+        <div className="grid grid-cols-[1.75rem_1fr] gap-2">
+          <div className="flex h-56 flex-col justify-between pb-6 text-right font-mono text-[0.65rem] text-muted-foreground">
+            <span>18</span><span>12</span><span>6</span><span>0</span>
+          </div>
+          <div>
+            <div className="relative flex h-56 items-end gap-px border-b border-border">
+              {[0, 1, 2].map((line) => <span key={line} className="pointer-events-none absolute inset-x-0 border-t border-border/70" style={{ top: `${line * 33.333}%` }} />)}
+              {bars.map((height, index) => (
+                <motion.span
+                  key={index}
+                  className="relative z-10 min-w-0 flex-1 bg-primary/55"
+                  initial={{ height: 0 }}
+                  whileInView={{ height: `${(height / 18) * 100}%` }}
+                  viewport={{ once: true, margin: "-60px" }}
+                  transition={{ duration: 0.55, delay: index * 0.012, ease: "easeOut" }}
+                  aria-hidden="true"
+                />
+              ))}
+            </div>
+            <div className="mt-3 flex justify-between font-mono text-[0.6rem] text-muted-foreground sm:text-[0.7rem]">
+              <span>13 May</span><span>4 Jun</span><span>26 Jun</span><span>18 Jul</span><span>11 Aug</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption className="border-t border-border px-4 py-4 font-mono text-xs leading-relaxed text-muted-foreground sm:px-6">
+        {chart.sourceLabel}
+      </figcaption>
+    </figure>
+  );
+}
+
+function ArticleAiFindings({ findings }: { findings: ArticleAiFinding[] }) {
+  const statusStyle = {
+    "Overstated claim": {
+      icon: AlertTriangle,
+      className: "border-amber-500/50 bg-amber-500/[0.07] text-amber-600 dark:text-amber-400",
+    },
+    "Unsupported assumption": {
+      icon: CircleHelp,
+      className: "border-rose-500/50 bg-rose-500/[0.07] text-rose-600 dark:text-rose-400",
+    },
+    "Partially accurate": {
+      icon: CircleCheck,
+      className: "border-primary/50 bg-primary/[0.06] text-primary",
+    },
+  } as const;
+
+  return (
+    <div className="mt-7 flex flex-col gap-4" aria-label="AI response findings">
+      {findings.map((finding, index) => {
+        const style = statusStyle[finding.status];
+        const Icon = style.icon;
+
+        return (
+          <motion.article
+            key={finding.claim}
+            className="flex flex-col border border-border bg-card p-5 sm:p-6"
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.4, delay: index * 0.06 }}
+          >
+            <div className={`inline-flex w-fit items-center gap-2 border px-2.5 py-1 font-mono text-[0.65rem] uppercase tracking-widest ${style.className}`}>
+              <Icon className="h-3.5 w-3.5" aria-hidden="true" />
+              {finding.status}
+            </div>
+            {finding.context && (
+              <p className="mt-4 text-sm font-medium leading-relaxed text-foreground">{finding.context}</p>
+            )}
+            <blockquote className="mt-4 border-l-2 border-border pl-4 text-base font-medium leading-relaxed text-foreground">
+              {finding.claim}
+            </blockquote>
+            <div className="mt-4">
+              <p className="font-mono text-[0.65rem] uppercase tracking-widest text-muted-foreground">What the evidence supports</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{finding.correction}</p>
+            </div>
+            {finding.link && (
+              <Link href={finding.link.href} className="mt-auto inline-flex items-center gap-1.5 pt-5 font-mono text-[0.68rem] uppercase tracking-widest text-primary hover:underline">
+                {finding.link.label}
+                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </Link>
+            )}
+          </motion.article>
+        );
+      })}
+    </div>
+  );
+}
+
 function ArticleImageCarouselBlock({
   carousel,
   onSelectImage,
@@ -249,6 +396,7 @@ function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playbackRate, setPlaybackRate] = useState(1);
+  const sourceType = video.src.toLowerCase().endsWith(".mov") ? "video/quicktime" : "video/mp4";
 
   useEffect(() => {
     const element = videoRef.current;
@@ -268,7 +416,7 @@ function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
           element.pause();
         }
       },
-      { threshold: 0.45 },
+      { threshold: 0.2 },
     );
 
     observer.observe(element);
@@ -307,6 +455,7 @@ function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
         <video
           ref={videoRef}
           controls
+          autoPlay
           muted
           playsInline
           preload="metadata"
@@ -315,7 +464,7 @@ function ArticleVideoBlock({ video }: { video: ArticleVideo }) {
           aria-label={video.title}
           onRateChange={(event) => setPlaybackRate(event.currentTarget.playbackRate)}
         >
-          <source src={video.src} type="video/mp4" />
+          <source src={video.src} type={sourceType} />
           Your browser does not support embedded video playback.
         </video>
       </div>
@@ -471,6 +620,31 @@ function ScrollableComparisonTable({ table }: { table: ArticleComparisonTable })
   );
 }
 
+function ArticleAuthorCard({ headingId }: { headingId: string }) {
+  return (
+    <section aria-labelledby={headingId} className="border border-border bg-card p-5">
+      <h2 id={headingId} className="mb-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+        Author
+      </h2>
+      <div className="flex items-center gap-3">
+        <img
+          src={authorPhotoSrc}
+          alt="Morgan Mngadi"
+          className="h-14 w-12 shrink-0 border border-border bg-background object-cover object-top"
+          loading="eager"
+        />
+        <div>
+          <p className="font-medium leading-tight">Morgan Mngadi</p>
+          <p className="mt-1 font-mono text-xs uppercase tracking-widest text-primary">SEO Specialist</p>
+        </div>
+      </div>
+      <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+        Writing about technical SEO, analytics, AI visibility, organic growth, and product-led search systems.
+      </p>
+    </section>
+  );
+}
+
 export default function BlogArticle() {
   const [, params] = useRoute("/blog/:slug");
   const article = params?.slug ? getArticle(params.slug) : undefined;
@@ -481,7 +655,7 @@ export default function BlogArticle() {
   }
 
   const moreArticles = ARTICLES.filter((item) => item.slug !== article.slug).slice(0, 3);
-  const ctaCopy = ARTICLE_CTA_COPY[article.category] ?? {
+  const ctaCopy = ARTICLE_SLUG_CTA_COPY[article.slug] ?? ARTICLE_CTA_COPY[article.category] ?? {
     title: "Want to apply these ideas to your search strategy?",
     description: "Let’s talk about how this approach could support your website, content, analytics, or digital product.",
   };
@@ -531,27 +705,6 @@ export default function BlogArticle() {
 
           <div className="grid grid-cols-1 gap-10 py-14 lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-12 xl:grid-cols-[200px_minmax(0,1fr)_240px] xl:gap-8">
             <motion.aside variants={fadeUp} className="flex flex-col gap-5 lg:sticky lg:top-20 lg:self-start">
-              <section aria-labelledby="article-author" className="border border-border bg-card p-5">
-                <h2 id="article-author" className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                  Author
-                </h2>
-                <div className="flex items-center gap-3">
-                  <img
-                    src="/morgan-photo.png"
-                    alt="Morgan Mngadi"
-                    className="h-14 w-12 shrink-0 border border-border bg-background object-cover object-top"
-                    loading="eager"
-                  />
-                  <div>
-                    <p className="font-medium leading-tight">Morgan Mngadi</p>
-                    <p className="mt-1 font-mono text-xs uppercase tracking-widest text-primary">SEO Specialist</p>
-                  </div>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  Writing about technical SEO, analytics, AI visibility, organic growth, and product-led search systems.
-                </p>
-              </section>
-
               <nav aria-label="Table of contents" className="border border-border bg-card p-5">
                 <h2 className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">Contents</h2>
                 <ol className="flex flex-col gap-3">
@@ -622,6 +775,12 @@ export default function BlogArticle() {
                   )}
                   {section.chart && (
                     <ArticleBarChart chart={section.chart} />
+                  )}
+                  {section.indexationChart && (
+                    <ArticleIndexationChartBlock chart={section.indexationChart} />
+                  )}
+                  {section.aiFindings && (
+                    <ArticleAiFindings findings={section.aiFindings} />
                   )}
                   {section.imageBlocks && (
                     <div className={section.imageLayout === "grid" ? "mt-8 grid grid-cols-1 gap-6 md:grid-cols-2" : "mt-8 flex flex-col gap-8"}>
@@ -721,7 +880,8 @@ export default function BlogArticle() {
                 </motion.section>
               ))}
 
-              <motion.section variants={fadeUp} className="border-y border-border py-10 mb-10 xl:hidden">
+              <motion.section variants={fadeUp} className="mb-10 flex flex-col gap-5 border-y border-border py-10 xl:hidden">
+                <ArticleAuthorCard headingId="article-author-mobile" />
                 <div className="border border-primary/40 bg-card p-6 md:p-8">
                   <p className="font-mono text-xs uppercase tracking-widest text-primary mb-4">Let’s Connect</p>
                   <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-4">
@@ -819,7 +979,8 @@ export default function BlogArticle() {
               </motion.footer>
             </div>
 
-            <motion.aside variants={fadeUp} className="hidden xl:block xl:sticky xl:top-24 xl:self-start">
+            <motion.aside variants={fadeUp} className="hidden xl:sticky xl:top-24 xl:flex xl:flex-col xl:gap-5 xl:self-start">
+              <ArticleAuthorCard headingId="article-author-desktop" />
               <section aria-labelledby="article-sidebar-cta" className="border border-primary bg-primary p-6 text-primary-foreground shadow-lg shadow-primary/10">
                 <p className="mb-4 font-mono text-xs uppercase tracking-widest text-primary-foreground/75">Let’s Connect</p>
                 <h2 id="article-sidebar-cta" className="text-2xl font-medium leading-tight tracking-tight">
