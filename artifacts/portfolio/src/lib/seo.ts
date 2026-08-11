@@ -2,7 +2,7 @@ import { ARTICLES, articleParagraphText, type Article } from "@/data/articles";
 
 export const SITE_URL = "https://morgan-mngadi-portfolio.online";
 export const SITE_NAME = "Morgan Mngadi";
-export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/opengraph.jpg`;
+export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/morgan-photo.png`;
 export const PERSON_IMAGE = `${SITE_URL}/morgan-author.png`;
 
 export type SeoConfig = {
