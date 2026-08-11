@@ -225,7 +225,7 @@ export default function About() {
               <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_0_44%,hsl(var(--primary)/0.08)_44%_67%,transparent_67%),radial-gradient(circle_at_50%_18%,hsl(var(--primary)/0.10),transparent_42%)]" />
               <div className="absolute inset-x-8 bottom-0 h-px bg-primary/30" />
               <img
-                src="/morgan-photo.png"
+                src="/morgan-author.png"
                 alt="Morgan Mngadi"
                 className="relative z-10 w-[min(92vw,390px)] translate-y-5 object-contain object-bottom md:w-[410px] lg:w-[min(36vw,500px)]"
                 style={{ filter: "grayscale(12%) brightness(0.96)" }}

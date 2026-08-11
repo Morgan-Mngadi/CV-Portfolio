@@ -87,6 +87,25 @@ export function Seo({ path }: SeoProps) {
         meta.name = "twitter:image";
         return meta;
       }, seo.image);
+      const imageMeta = [
+        ["og:image:width", "1200"],
+        ["og:image:height", "630"],
+        ["og:image:type", "image/png"],
+        ["og:image:alt", seo.imageAlt],
+      ];
+
+      for (const [property, content] of imageMeta) {
+        upsertMeta(`meta[property="${property}"]`, () => {
+          const meta = document.createElement("meta");
+          meta.setAttribute("property", property);
+          return meta;
+        }, content);
+      }
+      upsertMeta('meta[name="twitter:image:alt"]', () => {
+        const meta = document.createElement("meta");
+        meta.name = "twitter:image:alt";
+        return meta;
+      }, seo.imageAlt);
     } else {
       removeMeta('meta[property="og:image"]');
       removeMeta('meta[name="twitter:image"]');

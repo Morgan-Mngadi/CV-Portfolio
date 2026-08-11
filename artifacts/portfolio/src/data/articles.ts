@@ -98,6 +98,7 @@ export type Article = {
   slug: string;
   title: string;
   metaTitle?: string;
+  socialImage?: string;
   heroAnswer?: {
     answer: string;
     explanation: string;

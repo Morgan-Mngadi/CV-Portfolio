@@ -11,6 +11,7 @@ export type SeoConfig = {
   path: string;
   type?: "website" | "profile" | "article";
   image?: string;
+  imageAlt?: string;
   robots?: string;
   schema?: Record<string, unknown>[];
   pageType?: "WebPage" | "ProfilePage" | "CollectionPage";
@@ -157,6 +158,7 @@ const articleDate = (date: string) => {
 };
 
 const articleImage = (article: Article) => {
+  if (article.socialImage) return absoluteUrl(article.socialImage);
   const firstImage = article.sections.flatMap((section) => section.imageBlocks ?? [])[0];
   return firstImage ? absoluteUrl(firstImage.src) : DEFAULT_SOCIAL_IMAGE;
 };
@@ -497,6 +499,8 @@ for (const article of ARTICLES) {
     description: article.metaDescription ?? article.excerpt,
     path,
     type: "article",
+    image: article.socialImage ? absoluteUrl(article.socialImage) : DEFAULT_SOCIAL_IMAGE,
+    imageAlt: article.socialImage ? article.title : "Morgan Mngadi, SEO Specialist",
     mainEntityId: `${absoluteUrl(path)}#article`,
     schema: [
       personSchema,
@@ -549,6 +553,7 @@ export const getSeoConfig = (path: string) => {
     description,
     canonical: absoluteUrl(config.path),
     image: config.image ?? DEFAULT_SOCIAL_IMAGE,
+    imageAlt: config.imageAlt ?? "Morgan Mngadi, SEO Specialist",
     robots: config.robots ?? "index, follow",
     schema: withSitewideSchemas([page, ...(breadcrumb ? [breadcrumb] : []), ...(config.schema ?? [])]),
   };
@@ -576,10 +581,15 @@ export const renderSeoHead = (path: string) => {
     `<meta property="og:type" content="${seo.type === "article" ? "article" : "website"}" />`,
     `<meta property="og:url" content="${escapeHtml(seo.canonical)}" />`,
     ...(seo.image ? [`<meta property="og:image" content="${escapeHtml(seo.image)}" />`] : []),
+    ...(seo.image ? [`<meta property="og:image:width" content="1200" />`] : []),
+    ...(seo.image ? [`<meta property="og:image:height" content="630" />`] : []),
+    ...(seo.image ? [`<meta property="og:image:type" content="image/png" />`] : []),
+    ...(seo.image ? [`<meta property="og:image:alt" content="${escapeHtml(seo.imageAlt)}" />`] : []),
     `<meta name="twitter:card" content="${seo.image ? "summary_large_image" : "summary"}" />`,
     `<meta name="twitter:title" content="${escapeHtml(seo.title)}" />`,
     `<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`,
     ...(seo.image ? [`<meta name="twitter:image" content="${escapeHtml(seo.image)}" />`] : []),
+    ...(seo.image ? [`<meta name="twitter:image:alt" content="${escapeHtml(seo.imageAlt)}" />`] : []),
     `<script type="application/ld+json">${schema}</script>`,
   ].join("\n    ");
 };
