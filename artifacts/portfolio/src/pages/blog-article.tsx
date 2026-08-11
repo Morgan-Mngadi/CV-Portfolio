@@ -228,12 +228,12 @@ function ArticleIndexationChartBlock({ chart }: { chart: ArticleIndexationChart 
           <p className="mt-5 text-5xl font-medium tabular-nums text-foreground"><AnimatedInteger value={chart.notIndexedPages} /></p>
           <p className="mt-2 text-sm text-muted-foreground">No reasons</p>
         </div>
-        <div className="border-b border-primary/30 bg-primary/55 p-5 text-foreground sm:border-b-0 sm:p-6">
-          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-foreground/75">
-            <span className="grid h-5 w-5 place-items-center border border-foreground/55"><Check className="h-3.5 w-3.5" /></span>
+        <div className="border border-primary/60 bg-primary/[0.06] p-5 text-foreground sm:p-6">
+          <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-primary">
+            <span className="grid h-5 w-5 place-items-center border border-primary/70"><Check className="h-3.5 w-3.5" /></span>
             Indexed
           </p>
-          <p className="mt-5 text-5xl font-medium tabular-nums"><AnimatedInteger value={chart.indexedPages} /></p>
+          <p className="mt-5 text-5xl font-medium tabular-nums text-primary"><AnimatedInteger value={chart.indexedPages} /></p>
           <p className="mt-2 text-sm text-foreground/70">Pages available in search</p>
         </div>
       </div>
@@ -257,7 +257,7 @@ function ArticleIndexationChartBlock({ chart }: { chart: ArticleIndexationChart 
               {bars.map((height, index) => (
                 <motion.span
                   key={index}
-                  className="relative z-10 min-w-0 flex-1 bg-primary/55"
+                  className="relative z-10 min-w-0 flex-1 bg-primary"
                   initial={{ height: 0 }}
                   whileInView={{ height: `${(height / 18) * 100}%` }}
                   viewport={{ once: true, margin: "-60px" }}
