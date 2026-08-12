@@ -1,4 +1,4 @@
-import { animate, motion, useInView, useMotionValue, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
@@ -201,17 +201,50 @@ function ArticleBarChart({ chart }: { chart: ArticleChart }) {
 
 function AnimatedInteger({ value }: { value: number }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, (latest) => Math.round(latest));
+  const [displayValue, setDisplayValue] = useState(0);
 
   useEffect(() => {
-    if (!isInView) return;
-    const controls = animate(count, value, { duration: 1.15, ease: "easeOut" });
-    return controls.stop;
-  }, [count, isInView, value]);
+    const element = ref.current;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  return <motion.span ref={ref}>{rounded}</motion.span>;
+    if (!element || prefersReducedMotion || !("IntersectionObserver" in window)) {
+      setDisplayValue(value);
+      return;
+    }
+
+    let animationFrame = 0;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+
+        observer.disconnect();
+        const startedAt = performance.now();
+        const duration = 1150;
+
+        const update = (now: number) => {
+          const progress = Math.min((now - startedAt) / duration, 1);
+          const easedProgress = 1 - Math.pow(1 - progress, 4);
+          setDisplayValue(Math.round(value * easedProgress));
+
+          if (progress < 1) {
+            animationFrame = requestAnimationFrame(update);
+          }
+        };
+
+        animationFrame = requestAnimationFrame(update);
+      },
+      { threshold: 0.1 },
+    );
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [value]);
+
+  return <span ref={ref}>{displayValue}</span>;
 }
 
 function ArticleIndexationChartBlock({ chart }: { chart: ArticleIndexationChart }) {
