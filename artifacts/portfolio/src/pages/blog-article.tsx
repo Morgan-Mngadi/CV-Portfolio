@@ -931,7 +931,7 @@ function ArticlePieChartGroupBlock({ group }: { group: ArticlePieChartGroup }) {
         <h3 className="mt-2 text-xl font-medium tracking-tight text-foreground">{group.title}</h3>
         <p className="mt-3 inline-flex items-center gap-2 font-mono text-[0.65rem] uppercase tracking-widest text-primary">
           <span className="hidden md:inline">Hover over a segment to explore its contribution</span>
-          <span className="md:hidden">Tap a segment to explore its contribution</span>
+          <span className="md:hidden">Double tap a segment to explore its contribution</span>
           <CircleHelp className="h-3.5 w-3.5" aria-hidden="true" />
         </p>
       </figcaption>
