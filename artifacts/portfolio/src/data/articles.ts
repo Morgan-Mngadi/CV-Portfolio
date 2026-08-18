@@ -5,7 +5,8 @@ export type ArticleTextLink = {
 
 export type ArticleParagraph = string | {
   text: string;
-  links: ArticleTextLink[];
+  links?: ArticleTextLink[];
+  quote?: boolean;
 };
 
 export type ArticleSection = {
@@ -23,6 +24,14 @@ export type ArticleSection = {
   indexationChart?: ArticleIndexationChart;
   aiFindings?: ArticleAiFinding[];
   comparisonTable?: ArticleComparisonTable;
+  flowDiagram?: ArticleFlowDiagram;
+  flowDiagramAfterParagraph?: number;
+  calculationPanel?: ArticleCalculationPanel;
+  pieChartGroup?: ArticlePieChartGroup;
+  inlineBullets?: {
+    afterParagraph: number;
+    items: string[];
+  };
   imagePlaceholder?: string;
   closingParagraphs?: ArticleParagraph[];
   link?: {
@@ -75,6 +84,43 @@ export type ArticleVideo = {
 export type ArticleComparisonTable = {
   columns: string[];
   rows: string[][];
+};
+
+export type ArticleFlowDiagram = {
+  label: string;
+  title: string;
+  steps: {
+    title: string;
+    detail: string;
+  }[];
+};
+
+export type ArticleCalculationPanel = {
+  label: string;
+  title: string;
+  note: string;
+  rows: {
+    label: string;
+    calculation: string;
+    result: string;
+  }[];
+  totalLabel: string;
+  totalCalculation: string;
+  total: string;
+};
+
+export type ArticlePieChartGroup = {
+  label: string;
+  title: string;
+  charts: {
+    title: string;
+    total: string;
+    segments: {
+      label: string;
+      value: number;
+      displayValue: string;
+    }[];
+  }[];
 };
 
 export type ArticleChart = {
@@ -135,6 +181,7 @@ const calculateReadTime = (article: ArticleInput) => {
     visibleText.push(section.heading, ...section.paragraphs.map(articleParagraphText));
     if (section.notice) visibleText.push(section.notice);
     visibleText.push(...(section.bullets ?? []));
+    visibleText.push(...(section.inlineBullets?.items ?? []));
     visibleText.push(...(section.numberedSteps ?? []));
     visibleText.push(...(section.closingParagraphs ?? []).map(articleParagraphText));
 
@@ -168,6 +215,31 @@ const calculateReadTime = (article: ArticleInput) => {
       visibleText.push(finding.status, finding.context ?? "", finding.claim, finding.correction, finding.link?.label ?? "");
     });
 
+    if (section.flowDiagram) {
+      visibleText.push(section.flowDiagram.label, section.flowDiagram.title);
+      section.flowDiagram.steps.forEach((step) => visibleText.push(step.title, step.detail));
+    }
+
+    if (section.calculationPanel) {
+      visibleText.push(
+        section.calculationPanel.label,
+        section.calculationPanel.title,
+        section.calculationPanel.note,
+        section.calculationPanel.totalLabel,
+        section.calculationPanel.totalCalculation,
+        section.calculationPanel.total,
+      );
+      section.calculationPanel.rows.forEach((row) => visibleText.push(row.label, row.calculation, row.result));
+    }
+
+    if (section.pieChartGroup) {
+      visibleText.push(section.pieChartGroup.label, section.pieChartGroup.title);
+      section.pieChartGroup.charts.forEach((chart) => {
+        visibleText.push(chart.title, chart.total);
+        chart.segments.forEach((segment) => visibleText.push(segment.label, segment.displayValue));
+      });
+    }
+
     if (section.imagePlaceholder) {
       visibleText.push(section.imagePlaceholder);
     }
@@ -198,6 +270,369 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 });
 
 const ARTICLE_INPUTS: ArticleInput[] = [
+  {
+    slug: "how-much-revenue-did-organic-search-contribute",
+    title: "When the CEO Asks, ‘How Is SEO Doing?’, Talk About Revenue",
+    metaTitle: "How Much Revenue Did Organic Search Contribute? | Morgan Mngadi",
+    excerpt:
+      "A practical framework for translating organic leads into estimated revenue contribution and comparing SEO with other digital channels.",
+    metaDescription:
+      "Learn how to estimate organic search revenue contribution for lead-generation businesses and compare SEO with other digital channels.",
+    category: "Measurement",
+    date: "Aug 2026",
+    sections: [
+      {
+        id: "answer-the-commercial-question",
+        heading: "Answer the Commercial Question",
+        paragraphs: [
+          {
+            text: "SEO reports often focus on rankings, impressions, clicks, organic traffic, and leads. These metrics are useful for understanding what is happening within the channel, but they are rarely the answer a CEO, board member, or shareholder is looking for.",
+            links: [
+              {
+                text: "rankings, impressions, clicks, organic traffic, and leads",
+                href: "/blog/seo-metrics-that-businesses-care-about",
+              },
+            ],
+          },
+          {
+            text: "When senior leadership asks, ‘How is SEO doing?’, the underlying question is usually commercial: how much did organic search contribute to the business?",
+            quote: true,
+          },
+          "A useful answer might be: organic search contributed an estimated R2.5 million in revenue potential this month, compared with R1.8 million from paid search and R900,000 from paid social. That gives leadership something they can evaluate alongside the other digital channels.",
+          "The goal is not to discard rankings, traffic, or leads. Those metrics explain how SEO performance changed. Revenue contribution explains why that performance matters to the business.",
+        ],
+      },
+      {
+        id: "ecommerce-attribution-is-easier",
+        heading: "Why Ecommerce Revenue Attribution Is Easier",
+        paragraphs: [
+          "For ecommerce businesses, connecting organic search to revenue is relatively straightforward. A customer arrives through organic search, purchases a product online, and completes the transaction within a measurable digital journey.",
+          "Analytics and ecommerce platforms can then report organic transactions, revenue, average order value, conversion rate, and revenue by product or landing page.",
+          "Attribution is never perfect. A customer may interact with several channels before purchasing, and consent or tracking limitations can obscure parts of the journey. Even so, the online transaction creates a direct revenue event that can be measured.",
+          "Lead-generation businesses have a more difficult problem because the website usually captures the enquiry but not the final sale.",
+        ],
+      },
+      {
+        id: "the-lead-generation-gap",
+        heading: "The Lead-Generation Attribution Gap",
+        paragraphs: [
+          "In automotive, tertiary education, financial services, property, and many other sectors, the website generates a lead. The actual transaction happens later through a salesperson, dealership, admissions team, call centre, or another offline process.",
+          "An SEO report might say that organic search generated 150 leads this month. That shows how much demand the channel generated, but it does not show what that demand was potentially worth.",
+          "The ideal solution is an integrated CRM and sales process in which every lead retains its original channel, landing page, product, and lead type. The lead can then be matched with a completed sale or enrolment and the associated revenue.",
+          "Many businesses do not yet have that end-to-end connection. Until they do, a transparent commercial model can help bridge the gap between an organic lead and its potential revenue contribution.",
+        ],
+      },
+      {
+        id: "model-organic-revenue-contribution",
+        heading: "How to Model Organic Revenue Contribution",
+        paragraphs: [
+          "When verified sales data is unavailable, businesses can estimate the potential revenue associated with organic leads. The model uses historical business performance to estimate how many leads are likely to become customers rather than treating every lead as completed revenue.",
+          "This gives leadership a commercial estimate that can be compared with other digital channels, provided the same definitions and attribution rules are applied consistently.",
+        ],
+        numberedSteps: [
+          "Group organic leads by the product, programme, or service they relate to.",
+          "Separate the lead types because a general enquiry may convert differently from a test-drive booking, application, or quotation request.",
+          "Apply the historically agreed conversion rate for each lead type.",
+          "Estimate the resulting sales, enrolments, or customers.",
+          "Multiply those outcomes by an agreed product value, tuition value, or average transaction value.",
+          "Combine the results to estimate organic search's total revenue contribution.",
+        ],
+        flowDiagram: {
+          label: "Commercial Contribution Pipeline",
+          title: "From Organic Discovery to Estimated Revenue",
+          steps: [
+            { title: "Organic Search", detail: "The channel that generated the visit" },
+            { title: "Product or Programme", detail: "Suzuki Swift, BCom, or another offering" },
+            { title: "Lead Type", detail: "Enquiry, test drive, application, or quote" },
+            { title: "Conversion Rate", detail: "The historically agreed rate for that lead" },
+            { title: "Estimated Customers", detail: "Expected sales or enrolments" },
+            { title: "Commercial Value", detail: "Average sale, tuition, or service value" },
+            { title: "Revenue Contribution", detail: "The estimated value attributed to the channel" },
+          ],
+        },
+        flowDiagramAfterParagraph: 0,
+      },
+      {
+        id: "collect-commercial-context-with-gtm",
+        heading: "Use GTM to Collect Commercial Context",
+        paragraphs: [
+          {
+            text: "Google Tag Manager can add the product, programme, lead type, and indicative price to each lead event before it is sent to GA4. Instead of recording only that a form was submitted, the event can explain what the person enquired about and the commercial context of that enquiry.",
+            links: [
+              {
+                text: "Google Tag Manager",
+                href: "/blog/how-to-create-gtm-tags-for-leads",
+              },
+            ],
+          },
+          "For example, an event named generate_lead could include parameters such as:",
+          "An automotive enquiry might send product_name as Suzuki Swift, lead_type as test_drive, product_value as 250000, and currency as ZAR.",
+          "A tertiary education enquiry could send programme_name as BCom, lead_type as course_enquiry, and product_value as 70000.",
+          "The best collection method depends on how the website exposes its product and pricing data. The data layer is usually the most reliable option because the development team can provide clean values at the moment the lead action occurs. Other methods can work when a data-layer implementation is not yet available.",
+        ],
+        inlineBullets: {
+          afterParagraph: 1,
+          items: [
+            "lead_type",
+            "product_name",
+            "product_category",
+            "product_value",
+            "currency",
+            "form_id",
+            "page_url",
+          ],
+        },
+        flowDiagram: {
+          label: "Measurement Data Flow",
+          title: "From Website Interaction to Executive Reporting",
+          steps: [
+            { title: "Website", detail: "A user submits an enquiry or books a test drive" },
+            { title: "GTM", detail: "Variables collect the lead, product, and price context" },
+            { title: "GA4", detail: "The event and its parameters are recorded" },
+            { title: "CRM", detail: "Lead status and verified outcomes are connected" },
+            { title: "Commercial Model", detail: "Conversion rates and values fill remaining gaps" },
+            { title: "Looker Studio", detail: "Channel contribution reaches the executive report" },
+          ],
+        },
+        closingParagraphs: [
+          "Where possible, send an unformatted numeric value such as 250000 rather than text such as ‘From R250,000’. Send the currency separately, and decide whether the value represents list price, average selling value, annual tuition, or another agreed measure.",
+          "The GA4 event tag can pass these GTM variables as event parameters. Parameters used for reporting should then be registered in GA4 as custom dimensions or custom metrics where required. Test the event in GTM Preview and GA4 DebugView to confirm that it fires once, carries the correct product and value, and does not expose personal information.",
+          "This richer event data does not prove that a sale occurred. It creates the product-level lead data needed to apply historical conversion rates, connect leads with CRM outcomes, and estimate revenue contribution by organic search and the other digital channels.",
+        ],
+      },
+      {
+        id: "automotive-example",
+        heading: "An Automotive Revenue Contribution Example",
+        paragraphs: [
+          "Suppose organic search generates 20 Enquire Now leads and 10 test-drive bookings for the Suzuki Swift. These actions should not automatically receive the same value. Someone who books a test drive may historically be more likely to purchase than someone who submits a general enquiry.",
+          "The business can apply its agreed sales conversion rate to each lead type, calculate the estimated number of sales, and multiply that result by the agreed commercial value of the Suzuki Swift.",
+          "The same calculation can then be repeated for the Suzuki Fronx, Jimny, and every other model on the website. Instead of reporting one total lead number, the business can see which vehicles generated demand and how much revenue that demand may represent.",
+        ],
+        calculationPanel: {
+          label: "Worked Example",
+          title: "Suzuki Swift Estimated Revenue Contribution",
+          note: "Illustrative assumptions only. Replace these rates and values with figures agreed by the business.",
+          rows: [
+            { label: "Enquire Now", calculation: "20 leads × 5% conversion rate", result: "1 estimated sale" },
+            { label: "Test Drive", calculation: "10 bookings × 15% conversion rate", result: "1.5 estimated sales" },
+            { label: "Estimated Sales", calculation: "1 + 1.5", result: "2.5 estimated sales" },
+          ],
+          totalLabel: "Estimated Revenue Contribution",
+          totalCalculation: "2.5 estimated sales × R250,000 average vehicle value",
+          total: "R625,000",
+        },
+        closingParagraphs: [
+          "This is a different level of SEO reporting. It moves the conversation from channel metrics to commercial modelling by product.",
+        ],
+      },
+      {
+        id: "not-all-leads-equal",
+        heading: "Not All Leads Have the Same Commercial Value",
+        paragraphs: [
+          "A major weakness in lead-generation reporting is that it often treats every lead as commercially equal. Twenty leads for a R500,000 vehicle are not equivalent to 20 leads for a R200,000 vehicle.",
+          "Lead intent matters too. A brochure download, general enquiry, and test-drive booking may have very different probabilities of becoming a sale.",
+          "Revenue contribution should therefore reflect the product or service, the lead type, its historical conversion probability, and its average commercial value. This helps the business identify not only which channel generated the most leads, but which channel generated the most valuable demand.",
+        ],
+      },
+      {
+        id: "tertiary-education-example",
+        heading: "A Tertiary Education Revenue Contribution Example",
+        paragraphs: [
+          "The same framework can be used by universities, colleges, and other education providers. Consider a BCom that receives 40 organic enquiries. With a historical enquiry-to-enrolment rate of 15%, those enquiries represent six estimated enrolments. At annual tuition of R70,000, the estimated first-year revenue contribution is R420,000.",
+          "Now consider a Diploma in IT that receives 30 organic enquiries. At a historical conversion rate of 20%, it also represents six estimated enrolments. With tuition of R55,000, its estimated first-year revenue contribution is R330,000.",
+          "Across those two programmes, organic search generated an estimated R750,000 in first-year revenue potential. The institution can repeat the calculation across all programmes to estimate the channel's total contribution.",
+          "The value definition must remain consistent. If the institution uses first-year tuition, it should do so across every programme. If it uses expected student lifetime value, that methodology should be documented and applied consistently.",
+        ],
+        comparisonTable: {
+          columns: ["Programme", "Organic Enquiries", "Conversion Rate", "Estimated Enrolments", "Estimated First-Year Revenue"],
+          rows: [
+            ["BCom", "40", "15%", "6", "R420,000"],
+            ["Diploma in IT", "30", "20%", "6", "R330,000"],
+            ["Combined", "70", "—", "12", "R750,000"],
+          ],
+        },
+      },
+      {
+        id: "compare-digital-channels",
+        heading: "Compare SEO With Other Digital Channels",
+        paragraphs: [
+          "The model becomes most useful when it is applied consistently across digital channels. Leadership can then compare organic search, paid search, paid social, email, and other sources using the same commercial language.",
+          {
+            text: "In my Looker Studio dashboards, I filter GA4 data using Session default channel group set to Organic Search. This is a session-scoped channel definition, so the organic total includes Bing and other recognised organic search engines rather than representing Google alone.",
+            links: [
+              {
+                text: "Looker Studio dashboards",
+                href: "/blog/looker-studio-dashboards-for-reporting",
+              },
+            ],
+          },
+          "A channel that generates the most leads may not generate the greatest commercial value. Its leads may relate to lower-value products or have a lower likelihood of converting. Comparing estimated sales and revenue contribution reveals a different picture from lead volume alone.",
+        ],
+        pieChartGroup: {
+          label: "Digital Channel Comparison",
+          title: "Lead Volume Does Not Always Reflect Commercial Contribution",
+          charts: [
+            {
+              title: "Lead Share by Channel",
+              total: "550 Leads",
+              segments: [
+                { label: "Organic Search", value: 150, displayValue: "150" },
+                { label: "Paid Search", value: 120, displayValue: "120" },
+                { label: "Paid Social", value: 200, displayValue: "200" },
+                { label: "Email", value: 80, displayValue: "80" },
+              ],
+            },
+            {
+              title: "Estimated Sales Share",
+              total: "64 Sales",
+              segments: [
+                { label: "Organic Search", value: 22, displayValue: "22" },
+                { label: "Paid Search", value: 18, displayValue: "18" },
+                { label: "Paid Social", value: 10, displayValue: "10" },
+                { label: "Email", value: 14, displayValue: "14" },
+              ],
+            },
+            {
+              title: "Estimated Revenue Share",
+              total: "R6.3m",
+              segments: [
+                { label: "Organic Search", value: 2500000, displayValue: "R2.5m" },
+                { label: "Paid Search", value: 1800000, displayValue: "R1.8m" },
+                { label: "Paid Social", value: 900000, displayValue: "R900k" },
+                { label: "Email", value: 1100000, displayValue: "R1.1m" },
+              ],
+            },
+          ],
+        },
+        closingParagraphs: [
+          "This kind of comparison is only credible when each channel uses the same definitions, attribution window, conversion data, and revenue methodology.",
+        ],
+      },
+      {
+        id: "contribution-not-ownership",
+        heading: "Revenue Contribution Is Not Revenue Ownership",
+        paragraphs: [
+          "Marketing channels rarely operate independently. A customer might discover a brand through organic search, return through paid social, open an email, search for the brand directly, and then submit an enquiry before completing the purchase offline.",
+          "The channel that receives credit depends on the organisation's attribution model. Last-click attribution may credit the final measurable interaction, first-click attribution may credit discovery, and a multi-touch model may divide credit across the journey.",
+          "This is also why I use Session default channel group rather than First user default channel group when comparing channels in Looker Studio. First user identifies the channel that originally acquired the person and keeps that acquisition source attached as they return.",
+          {
+            text: "Session reporting identifies the channel associated with the current visit, making it more useful for comparing traffic, leads, and revenue during a reporting period. It still does not solve multi-touch attribution; it provides a session-level view of contribution.",
+            quote: true,
+          },
+          "SEO reporting should therefore avoid implying that organic search single-handedly created or owns all attributed revenue. A more accurate description is revenue attributed to or influenced by organic search under the organisation's agreed attribution model.",
+        ],
+      },
+      {
+        id: "label-estimates-clearly",
+        heading: "Label Estimated Revenue Clearly",
+        paragraphs: [
+          "If the revenue figure is based on leads, historical conversion rates, and average product values, it is not verified revenue. It is estimated revenue contribution, modelled revenue potential, or expected commercial value.",
+          "That distinction should be visible in the report. A modelled figure is only as credible as its assumptions, including historical conversion rates, lead-quality standards, average transaction values, duplicate-lead handling, attribution rules, and the period over which revenue is measured.",
+          "Marketing, sales, and finance should agree on these inputs and review them as prices and conversion performance change. Where CRM and financial data become available, estimated outcomes should be replaced with verified sales, enrolments, and revenue.",
+        ],
+      },
+      {
+        id: "calculate-estimated-seo-roi",
+        heading: "Calculate Estimated SEO ROI",
+        paragraphs: [
+          "Revenue contribution should be the main commercial outcome in the report. Once that value has been established, it can also be compared with the SEO investment to provide an estimated return on investment.",
+          {
+            text: "For an agency, making revenue contribution and ROI visible can be the difference between a client staying or leaving. It can also influence whether retainer hours are reduced, maintained, or increased.",
+            quote: true,
+          },
+          "When clients can see the commercial value associated with organic search, both sides have stronger evidence for deciding whether to protect the investment, expand the scope, or redirect effort. That creates a clearer path to profitable growth for the client and the agency.",
+          "If the revenue contribution is modelled rather than verified, the ROI must also be described as estimated or modelled. The calculation is only as credible as the conversion rates, product values, attribution rules, and other assumptions beneath it.",
+        ],
+        calculationPanel: {
+          label: "Worked Example",
+          title: "Estimated SEO Return on Investment",
+          note: "This is a revenue-based, modelled ROI example. Replace the estimated revenue and SEO cost with figures agreed by the business.",
+          rows: [
+            {
+              label: "Estimated Organic Revenue",
+              calculation: "Modelled revenue contribution",
+              result: "R2,500,000",
+            },
+            {
+              label: "SEO Investment",
+              calculation: "Monthly SEO cost",
+              result: "R75,000",
+            },
+            {
+              label: "Estimated Net Return",
+              calculation: "R2,500,000 − R75,000",
+              result: "R2,425,000",
+            },
+          ],
+          totalLabel: "Estimated SEO ROI",
+          totalCalculation: "(R2,500,000 − R75,000) ÷ R75,000 × 100",
+          total: "3,233%",
+        },
+        closingParagraphs: [
+          "Where reliable margin data is available, using gross profit or contribution margin instead of revenue will provide a more financially rigorous view of return.",
+        ],
+      },
+      {
+        id: "build-report-layers",
+        heading: "Build the Report in Layers",
+        paragraphs: [
+          "Different audiences need different levels of information.",
+          {
+            text: "The executive layer should lead with estimated or verified organic revenue contribution, performance against other digital channels, change over time, and the most important commercial opportunities or risks.",
+            quote: true,
+          },
+          "The marketing layer can explain lead volume, conversion rates, lead quality, product performance, landing pages, and brand versus non-brand demand.",
+          "The SEO layer can then provide the diagnostic detail: rankings, impressions, clicks, click-through rates, technical health, and content performance. These metrics still matter because they explain why commercial performance changed, but they should support the commercial answer rather than replace it.",
+        ],
+      },
+      {
+        id: "answer-the-ceo",
+        heading: "What the Answer to the CEO Could Sound Like",
+        paragraphs: [
+          "Instead of saying, ‘Organic traffic increased by 18%, and we now rank in the top three positions for 42 keywords,’ give leadership an answer tied to business performance.",
+          {
+            text: "Organic search generated 150 leads and an estimated R2.5 million in revenue potential this month. It represented 40% of the revenue attributed to digital lead-generation channels, compared with 29% from paid search and 14% from paid social. Vehicle-model pages produced most of the organic contribution, with the Suzuki Swift example showing how that value can be modelled at product level.",
+            quote: true,
+          },
+        ],
+        closingParagraphs: [
+          "The supporting SEO metrics can then explain how that result was achieved.",
+        ],
+      },
+      {
+        id: "make-seo-business-reporting",
+        heading: "Make SEO Reporting Business Reporting",
+        paragraphs: [
+          "The purpose of this framework is not to manufacture certainty where none exists. It is to make organic search's commercial contribution more visible.",
+          "Ecommerce businesses can often connect a channel directly to online transactions. Lead-generation businesses usually need CRM integration or a carefully governed model to bridge the distance between a website enquiry and an offline sale.",
+          "Until verified end-to-end attribution is available, a transparent model is more useful than stopping at lead volume. When the CEO or shareholders ask how SEO is doing, the answer should connect organic search with the language used to evaluate the rest of the business: organic search contributed an estimated R X to revenue, represented X% of digitally attributed commercial value, and performed as follows compared with our other channels.",
+          "That is the point at which SEO reporting becomes business reporting.",
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "How Do You Measure SEO Revenue for a Lead-Generation Business?",
+        answer:
+          "Connect organic leads to verified CRM sales where possible. If that data is unavailable, group leads by product and lead type, apply agreed historical conversion rates, and multiply the estimated outcomes by a consistent commercial value.",
+      },
+      {
+        question: "Is Estimated Organic Revenue the Same as Verified Revenue?",
+        answer:
+          "No. Revenue based on historical conversion rates and average values is a modelled estimate. Verified revenue requires the original organic lead to be connected with a completed transaction and its actual value.",
+      },
+      {
+        question: "Why Should SEO Be Compared With Other Digital Channels?",
+        answer:
+          "A consistent channel comparison helps leadership understand where digital demand and commercial value are coming from, rather than assessing SEO through rankings, traffic, or lead volume in isolation.",
+      },
+      {
+        question: "Should All Organic Leads Have the Same Value?",
+        answer:
+          "No. Their expected value should reflect the product or programme, the type of lead, its historical probability of converting, and the agreed value of the resulting sale or enrolment.",
+      },
+    ],
+  },
   {
     slug: "can-ai-recommend-you-for-a-job-portfolio-indexation",
     title: "Can AI Recommend You for a Job? Why Your Portfolio Needs to Be Indexed",

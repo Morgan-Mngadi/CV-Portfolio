@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
-import { ARTICLES, getArticle, type ArticleAiFinding, type ArticleChart, type ArticleComparisonTable, type ArticleImage, type ArticleImageCarousel, type ArticleIndexationChart, type ArticleParagraph, type ArticleVideo } from "@/data/articles";
+import { ARTICLES, getArticle, type ArticleAiFinding, type ArticleCalculationPanel, type ArticleChart, type ArticleComparisonTable, type ArticleFlowDiagram, type ArticleImage, type ArticleImageCarousel, type ArticleIndexationChart, type ArticleParagraph, type ArticlePieChartGroup, type ArticleVideo } from "@/data/articles";
 import {
   Dialog,
   DialogClose,
@@ -83,7 +83,7 @@ function renderLinkedParagraph(paragraph: ArticleParagraph) {
   const content = [];
   let remainingText = paragraph.text;
 
-  paragraph.links.forEach((link) => {
+  (paragraph.links ?? []).forEach((link) => {
     const linkIndex = remainingText.indexOf(link.text);
 
     if (linkIndex === -1) {
@@ -680,6 +680,280 @@ function ScrollableComparisonTable({ table }: { table: ArticleComparisonTable })
   );
 }
 
+function ArticleFlowDiagramBlock({ diagram }: { diagram: ArticleFlowDiagram }) {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const thumbRef = useRef<HTMLDivElement>(null);
+  const animationFrameRef = useRef<number | null>(null);
+  const [isScrollable, setIsScrollable] = useState(false);
+
+  const updateThumb = () => {
+    const element = scrollRef.current;
+    const thumb = thumbRef.current;
+
+    if (!element || !thumb) return;
+
+    const maxScroll = element.scrollWidth - element.clientWidth;
+    const scrollable = maxScroll > 0;
+    const width = scrollable ? Math.max(18, (element.clientWidth / element.scrollWidth) * 100) : 100;
+    const trackWidth = thumb.parentElement?.clientWidth ?? 0;
+    const thumbWidth = (trackWidth * width) / 100;
+    const left = scrollable ? (element.scrollLeft / maxScroll) * (trackWidth - thumbWidth) : 0;
+
+    setIsScrollable(scrollable);
+    thumb.style.width = `${thumbWidth}px`;
+    thumb.style.transform = `translate3d(${left}px, 0, 0)`;
+  };
+
+  const scheduleThumbUpdate = () => {
+    if (animationFrameRef.current !== null) cancelAnimationFrame(animationFrameRef.current);
+
+    animationFrameRef.current = requestAnimationFrame(() => {
+      updateThumb();
+      animationFrameRef.current = null;
+    });
+  };
+
+  useEffect(() => {
+    scheduleThumbUpdate();
+    window.addEventListener("resize", scheduleThumbUpdate);
+
+    return () => {
+      window.removeEventListener("resize", scheduleThumbUpdate);
+      if (animationFrameRef.current !== null) cancelAnimationFrame(animationFrameRef.current);
+    };
+  }, []);
+
+  return (
+    <div className="mt-8">
+      <div
+        className={`mb-2 flex items-center justify-end gap-2 font-mono text-[0.7rem] uppercase tracking-widest text-primary transition-opacity duration-300 ${
+          isScrollable ? "opacity-100" : "pointer-events-none opacity-0"
+        }`}
+        aria-hidden={!isScrollable}
+      >
+        <span>Scroll horizontally to follow the pipeline</span>
+        <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+      </div>
+      <figure className="overflow-hidden border border-primary/40 bg-card">
+        <figcaption className="border-b border-border bg-primary/[0.06] px-5 py-4 sm:px-6">
+          <p className="font-mono text-xs uppercase tracking-widest text-primary">{diagram.label}</p>
+          <h3 className="mt-2 text-xl font-medium tracking-tight text-foreground">{diagram.title}</h3>
+        </figcaption>
+        <div ref={scrollRef} onScroll={scheduleThumbUpdate} className="overflow-x-auto p-5 sm:p-6">
+          <ol className="flex min-w-max items-stretch">
+            {diagram.steps.map((step, index) => (
+              <li key={step.title} className="flex items-center">
+                <div className="flex h-full w-40 flex-col border border-border bg-background p-4 sm:w-44">
+                  <span className="font-mono text-[0.65rem] tabular-nums text-primary">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <strong className="mt-3 text-sm font-medium leading-snug text-foreground">{step.title}</strong>
+                  <span className="mt-2 text-xs leading-relaxed text-muted-foreground">{step.detail}</span>
+                </div>
+                {index < diagram.steps.length - 1 && (
+                  <span className="grid w-10 shrink-0 place-items-center text-primary" aria-hidden="true">
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                )}
+              </li>
+            ))}
+          </ol>
+        </div>
+      </figure>
+      <div
+        aria-hidden="true"
+        className={`relative mt-2 h-0.5 w-24 overflow-hidden bg-border transition-opacity duration-300 ${
+          isScrollable ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        <div
+          ref={thumbRef}
+          className="absolute inset-y-0 left-0 bg-primary transition-[transform,width] duration-200 ease-out will-change-transform"
+          style={{ transform: "translate3d(0, 0, 0)", width: "100%" }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function ArticleCalculationPanelBlock({ panel }: { panel: ArticleCalculationPanel }) {
+  return (
+    <figure className="mt-8 border border-primary/50 bg-card">
+      <figcaption className="border-b border-border bg-primary/[0.06] px-5 py-4 sm:px-6">
+        <p className="font-mono text-xs uppercase tracking-widest text-primary">{panel.label}</p>
+        <h3 className="mt-2 text-xl font-medium tracking-tight text-foreground">{panel.title}</h3>
+        <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{panel.note}</p>
+      </figcaption>
+      <div className="divide-y divide-border px-5 sm:px-6">
+        {panel.rows.map((row) => (
+          <div key={row.label} className="grid gap-2 py-4 sm:grid-cols-[0.8fr_1.35fr_1fr] sm:items-center sm:gap-5">
+            <span className="text-sm font-medium text-foreground">{row.label}</span>
+            <span className="font-mono text-xs leading-relaxed text-muted-foreground">{row.calculation}</span>
+            <span className="text-sm text-primary sm:text-right">{row.result}</span>
+          </div>
+        ))}
+      </div>
+      <div className="border-t border-primary/40 bg-primary/[0.08] px-5 py-5 sm:px-6">
+        <div className="grid gap-3 sm:grid-cols-[1fr_auto] sm:items-end sm:gap-6">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-widest text-primary">{panel.totalLabel}</p>
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">{panel.totalCalculation}</p>
+          </div>
+          <strong className="text-3xl font-medium tracking-tight text-foreground">{panel.total}</strong>
+        </div>
+      </div>
+    </figure>
+  );
+}
+
+const PIE_CHART_COLORS = [
+  "hsl(var(--primary))",
+  "hsl(195 72% 50%)",
+  "hsl(267 62% 64%)",
+  "hsl(38 88% 56%)",
+];
+
+function InteractiveDonutChart({ chart }: { chart: ArticlePieChartGroup["charts"][number] }) {
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const total = chart.segments.reduce((sum, segment) => sum + segment.value, 0);
+  let cumulativePercentage = 0;
+  const segments = chart.segments.map((segment, index) => {
+    const percentage = (segment.value / total) * 100;
+    const startPercentage = cumulativePercentage;
+    const middleAngle = ((startPercentage + percentage / 2) / 100) * 360 - 90;
+    cumulativePercentage += percentage;
+    const labelRadius = 42;
+
+    return {
+      ...segment,
+      index,
+      percentage,
+      startPercentage,
+      labelX: 60 + labelRadius * Math.cos((middleAngle * Math.PI) / 180),
+      labelY: 60 + labelRadius * Math.sin((middleAngle * Math.PI) / 180),
+    };
+  });
+  const activeSegment = activeIndex === null ? null : segments[activeIndex];
+  const accessibleSummary = segments
+    .map((segment) => `${segment.label}: ${segment.displayValue}, ${Math.round(segment.percentage)}%`)
+    .join("; ");
+
+  const clearDesktopHover = () => {
+    if (window.matchMedia("(hover: hover)").matches) setActiveIndex(null);
+  };
+
+  return (
+    <section className="min-w-0">
+      <h4 className="min-h-10 text-center text-sm font-medium leading-snug text-foreground">{chart.title}</h4>
+      <div className="relative mx-auto mt-4 aspect-square w-48 md:w-full md:max-w-52" onMouseLeave={clearDesktopHover}>
+        <svg
+          viewBox="0 0 120 120"
+          className="h-full w-full overflow-visible"
+          role="img"
+          aria-label={`${chart.title}. ${accessibleSummary}`}
+        >
+          <circle cx="60" cy="60" r="42" fill="none" stroke="hsl(var(--border))" strokeWidth="24" />
+          <g transform="rotate(-90 60 60)">
+            {segments.map((segment) => {
+              const isActive = activeIndex === segment.index;
+              const isDimmed = activeIndex !== null && !isActive;
+              const color = PIE_CHART_COLORS[segment.index % PIE_CHART_COLORS.length];
+
+              return (
+                <circle
+                  key={segment.label}
+                  cx="60"
+                  cy="60"
+                  r="42"
+                  pathLength="100"
+                  fill="none"
+                  stroke={color}
+                  strokeWidth={isActive ? 26 : 24}
+                  strokeDasharray={`${segment.percentage} ${100 - segment.percentage}`}
+                  strokeDashoffset={-segment.startPercentage}
+                  className="cursor-pointer outline-none transition-[opacity,filter,stroke-width] duration-200 focus-visible:opacity-100"
+                  style={{
+                    opacity: isDimmed ? 0.2 : 1,
+                    filter: isActive ? `drop-shadow(0 0 5px ${color})` : "none",
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`${segment.label}: ${segment.displayValue}, ${Math.round(segment.percentage)}%. Select to highlight.`}
+                  onMouseEnter={() => setActiveIndex(segment.index)}
+                  onFocus={() => setActiveIndex(segment.index)}
+                  onBlur={() => setActiveIndex(null)}
+                  onClick={() => setActiveIndex((current) => current === segment.index ? null : segment.index)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      setActiveIndex((current) => current === segment.index ? null : segment.index);
+                    }
+                  }}
+                />
+              );
+            })}
+          </g>
+          {activeSegment && (
+            <text
+              x={activeSegment.labelX}
+              y={activeSegment.labelY}
+              textAnchor="middle"
+              dominantBaseline="central"
+              className="pointer-events-none fill-white font-mono text-[7px] font-semibold"
+              style={{ paintOrder: "stroke", stroke: "hsl(var(--background) / 0.45)", strokeWidth: 1.5 }}
+            >
+              {Math.round(activeSegment.percentage)}%
+            </text>
+          )}
+        </svg>
+        <div className="pointer-events-none absolute inset-[29%] grid place-items-center rounded-full border border-border bg-card px-1 text-center">
+          {activeSegment ? (
+            <div>
+              <span className="block text-[0.65rem] leading-tight text-muted-foreground">{activeSegment.label}</span>
+              <strong className="mt-1 block text-base font-medium tracking-tight text-foreground">{activeSegment.displayValue}</strong>
+            </div>
+          ) : (
+            <strong className="text-lg font-medium tracking-tight text-foreground">{chart.total}</strong>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ArticlePieChartGroupBlock({ group }: { group: ArticlePieChartGroup }) {
+  const legendSegments = group.charts[0]?.segments ?? [];
+
+  return (
+    <figure className="mt-8 border border-primary/40 bg-card">
+      <figcaption className="border-b border-border bg-primary/[0.06] px-5 py-4 sm:px-6">
+        <p className="font-mono text-xs uppercase tracking-widest text-primary">{group.label}</p>
+        <h3 className="mt-2 text-xl font-medium tracking-tight text-foreground">{group.title}</h3>
+        <p className="mt-3 inline-flex items-center gap-2 font-mono text-[0.65rem] uppercase tracking-widest text-primary">
+          <span className="hidden md:inline">Hover over a segment to explore its contribution</span>
+          <span className="md:hidden">Tap a segment to explore its contribution</span>
+          <CircleHelp className="h-3.5 w-3.5" aria-hidden="true" />
+        </p>
+      </figcaption>
+      <div className="grid gap-8 p-5 md:grid-cols-3 md:gap-5 sm:p-6">
+        {group.charts.map((chart) => <InteractiveDonutChart key={chart.title} chart={chart} />)}
+      </div>
+      <ul className="flex flex-wrap justify-center gap-x-5 gap-y-3 border-t border-border px-5 py-4 sm:px-6">
+        {legendSegments.map((segment, index) => (
+          <li key={segment.label} className="inline-flex items-center gap-2 text-xs text-muted-foreground">
+            <span
+              className="h-2.5 w-2.5 rounded-full"
+              style={{ backgroundColor: PIE_CHART_COLORS[index % PIE_CHART_COLORS.length] }}
+              aria-hidden="true"
+            />
+            {segment.label}
+          </li>
+        ))}
+      </ul>
+    </figure>
+  );
+}
+
 function ArticleAuthorCard({ headingId }: { headingId: string }) {
   return (
     <section aria-labelledby={headingId} className="border border-border bg-card p-5">
@@ -802,10 +1076,30 @@ export default function BlogArticle() {
                 >
                   <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-5">{section.heading}</h2>
                   <div className="flex flex-col gap-4">
-                    {section.paragraphs.map((paragraph) => (
-                      <p key={typeof paragraph === "string" ? paragraph : paragraph.text} className="text-muted-foreground leading-relaxed">
-                        {renderLinkedParagraph(paragraph)}
-                      </p>
+                    {section.paragraphs.map((paragraph, index) => (
+                      <Fragment key={typeof paragraph === "string" ? paragraph : paragraph.text}>
+                        {typeof paragraph !== "string" && paragraph.quote ? (
+                          <blockquote className="border-l-4 border-primary bg-primary/[0.06] px-5 py-4 text-lg font-medium leading-relaxed text-foreground">
+                            {renderLinkedParagraph(paragraph)}
+                          </blockquote>
+                        ) : (
+                          <p className="text-muted-foreground leading-relaxed">
+                            {renderLinkedParagraph(paragraph)}
+                          </p>
+                        )}
+                        {section.flowDiagram && section.flowDiagramAfterParagraph === index && (
+                          <ArticleFlowDiagramBlock diagram={section.flowDiagram} />
+                        )}
+                        {section.inlineBullets?.afterParagraph === index && (
+                          <ul className="grid gap-2 border-l-2 border-primary/60 py-1 pl-5 sm:grid-cols-2">
+                            {section.inlineBullets.items.map((item) => (
+                              <li key={item} className="font-mono text-sm text-foreground">
+                                {item}
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                      </Fragment>
                     ))}
                   </div>
                   {section.notice && (
@@ -840,6 +1134,15 @@ export default function BlogArticle() {
                   )}
                   {section.comparisonTable && (
                     <ScrollableComparisonTable table={section.comparisonTable} />
+                  )}
+                  {section.flowDiagram && section.flowDiagramAfterParagraph === undefined && (
+                    <ArticleFlowDiagramBlock diagram={section.flowDiagram} />
+                  )}
+                  {section.calculationPanel && (
+                    <ArticleCalculationPanelBlock panel={section.calculationPanel} />
+                  )}
+                  {section.pieChartGroup && (
+                    <ArticlePieChartGroupBlock group={section.pieChartGroup} />
                   )}
                   {section.chart && (
                     <ArticleBarChart chart={section.chart} />

@@ -114,6 +114,7 @@ const articleText = (article: Article) => {
   article.sections.forEach((section) => {
     text.push(section.heading, ...section.paragraphs.map(articleParagraphText));
     text.push(...(section.bullets ?? []));
+    text.push(...(section.inlineBullets?.items ?? []));
     text.push(...(section.numberedSteps ?? []));
     text.push(...(section.closingParagraphs ?? []).map(articleParagraphText));
     section.imageBlocks?.forEach((image) => text.push(image.alt, image.caption));
@@ -136,6 +137,28 @@ const articleText = (article: Article) => {
       text.push(finding.status, finding.context ?? "", finding.claim, finding.correction, finding.link?.label ?? "");
     });
     section.comparisonTable?.rows.forEach((row) => text.push(...row));
+    if (section.flowDiagram) {
+      text.push(section.flowDiagram.label, section.flowDiagram.title);
+      section.flowDiagram.steps.forEach((step) => text.push(step.title, step.detail));
+    }
+    if (section.calculationPanel) {
+      text.push(
+        section.calculationPanel.label,
+        section.calculationPanel.title,
+        section.calculationPanel.note,
+        section.calculationPanel.totalLabel,
+        section.calculationPanel.totalCalculation,
+        section.calculationPanel.total,
+      );
+      section.calculationPanel.rows.forEach((row) => text.push(row.label, row.calculation, row.result));
+    }
+    if (section.pieChartGroup) {
+      text.push(section.pieChartGroup.label, section.pieChartGroup.title);
+      section.pieChartGroup.charts.forEach((chart) => {
+        text.push(chart.title, chart.total);
+        chart.segments.forEach((segment) => text.push(segment.label, segment.displayValue));
+      });
+    }
     section.links?.forEach((link) => text.push(link.label));
   });
 
