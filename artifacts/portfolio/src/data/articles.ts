@@ -13,6 +13,7 @@ export type ArticleSection = {
   id: string;
   heading: string;
   paragraphs: ArticleParagraph[];
+  takeaway?: string;
   notice?: string;
   bullets?: string[];
   numberedSteps?: string[];
@@ -34,6 +35,13 @@ export type ArticleSection = {
   };
   imagePlaceholder?: string;
   closingParagraphs?: ArticleParagraph[];
+  subsections?: ArticleSubsection[];
+  scoreCards?: ArticleScoreCard[];
+  preferredSourcesCta?: {
+    domain: string;
+    label: string;
+    description: string;
+  };
   link?: {
     href: string;
     label: string;
@@ -42,6 +50,20 @@ export type ArticleSection = {
     href: string;
     label: string;
   }[];
+};
+
+export type ArticleSubsection = {
+  heading: string;
+  paragraphs: ArticleParagraph[];
+  bullets?: string[];
+  numberedSteps?: string[];
+};
+
+export type ArticleScoreCard = {
+  value: string;
+  label: string;
+  description: string;
+  source?: string;
 };
 
 export type ArticleIndexationChart = {
@@ -179,11 +201,22 @@ const calculateReadTime = (article: ArticleInput) => {
 
   article.sections.forEach((section) => {
     visibleText.push(section.heading, ...section.paragraphs.map(articleParagraphText));
+    if (section.takeaway) visibleText.push(section.takeaway);
     if (section.notice) visibleText.push(section.notice);
     visibleText.push(...(section.bullets ?? []));
     visibleText.push(...(section.inlineBullets?.items ?? []));
     visibleText.push(...(section.numberedSteps ?? []));
     visibleText.push(...(section.closingParagraphs ?? []).map(articleParagraphText));
+    section.subsections?.forEach((subsection) => {
+      visibleText.push(subsection.heading, ...subsection.paragraphs.map(articleParagraphText));
+      visibleText.push(...(subsection.bullets ?? []), ...(subsection.numberedSteps ?? []));
+    });
+    section.scoreCards?.forEach((card) => {
+      visibleText.push(card.value, card.label, card.description, card.source ?? "");
+    });
+    if (section.preferredSourcesCta) {
+      visibleText.push(section.preferredSourcesCta.label, section.preferredSourcesCta.description);
+    }
 
     section.imageBlocks?.forEach((image) => {
       visibleText.push(image.caption);
@@ -270,6 +303,210 @@ const withCalculatedReadTime = (article: ArticleInput): Article => ({
 });
 
 const ARTICLE_INPUTS: ArticleInput[] = [
+  {
+    slug: "google-preferred-sources",
+    title: "Google’s Preferred Sources: What It Is and Why Publishers Should Adopt It",
+    metaTitle: "Google Preferred Sources: A Guide for Publishers | Morgan Mngadi",
+    socialImage: "/morgan-author.png",
+    excerpt:
+      "Google’s Preferred Sources turns reader loyalty into personalised search visibility. Here is what it means for readers, publishers and SEO teams.",
+    metaDescription:
+      "Learn what Google Preferred Sources is, who it is for, why publishers should adopt it, and how to add a direct source-preferences link.",
+    category: "AI Search",
+    date: "Aug 2026",
+    sections: [
+      {
+        id: "what-is-google-preferred-sources",
+        heading: "What Is Google’s Preferred Sources Feature?",
+        paragraphs: [
+          "Google’s Preferred Sources is a personalisation feature that lets people choose the websites and publishers they want to see more often in Search. It adds an explicit reader preference to the signals Google already uses to decide which fresh and relevant content to display.",
+          "Once a source is selected, its relevant articles may appear more frequently in Top Stories, in a dedicated ‘From your sources’ area, or with a Preferred badge. Google has also extended these labels to AI Overviews and AI Mode where those experiences are available.",
+          "This is not a universal ranking boost. A selection affects that reader’s personalised experience, and the publisher must still produce fresh content that is relevant to the query.",
+        ],
+        takeaway: "Preferred Sources is best understood as a user-controlled personalisation signal rather than a conventional site-wide ranking factor.",
+        scoreCards: [
+          {
+            value: "2×",
+            label: "Click-through likelihood",
+            description: "Google says readers are twice as likely to click through after marking a website as a Preferred Source.",
+            source: "Google, May 2026",
+          },
+          {
+            value: "345K+",
+            label: "Sources selected",
+            description: "More than 345,000 unique websites had been selected by readers when Google expanded the feature into AI Search.",
+            source: "Google, May 2026",
+          },
+        ],
+      },
+      {
+        id: "who-is-it-for",
+        heading: "Who Is Preferred Sources For?",
+        paragraphs: [
+          "Preferred Sources connects two audiences: people who want more control over their search experience and publishers that want to deepen an existing reader relationship.",
+        ],
+        subsections: [
+          {
+            heading: "For readers",
+            paragraphs: [
+              "Readers can make trusted local, specialist or independent publications more visible when those sources have something relevant to say. It reduces dependence on algorithmic guesswork without removing other viewpoints from the results.",
+            ],
+            bullets: [
+              "People who regularly return to particular publications.",
+              "Readers looking for local or specialist reporting.",
+              "People who want to identify familiar sources inside AI-generated search experiences.",
+            ],
+          },
+          {
+            heading: "For publishers and creators",
+            paragraphs: [
+              "The opportunity extends beyond major newsrooms. Local publishers, trade journals, independent journalists, specialist blogs and brands with active editorial teams can all benefit when they publish timely, original material.",
+              "Google only accepts a domain or subdomain as a source. A publication at news.example.com can be eligible independently, while a directory such as example.com/news cannot be selected separately from its parent domain.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "why-adopt-preferred-sources",
+        heading: "Why Would a Publisher Adopt It?",
+        paragraphs: [
+          "Preferred Sources gives publishers a practical way to translate earned loyalty into greater visibility for the people most likely to value their work.",
+        ],
+        subsections: [
+          {
+            heading: "Strengthen the direct audience relationship",
+            paragraphs: [
+              "A newsletter subscription or social follow connects a reader to a publisher within one channel. Preferred Sources adds Google Search to that relationship and gives an already-engaged reader another route back to the publication.",
+            ],
+          },
+          {
+            heading: "Create an opportunity for smaller publications",
+            paragraphs: [
+              "Niche and local publishers may not have the brand recognition of a national outlet, but they can have stronger expertise or community trust. The feature allows that loyalty to influence an individual reader’s results.",
+            ],
+          },
+          {
+            heading: "Improve visibility in AI-led search",
+            paragraphs: [
+              "Preferred labels can make a chosen publisher easier to identify within AI Overviews and AI Mode. This does not remove the risk of zero-click searches, but it gives trusted sources a clearer visual route to the reader.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "how-readers-use-it",
+        heading: "How Readers Select a Preferred Source",
+        paragraphs: [
+          "A signed-in reader can open Google’s source preferences page, search for a publication and add it to their list. They may also open the preference controls from the star beside Top Stories when that feature appears.",
+          "The button below uses Google’s official deep-link format and takes the reader directly to this website in Google’s preference interface.",
+        ],
+        preferredSourcesCta: {
+          domain: "morgan-mngadi-portfolio.online",
+          label: "Add this site on Google",
+          description: "Add Morgan Mngadi as a Google Preferred Source to see more relevant articles in your personalised search experience.",
+        },
+      },
+      {
+        id: "how-publishers-implement-it",
+        heading: "How Publishers Can Implement Preferred Sources",
+        paragraphs: [
+          "There is no special application or structured-data property required simply to become selectable. Implementation consists of checking eligibility, creating Google’s direct preference link and making the invitation useful to readers.",
+        ],
+        subsections: [
+          {
+            heading: "1. Confirm the publication is eligible",
+            paragraphs: [
+              "Search for the domain in Google’s source preferences tool. If it does not appear, check that Google can crawl and index the site and that the publication consistently releases fresh content with clear titles, dates, authorship and canonical URLs.",
+            ],
+          },
+          {
+            heading: "2. Build the direct Google link",
+            paragraphs: [
+              "Use https://google.com/preferences/source?q=example.com and replace example.com with the eligible domain or subdomain. Test the completed link while signed in to a Google account.",
+            ],
+          },
+          {
+            heading: "3. Place the call to action in context",
+            paragraphs: [
+              "Add the CTA near other audience actions: below an article, beside sharing controls, in a newsletter or on a subscription confirmation page. Returning and subscribed readers are stronger candidates than first-time visitors because they already understand the publication’s value.",
+            ],
+          },
+          {
+            heading: "4. Keep publishing timely, distinctive work",
+            paragraphs: [
+              "Being selected does not guarantee exposure. Relevance, freshness, crawlability and editorial quality still determine whether an article is eligible to appear for a particular search.",
+            ],
+          },
+          {
+            heading: "5. Measure the campaign carefully",
+            paragraphs: [
+              "Track clicks on the CTA and monitor returning organic visitors, search traffic to timely articles and engagement from Google referrals. Google does not provide publishers with a simple public count of their selectors, so avoid attributing every later Google visit to this feature.",
+            ],
+          },
+        ],
+      },
+      {
+        id: "what-it-cannot-do",
+        heading: "What Preferred Sources Cannot Do",
+        paragraphs: [
+          "Preferred Sources should complement SEO and audience development, not replace them. It cannot guarantee Top Stories inclusion, make irrelevant content rank, repair indexing problems or create a universal ranking advantage.",
+          "Google also makes clear that adding a promotional button is optional. The button helps readers find and select a site; it is not an eligibility requirement.",
+        ],
+        bullets: [
+          "It cannot override relevance or freshness.",
+          "It cannot compensate for weak technical foundations or poor editorial quality.",
+          "It cannot replace newsletters, subscriptions or other owned audience channels.",
+          "It cannot force a reader to retain a source in their preferences.",
+        ],
+      },
+      {
+        id: "loyalty-not-a-shortcut",
+        heading: "A Loyalty Signal, Not an SEO Shortcut",
+        paragraphs: [
+          {
+            text: "Google’s announcement expanding Preferred Sources into AI Search reflects a broader change in search. As industry analysis has observed, audience preference is becoming more explicit. Readers gain more control over the publications they encounter, while publishers gain another way to turn trust into personalised visibility.",
+            links: [
+              {
+                text: "Google’s announcement expanding Preferred Sources into AI Search",
+                href: "https://blog.google/products-and-platforms/products/search/original-high-quality-content-search/",
+              },
+              {
+                text: "industry analysis",
+                href: "https://www.searchenginejournal.com/googles-preferred-sources-feature-is-now-a-global-seo-signal/573591/",
+              },
+            ],
+          },
+          {
+            text: "Google’s Preferred Sources documentation explains the mechanics; the sensible strategy is straightforward: make the site technically accessible, publish timely and distinctive work, and ask satisfied readers to add it as a Preferred Source. The button is the easy part. The lasting advantage comes from producing work people actively choose to see again.",
+            links: [
+              {
+                text: "Google’s Preferred Sources documentation",
+                href: "https://developers.google.com/search/docs/appearance/preferred-sources",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Is Preferred Sources a Google ranking factor?",
+        answer: "It is a user-controlled personalisation signal, not a universal site-wide ranking boost. A selected source may appear more prominently for that reader when its content is fresh and relevant.",
+      },
+      {
+        question: "Does a publisher need special structured data to participate?",
+        answer: "No. Google says the promotional links and buttons are optional. The website must be discoverable in the source preferences tool, while normal crawlability, indexation and content quality remain important.",
+      },
+      {
+        question: "Can any page be added as a Preferred Source?",
+        answer: "No. Google supports eligible domains and subdomains, not individual subdirectories or article URLs.",
+      },
+      {
+        question: "Where can Preferred Sources appear?",
+        answer: "Selected sources can be highlighted in Top Stories and may also receive Preferred labels in AI Overviews and AI Mode where those products are available.",
+      },
+    ],
+  },
   {
     slug: "how-much-revenue-did-organic-search-contribute",
     title: "When the CEO Asks, ‘How Is SEO Doing?’, Talk About Revenue",

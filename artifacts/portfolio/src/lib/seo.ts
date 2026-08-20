@@ -117,6 +117,12 @@ const articleText = (article: Article) => {
     text.push(...(section.inlineBullets?.items ?? []));
     text.push(...(section.numberedSteps ?? []));
     text.push(...(section.closingParagraphs ?? []).map(articleParagraphText));
+    section.subsections?.forEach((subsection) => {
+      text.push(subsection.heading, ...subsection.paragraphs.map(articleParagraphText));
+      text.push(...(subsection.bullets ?? []), ...(subsection.numberedSteps ?? []));
+    });
+    section.scoreCards?.forEach((card) => text.push(card.value, card.label, card.description, card.source ?? ""));
+    if (section.preferredSourcesCta) text.push(section.preferredSourcesCta.label, section.preferredSourcesCta.description);
     section.imageBlocks?.forEach((image) => text.push(image.alt, image.caption));
     if (section.imageCarousel) {
       text.push(section.imageCarousel.title, section.imageCarousel.description);

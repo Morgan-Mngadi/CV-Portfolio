@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2, X } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, BookmarkPlus, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2, X } from "lucide-react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
-import { ARTICLES, getArticle, type ArticleAiFinding, type ArticleCalculationPanel, type ArticleChart, type ArticleComparisonTable, type ArticleFlowDiagram, type ArticleImage, type ArticleImageCarousel, type ArticleIndexationChart, type ArticleParagraph, type ArticlePieChartGroup, type ArticleVideo } from "@/data/articles";
+import { ARTICLES, getArticle, type ArticleAiFinding, type ArticleCalculationPanel, type ArticleChart, type ArticleComparisonTable, type ArticleFlowDiagram, type ArticleImage, type ArticleImageCarousel, type ArticleIndexationChart, type ArticleParagraph, type ArticlePieChartGroup, type ArticleScoreCard, type ArticleSubsection, type ArticleVideo } from "@/data/articles";
 import {
   Dialog,
   DialogClose,
@@ -21,6 +21,7 @@ import NotFound from "@/pages/not-found";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
+import { AnimatedMetric } from "@/components/animated-metric";
 import authorPhotoSrc from "@assets/Untitled_design-Photoroom_1779786532347.png";
 
 const fadeUp = {
@@ -126,6 +127,82 @@ function renderLinkedParagraph(paragraph: ArticleParagraph) {
   }
 
   return content;
+}
+
+function ArticleScoreCards({ cards }: { cards: ArticleScoreCard[] }) {
+  return (
+    <div className="mt-8 grid gap-4 sm:grid-cols-2" aria-label="Key Preferred Sources figures">
+      {cards.map((card) => (
+        <article key={card.label} className="flex h-full flex-col border border-border bg-card p-5 sm:p-6">
+          <AnimatedMetric value={card.value} className="block text-4xl font-medium tabular-nums tracking-tight text-primary sm:text-5xl" />
+          <h3 className="mt-4 text-lg font-medium text-foreground">{card.label}</h3>
+          <p className="mb-8 mt-2 text-sm leading-relaxed text-muted-foreground">{card.description}</p>
+          {card.source && <p className="mt-auto border-t border-border pt-3 font-mono text-[0.65rem] uppercase tracking-widest text-muted-foreground">{card.source}</p>}
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function ArticleSubsections({ subsections }: { subsections: ArticleSubsection[] }) {
+  return (
+    <div className="mt-8 flex flex-col gap-8">
+      {subsections.map((subsection) => (
+        <section key={subsection.heading}>
+          <h3 className="text-xl font-medium tracking-tight text-primary/80 sm:text-2xl">{subsection.heading}</h3>
+          <div className="mt-4 flex flex-col gap-4">
+            {subsection.paragraphs.map((paragraph) => (
+              <p key={typeof paragraph === "string" ? paragraph : paragraph.text} className="leading-relaxed text-muted-foreground">
+                {renderLinkedParagraph(paragraph)}
+              </p>
+            ))}
+          </div>
+          {subsection.bullets && (
+            <ul className="mt-5 flex flex-col gap-3">
+              {subsection.bullets.map((item) => (
+                <li key={item} className="border-l-4 border-primary/70 pl-5 text-sm leading-relaxed text-muted-foreground">{item}</li>
+              ))}
+            </ul>
+          )}
+          {subsection.numberedSteps && (
+            <ol className="mt-5 flex flex-col gap-3">
+              {subsection.numberedSteps.map((item, index) => (
+                <li key={item} className="grid grid-cols-[2rem_1fr] gap-3 text-sm leading-relaxed text-muted-foreground">
+                  <span className="font-mono text-xs tabular-nums text-primary">{index + 1}.</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ol>
+          )}
+        </section>
+      ))}
+    </div>
+  );
+}
+
+function PreferredSourcesCta({ domain, label, description }: { domain: string; label: string; description: string }) {
+  const href = `https://google.com/preferences/source?q=${encodeURIComponent(domain)}`;
+
+  return (
+    <aside className="mt-8 border border-primary/50 bg-primary/[0.06] p-5 sm:p-6" aria-label="Add this website as a Google Preferred Source">
+      <div className="flex items-center gap-4">
+        <span className="grid h-11 w-11 shrink-0 place-items-center border border-primary/50 bg-background text-primary">
+          <BookmarkPlus className="h-5 w-5" aria-hidden="true" />
+        </span>
+        <h3 className="text-xl font-medium tracking-tight text-foreground">See more of these articles on Google</h3>
+      </div>
+      <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-5 inline-flex w-full items-center justify-center gap-2 bg-primary px-5 py-3 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+      >
+        {label} <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+      </a>
+      <p className="mt-3 font-mono text-[0.65rem] leading-relaxed text-muted-foreground">Opens Google’s source preferences page. A Google account may be required.</p>
+    </aside>
+  );
 }
 
 function ArticleBarChart({ chart }: { chart: ArticleChart }) {
@@ -955,6 +1032,8 @@ function ArticlePieChartGroupBlock({ group }: { group: ArticlePieChartGroup }) {
 }
 
 function ArticleAuthorCard({ headingId }: { headingId: string }) {
+  const preferredSourcesHref = "https://google.com/preferences/source?q=morgan-mngadi-portfolio.online";
+
   return (
     <section aria-labelledby={headingId} className="border border-border bg-card p-5">
       <h2 id={headingId} className="mb-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
@@ -975,6 +1054,25 @@ function ArticleAuthorCard({ headingId }: { headingId: string }) {
       <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
         Writing about technical SEO, analytics, AI visibility, organic growth, and product-led search systems.
       </p>
+      <div className="group relative mt-5 w-fit">
+        <a
+          href={preferredSourcesHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-describedby={`${headingId}-preferred-source-help`}
+          className="inline-flex items-center gap-2 font-mono text-xs text-primary transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+        >
+          <BookmarkPlus className="h-4 w-4 shrink-0" aria-hidden="true" />
+          Add me on Google
+        </a>
+        <span
+          id={`${headingId}-preferred-source-help`}
+          role="tooltip"
+          className="pointer-events-none absolute bottom-full left-0 z-20 mb-3 w-64 border border-border bg-popover p-4 text-sm font-sans leading-relaxed text-popover-foreground opacity-0 shadow-xl transition-opacity group-hover:opacity-100 group-focus-within:opacity-100"
+        >
+          Add me as a Google Preferred Source to see more of my articles in your search results.
+        </span>
+      </div>
     </section>
   );
 }
@@ -1102,6 +1200,15 @@ export default function BlogArticle() {
                       </Fragment>
                     ))}
                   </div>
+                  {section.takeaway && (
+                    <aside className="mt-6 flex gap-4 border border-primary/50 bg-primary/[0.06] p-5" aria-label="Key takeaway">
+                      <CircleCheck className="mt-0.5 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+                      <div>
+                        <p className="font-mono text-xs uppercase tracking-widest text-primary">Key takeaway</p>
+                        <p className="mt-2 text-base font-medium leading-relaxed text-foreground">{section.takeaway}</p>
+                      </div>
+                    </aside>
+                  )}
                   {section.notice && (
                     <aside
                       className="mt-6 border border-primary/50 bg-primary/[0.06] p-5 text-sm leading-relaxed text-foreground"
@@ -1132,6 +1239,9 @@ export default function BlogArticle() {
                       ))}
                     </ol>
                   )}
+                  {section.subsections && <ArticleSubsections subsections={section.subsections} />}
+                  {section.scoreCards && <ArticleScoreCards cards={section.scoreCards} />}
+                  {section.preferredSourcesCta && <PreferredSourcesCta {...section.preferredSourcesCta} />}
                   {section.comparisonTable && (
                     <ScrollableComparisonTable table={section.comparisonTable} />
                   )}
