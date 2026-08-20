@@ -9,6 +9,7 @@ import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { AnimatedMetric } from "@/components/animated-metric";
+import { ARTICLES } from "@/data/articles";
 import {
   SiGoogleanalytics,
   SiGoogletagmanager,
@@ -114,6 +115,8 @@ const SEARCH_FOCUS_AREAS = [
   "Content performance",
   "Product/Service-led search",
 ];
+
+const LATEST_ARTICLES = ARTICLES.filter((article) => !article.archived).slice(0, 3);
 
 const WORK_WITH_ME = [
   {
@@ -739,10 +742,10 @@ export default function Home() {
 
           <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border border border-border">
             {WORK_WITH_ME.map((item) => (
-              <motion.div key={item.title} variants={fadeUp} className="bg-card p-6 md:p-8">
+              <motion.div key={item.title} variants={fadeUp} className="flex h-full flex-col bg-card p-6 md:p-8">
                 <h3 className="text-lg font-medium mb-4">{item.title}</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed mb-6">{item.description}</p>
-                <div className="font-mono text-xs uppercase tracking-widest text-primary">{item.bestFor}</div>
+                <p className="text-sm text-muted-foreground leading-relaxed">{item.description}</p>
+                <div className="mt-auto pt-6 font-mono text-xs uppercase tracking-widest text-primary">{item.bestFor}</div>
               </motion.div>
             ))}
           </motion.div>
@@ -757,6 +760,59 @@ export default function Home() {
           </motion.div>
         </motion.section>
 
+        {/* ─── BLOG ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr] lg:gap-16">
+            <motion.div variants={fadeUp} className="pt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              10 / Writing
+            </motion.div>
+            <div>
+              <motion.h2 variants={fadeUp} className="mb-4 max-w-2xl text-2xl font-medium leading-tight md:text-3xl">
+                Latest Thinking on Search, Analytics, and AI Visibility
+              </motion.h2>
+              <motion.p variants={fadeUp} className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                Practical articles exploring how search is changing, how performance should be measured, and how digital experiences can become more discoverable.
+              </motion.p>
+            </div>
+          </div>
+
+          <motion.div variants={stagger} className="grid grid-cols-1 gap-px border border-border bg-border md:grid-cols-3">
+            {LATEST_ARTICLES.map((article) => (
+              <Link key={article.slug} href={`/blog/${article.slug}`} className="group bg-card">
+                <motion.article variants={fadeUp} className="flex h-full min-h-72 flex-col p-6 transition-colors group-hover:bg-primary/5 md:p-7">
+                  <div className="mb-5 flex flex-wrap items-center gap-3 font-mono text-[11px] uppercase tracking-widest">
+                    <span className="text-primary">{article.category}</span>
+                    <span className="text-muted-foreground">{article.date}</span>
+                  </div>
+                  <h3 className="text-xl font-medium leading-snug tracking-tight transition-colors group-hover:text-primary">
+                    {article.title}
+                  </h3>
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{article.excerpt}</p>
+                  <div className="mt-auto flex items-center justify-between gap-4 pt-8 font-mono text-xs text-muted-foreground">
+                    <span>{article.readTime}</span>
+                    <ArrowUpRight className="h-4 w-4 transition-colors group-hover:text-primary" aria-hidden="true" />
+                  </div>
+                </motion.article>
+              </Link>
+            ))}
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-8">
+            <Link
+              href="/blog"
+              className="inline-flex items-center justify-center gap-2 border border-border px-5 py-3 font-mono text-sm text-muted-foreground transition-colors hover:border-primary hover:text-primary"
+            >
+              Explore all articles <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        </motion.section>
+
         {/* ─── TOOLS ─── */}
         <motion.section
           id="tools"
@@ -767,7 +823,7 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
-            10 / Tooling & Stack
+            11 / Tooling & Stack
           </motion.div>
           <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-2xl">
             Tools and Platforms Behind the Work
@@ -816,7 +872,7 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
               <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                11 / Contact
+                12 / Contact
               </motion.div>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let’s Connect Around Search,<br />Analytics, and Digital Products.

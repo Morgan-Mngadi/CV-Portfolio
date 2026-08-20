@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, BookmarkPlus, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2, X } from "lucide-react";
+import { AlertTriangle, ArrowLeft, ArrowRight, ArrowUpRight, BookmarkPlus, CalendarDays, Check, CircleCheck, CircleHelp, Clock, Maximize2, ThumbsDown, ThumbsUp, X } from "lucide-react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { Link, useRoute } from "wouter";
 import { ARTICLES, getArticle, type ArticleAiFinding, type ArticleCalculationPanel, type ArticleChart, type ArticleComparisonTable, type ArticleFlowDiagram, type ArticleImage, type ArticleImageCarousel, type ArticleIndexationChart, type ArticleParagraph, type ArticlePieChartGroup, type ArticleScoreCard, type ArticleSubsection, type ArticleVideo } from "@/data/articles";
@@ -1077,6 +1077,100 @@ function ArticleAuthorCard({ headingId }: { headingId: string }) {
   );
 }
 
+type ArticleFeedbackResponse = "helpful" | "not_helpful";
+
+function ArticleFeedback({ slug, title }: { slug: string; title: string }) {
+  const [response, setResponse] = useState<ArticleFeedbackResponse | null>(null);
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const storageKey = `article-feedback:${slug}`;
+
+  useEffect(() => {
+    try {
+      const storedResponse = window.localStorage.getItem(storageKey);
+
+      if (storedResponse === "helpful" || storedResponse === "not_helpful") {
+        setResponse(storedResponse);
+      }
+    } catch {
+      // Feedback still works when browser storage is unavailable.
+    }
+  }, [storageKey]);
+
+  useEffect(() => {
+    if (!showConfirmation) return;
+
+    const timeout = window.setTimeout(() => setShowConfirmation(false), 4000);
+    return () => window.clearTimeout(timeout);
+  }, [showConfirmation]);
+
+  const submitFeedback = (value: ArticleFeedbackResponse) => {
+    if (response) return;
+
+    setResponse(value);
+    setShowConfirmation(true);
+
+    try {
+      window.localStorage.setItem(storageKey, value);
+    } catch {
+      // The analytics event can still be sent when browser storage is unavailable.
+    }
+
+    window.gtag?.("event", "article_feedback", {
+      article_slug: slug,
+      article_title: title,
+      feedback_response: value,
+      page_path: window.location.pathname,
+    });
+  };
+
+  return (
+    <section aria-labelledby="article-feedback-heading" className="relative mb-10 border-y border-border py-8">
+      <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <p className="font-mono text-xs uppercase tracking-widest text-primary">Article feedback</p>
+          <h2 id="article-feedback-heading" className="mt-2 text-xl font-medium tracking-tight">
+            Was this article helpful?
+          </h2>
+          {response && <p className="mt-2 text-sm text-muted-foreground">Thanks—your feedback has been recorded.</p>}
+        </div>
+        <div className="flex items-center gap-3" aria-label="Rate this article">
+          <button
+            type="button"
+            onClick={() => submitFeedback("helpful")}
+            disabled={Boolean(response)}
+            aria-label="Yes, this article was helpful"
+            aria-pressed={response === "helpful"}
+            className={`grid h-11 w-11 place-items-center border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:cursor-default aria-pressed:border-primary aria-pressed:bg-primary/10 aria-pressed:text-primary ${response && response !== "helpful" ? "opacity-40" : ""}`}
+          >
+            <ThumbsUp className="h-5 w-5" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={() => submitFeedback("not_helpful")}
+            disabled={Boolean(response)}
+            aria-label="No, this article was not helpful"
+            aria-pressed={response === "not_helpful"}
+            className={`grid h-11 w-11 place-items-center border border-border text-muted-foreground transition-colors hover:border-primary hover:text-primary disabled:cursor-default aria-pressed:border-primary aria-pressed:bg-primary/10 aria-pressed:text-primary ${response && response !== "not_helpful" ? "opacity-40" : ""}`}
+          >
+            <ThumbsDown className="h-5 w-5" aria-hidden="true" />
+          </button>
+        </div>
+      </div>
+
+      {showConfirmation && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-6 right-6 z-[90] flex max-w-sm items-center gap-3 border border-primary/50 bg-background p-4 text-sm text-foreground shadow-2xl"
+        >
+          <CircleCheck className="h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+          Thank you for your feedback. It helps me improve future articles.
+        </div>
+      )}
+    </section>
+  );
+}
+
 export default function BlogArticle() {
   const [, params] = useRoute("/blog/:slug");
   const article = params?.slug ? getArticle(params.slug) : undefined;
@@ -1409,6 +1503,8 @@ export default function BlogArticle() {
                   ))}
                 </div>
               </motion.section>
+
+              <ArticleFeedback slug={article.slug} title={article.title} />
 
               {moreArticles.length > 0 && (
                 <motion.section variants={fadeUp} className="border-b border-border pb-10 mb-10">
