@@ -122,7 +122,7 @@ export default function AreasOfExpertise() {
       <SiteNav />
 
       <main className="relative z-10 max-w-6xl mx-auto px-6 pt-12">
-        <motion.section initial="hidden" animate="visible" variants={stagger} className="border-b border-border py-16 lg:py-24">
+        <motion.section data-section-label="Areas of Expertise" initial="hidden" animate="visible" variants={stagger} className="border-b border-border py-16 lg:py-24">
           <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6 font-mono text-xs text-primary uppercase tracking-widest">
             <span className="w-6 h-px bg-primary" />
             Areas of Expertise
@@ -203,9 +203,9 @@ export default function AreasOfExpertise() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
-              <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+              <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
                 02 / Connect
-              </motion.div>
+              </motion.h2>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Start a Conversation Around Search and Growth.
               </motion.h2>

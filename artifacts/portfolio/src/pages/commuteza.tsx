@@ -61,6 +61,7 @@ function CaseStudySection({ id, number, title, children }: CaseStudySectionProps
   return (
     <motion.section
       id={id}
+      data-section-label={`${number} / ${title}`}
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: "-80px" }}
@@ -109,7 +110,7 @@ export default function CommuteZA() {
       <SiteNav />
 
       <main className="relative z-10 max-w-6xl mx-auto px-6 pt-12">
-        <motion.section initial="hidden" animate="visible" variants={stagger} className="border-b border-border py-16 lg:py-24">
+        <motion.section data-section-label="CommuteZA Project" initial="hidden" animate="visible" variants={stagger} className="border-b border-border py-16 lg:py-24">
           <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,0.82fr)_minmax(420px,1fr)] gap-10 lg:gap-14 items-center">
             <div>
               <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6 font-mono text-xs text-primary uppercase tracking-widest">

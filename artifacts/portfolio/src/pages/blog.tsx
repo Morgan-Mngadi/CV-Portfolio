@@ -88,6 +88,7 @@ export default function Blog() {
 
         {/* HEADER */}
         <motion.section
+          data-section-label="Writing"
           initial="hidden"
           animate="visible"
           variants={stagger}
@@ -106,6 +107,7 @@ export default function Blog() {
         </motion.section>
 
         <motion.section
+          data-section-label="Featured Article"
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
@@ -195,6 +197,7 @@ export default function Blog() {
         {/* POST LIST */}
         <section
           id="article-results"
+          data-section-label="Article Library"
           aria-label={`${activeCategory} articles`}
           className="py-12 flex flex-col divide-y divide-border"
         >

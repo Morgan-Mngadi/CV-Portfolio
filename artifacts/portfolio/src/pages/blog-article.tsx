@@ -1263,6 +1263,7 @@ export default function BlogArticle() {
                 <motion.section
                   key={section.id}
                   id={section.id}
+                  data-section-label={section.heading}
                   variants={fadeUp}
                   className="scroll-mt-24 border-b border-border pb-10 mb-10"
                 >
@@ -1492,7 +1493,7 @@ export default function BlogArticle() {
                 </div>
               </motion.section>
 
-              <motion.section id="faq" variants={fadeUp} className="scroll-mt-24 pb-14">
+              <motion.section id="faq" data-section-label="FAQ" variants={fadeUp} className="scroll-mt-24 pb-14">
                 <h2 className="text-2xl md:text-3xl font-medium tracking-tight mb-6">FAQ</h2>
                 <div className="flex flex-col divide-y divide-border border border-border">
                   {article.faqs.map((faq) => (
@@ -1507,7 +1508,7 @@ export default function BlogArticle() {
               <ArticleFeedback slug={article.slug} title={article.title} />
 
               {moreArticles.length > 0 && (
-                <motion.section variants={fadeUp} className="border-b border-border pb-10 mb-10">
+                <motion.section data-section-label="More Articles" variants={fadeUp} className="border-b border-border pb-10 mb-10">
                   <div className="flex items-end justify-between gap-4 mb-6">
                     <div>
                       <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-3">Keep Reading</p>

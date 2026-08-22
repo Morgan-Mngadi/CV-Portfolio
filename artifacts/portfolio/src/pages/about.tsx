@@ -26,8 +26,8 @@ const EXPERIENCE = [
     location: "Midrand, JHB",
     current: true,
     description:
-      "Contributing to SEO delivery for agency clients in the telecommunications sector. Supporting technical audits, metadata implementation review, and performance reporting through GA4 and Search Console within a cross functional team.",
-    tags: ["Technical Audits", "Agency", "GA4", "Telecoms"],
+      "At Accenture Song, I contribute to SEO strategy across enterprise projects, including telecommunications and a pre-launch digital platform spanning five industries. I conduct keyword and opportunity research to inform site architecture and launch strategy, identifying opportunities representing 6M+ monthly searches.\n\nI’ve also developed Looker Studio dashboards for keyword intelligence, content performance and automated monthly reporting, allowing teams to focus more on insights and recommendations.\n\nI work cross-functionally with strategy, development and performance teams to embed SEO requirements into website implementation before launch.",
+    tags: ["SEO Strategy", "Keyword Intelligence", "Looker Studio", "Site Architecture", "Pre-launch SEO"],
   },
   {
     company: "Flume Digital Marketing",
@@ -190,6 +190,7 @@ export default function About() {
 
         {/* ─── HERO ─── */}
         <motion.section
+          data-section-label="About Me"
           initial="hidden"
           animate="visible"
           variants={stagger}
@@ -299,7 +300,7 @@ export default function About() {
                 </div>
 
                 <div className="relative z-10 md:pr-44">
-                  <p className="text-muted-foreground leading-relaxed mb-5">{exp.description}</p>
+                  <p className="whitespace-pre-line text-muted-foreground leading-relaxed mb-5">{exp.description}</p>
                   <div className="flex flex-wrap gap-2">
                     {exp.tags.map((tag) => (
                       <span key={tag} className="text-xs font-mono px-2.5 py-1 bg-card border border-border text-muted-foreground">
@@ -313,6 +314,89 @@ export default function About() {
           </div>
         </motion.section>
 
+        {/* ─── PROOF OF WORK ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-20 md:py-28 lg:py-36"
+        >
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            02 / Proof of Work
+          </motion.h2>
+
+          <div className="py-16 md:py-24 lg:py-28">
+            <motion.h3
+              variants={fadeUp}
+              className="max-w-5xl text-5xl font-medium uppercase leading-[0.88] tracking-[-0.055em] sm:text-7xl md:text-8xl lg:text-[8rem]"
+            >
+              Become <span className="text-primary">Undeniable.</span>
+            </motion.h3>
+
+            <motion.blockquote
+              variants={fadeUp}
+              className="mt-12 max-w-3xl border-l-2 border-primary pl-6 text-xl font-medium leading-relaxed md:mt-16 md:text-2xl"
+            >
+              Don&apos;t just say what you can do. Build the evidence.
+            </motion.blockquote>
+
+            <motion.div variants={stagger} className="mt-12 max-w-3xl space-y-6 text-base leading-relaxed text-muted-foreground md:mt-16 md:text-lg">
+              <motion.p variants={fadeUp}>
+                I believe the best way to demonstrate capability is through the work itself. Curiosity means more to me when it leads to something tangible: something built, tested, measured and improved.
+              </motion.p>
+              <motion.p variants={fadeUp}>
+                That&apos;s why I create outside the boundaries of my day-to-day role. Each project gives me a sandbox to explore new ideas, solve unfamiliar problems and compound what I know across <strong className="font-medium text-foreground">SEO, data and development</strong>.
+              </motion.p>
+              <motion.p variants={fadeUp}>
+                My goal is simple: keep learning, keep building, and create a body of work that speaks for itself.
+              </motion.p>
+            </motion.div>
+
+            <motion.p variants={fadeUp} className="mt-12 font-mono text-sm uppercase tracking-widest text-primary md:mt-16">
+              Learn it. Build it. Measure it. Explain it.
+            </motion.p>
+          </div>
+
+          <motion.div variants={stagger} className="grid grid-cols-1 gap-px border border-border bg-border md:grid-cols-2">
+            <motion.article variants={fadeUp} className="flex min-h-[360px] flex-col bg-card p-7 md:p-10">
+              <div className="mb-12 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                <span>Featured Proof 01</span>
+                <BarChart3 className="size-5 text-primary" aria-hidden="true" />
+              </div>
+              <h3 className="text-2xl font-medium tracking-tight md:text-3xl">Looker Studio Reporting</h3>
+              <p className="mt-4 text-lg font-medium text-primary">Turning data into decisions.</p>
+              <p className="mt-5 leading-relaxed text-muted-foreground">
+                I built a reporting system designed to reduce repetitive manual work and shift more time toward what actually matters: understanding performance, communicating the “so what,” and connecting search activity to business outcomes.
+              </p>
+              <Link
+                href="/blog/looker-studio-dashboards-for-reporting"
+                className="mt-auto inline-flex items-center gap-2 pt-10 font-mono text-xs uppercase tracking-widest text-primary hover:underline"
+              >
+                Explore the reporting article →
+              </Link>
+            </motion.article>
+
+            <motion.article variants={fadeUp} className="group flex min-h-[360px] flex-col bg-card p-7 transition-colors hover:bg-primary/[0.03] md:p-10">
+              <div className="mb-12 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                <span>Featured Proof 02</span>
+                <Globe className="size-5 text-primary" aria-hidden="true" />
+              </div>
+              <h3 className="text-2xl font-medium tracking-tight md:text-3xl">CommuteZA</h3>
+              <p className="mt-4 text-lg font-medium text-primary">Turning search demand into a product.</p>
+              <p className="mt-5 leading-relaxed text-muted-foreground">
+                I identified a problem I experienced personally, validated the demand through search data, and built a live multimodal transport platform around it. CommuteZA has become my sandbox for combining SEO strategy, analytics, development and product thinking with real users.
+              </p>
+              <Link
+                href="/projects/commuteza"
+                className="mt-auto inline-flex items-center gap-2 pt-10 font-mono text-xs uppercase tracking-widest text-primary hover:underline"
+              >
+                Explore the CommuteZA case study <ArrowUpRight className="size-4" aria-hidden="true" />
+              </Link>
+            </motion.article>
+          </motion.div>
+        </motion.section>
+
         {/* ─── 4-PILLAR EXPANDED ─── */}
         <motion.section
           initial="hidden"
@@ -322,9 +406,9 @@ export default function About() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-              02 / Methodology
-            </motion.div>
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+              03 / Methodology
+            </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-3">
                 How I Drive Organic Growth
@@ -375,9 +459,9 @@ export default function About() {
           variants={stagger}
           className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-            03 / Clients
-          </motion.div>
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            04 / Clients
+          </motion.h2>
           <div>
             <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
               Examples of clients I've worked with:
@@ -413,9 +497,9 @@ export default function About() {
           variants={stagger}
           className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-            04 / Focus
-          </motion.div>
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            05 / Focus
+          </motion.h2>
           <div>
             <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4">
               Professional Focus
@@ -449,7 +533,7 @@ export default function About() {
           className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
           <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-            05 / FAQ
+            06 / FAQ
           </motion.h2>
           <motion.div variants={stagger} className="flex flex-col divide-y divide-border border border-border">
             {FAQS.map((faq) => (
@@ -472,9 +556,9 @@ export default function About() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
-              <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
-                06 / Contact
-              </motion.div>
+              <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+                07 / Contact
+              </motion.h2>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let’s Connect Around Search,<br />Analytics, and Product Thinking.
               </motion.h2>

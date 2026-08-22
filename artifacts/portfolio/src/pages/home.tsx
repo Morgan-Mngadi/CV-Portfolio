@@ -290,6 +290,7 @@ export default function Home() {
 
         {/* ─── HERO ─── */}
         <motion.section
+          data-section-label="Welcome to My Portfolio"
           initial="hidden"
           animate="visible"
           variants={stagger}
@@ -364,13 +365,13 @@ export default function Home() {
           variants={stagger}
           className="border-b border-border py-16 grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
             01 / About
-          </motion.div>
+          </motion.h2>
           <div>
-            <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-3xl">
+            <motion.p variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-3xl">
               Technical SEO and analytics specialist building search systems that connect visibility, product thinking, and measurable business impact.
-            </motion.h2>
+            </motion.p>
             <motion.p variants={fadeUp} className="text-muted-foreground leading-relaxed max-w-2xl mb-6">
               My work sits across technical SEO, GA4, GTM, organic growth strategy, reporting, and digital product experimentation. CommuteZA is the clearest example: a self-built product used to test SEO architecture, structured data, redirect logic, and measurement systems in a controlled environment.
             </motion.p>
@@ -390,11 +391,8 @@ export default function Home() {
           variants={stagger}
           className="border-b border-border py-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
             02 / Impact Metrics
-          </motion.div>
-          <motion.h2 variants={fadeUp} className="sr-only">
-            Impact Metrics
           </motion.h2>
 
           <motion.div variants={stagger} className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-border divide-y md:divide-y-0 md:divide-x divide-border">
@@ -496,9 +494,9 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               04 / Framework
-            </motion.div>
+            </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-3">
                 How I Drive Organic Growth
@@ -538,9 +536,9 @@ export default function Home() {
           variants={stagger}
           className="border-b border-border py-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
             05 / Industries
-          </motion.div>
+          </motion.h2>
 
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
             <motion.p variants={fadeUp} className="text-muted-foreground text-sm leading-relaxed lg:pt-1">
@@ -598,9 +596,9 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               06 / Clients
-            </motion.div>
+            </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-3">
                 Examples of clients I've worked with:
@@ -638,9 +636,9 @@ export default function Home() {
           variants={stagger}
           className="border-b border-border py-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
             07 / Project
-          </motion.div>
+          </motion.h2>
 
           <Link href="/projects/commuteza">
           <motion.div
@@ -688,9 +686,9 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               08 / Product Systems
-            </motion.div>
+            </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
                 Builder Mindset Across Search, Analytics, and Product
@@ -727,9 +725,9 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
-            <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
               09 / Areas of Expertise
-            </motion.div>
+            </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
                 Core Disciplines Across SEO, Analytics, and Organic Growth
@@ -769,9 +767,9 @@ export default function Home() {
           className="border-b border-border py-16"
         >
           <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr] lg:gap-16">
-            <motion.div variants={fadeUp} className="pt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+            <motion.h2 variants={fadeUp} className="pt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
               10 / Writing
-            </motion.div>
+            </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="mb-4 max-w-2xl text-2xl font-medium leading-tight md:text-3xl">
                 Latest Thinking on Search, Analytics, and AI Visibility
@@ -822,9 +820,9 @@ export default function Home() {
           variants={stagger}
           className="border-b border-border py-16"
         >
-          <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
+          <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-12">
             11 / Tooling & Stack
-          </motion.div>
+          </motion.h2>
           <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-6 max-w-2xl">
             Tools and Platforms Behind the Work
           </motion.h2>
@@ -871,9 +869,9 @@ export default function Home() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 items-center">
             <div>
-              <motion.div variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
+              <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground mb-4">
                 12 / Contact
-              </motion.div>
+              </motion.h2>
               <motion.h2 variants={fadeUp} className="text-4xl md:text-5xl font-medium tracking-tight mb-4">
                 Let’s Connect Around Search,<br />Analytics, and Digital Products.
               </motion.h2>

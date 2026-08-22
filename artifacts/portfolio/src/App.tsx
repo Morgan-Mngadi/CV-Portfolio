@@ -15,6 +15,7 @@ import { ScrollProgress } from "@/components/scroll-progress";
 import { BackToTop } from "@/components/back-to-top";
 import { CookieConsent } from "@/components/cookie-consent";
 import { FreshDeploymentGuard } from "@/components/fresh-deployment-guard";
+import { SectionNavigation } from "@/components/section-navigation";
 
 const queryClient = new QueryClient();
 
@@ -50,6 +51,7 @@ function App({ ssrPath }: AppProps) {
           <ScrollToTop />
           <ScrollProgress />
           <Router />
+          <SectionNavigation />
           <BackToTop />
         </WouterRouter>
         <CookieConsent />
