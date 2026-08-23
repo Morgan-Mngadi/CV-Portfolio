@@ -26,7 +26,7 @@ const EXPERIENCE = [
     location: "Midrand, JHB",
     current: true,
     description:
-      "At Accenture Song, I contribute to SEO strategy across enterprise projects, including telecommunications and a pre-launch digital platform spanning five industries. I conduct keyword and opportunity research to inform site architecture and launch strategy, identifying opportunities representing 6M+ monthly searches.\n\nI’ve also developed Looker Studio dashboards for keyword intelligence, content performance and automated monthly reporting, allowing teams to focus more on insights and recommendations.\n\nI work cross-functionally with strategy, development and performance teams to embed SEO requirements into website implementation before launch.",
+      "At Accenture Song, I contribute to SEO strategy across enterprise projects, including telecommunications and a pre-launch B2C SaaS platform spanning five industries. I conduct keyword and opportunity research to inform site architecture and launch strategy, identifying opportunities representing 6M+ monthly searches.\n\nI’ve also developed Looker Studio dashboards for keyword intelligence, content performance and automated monthly reporting, allowing teams to focus more on insights and recommendations.\n\nI work cross-functionally with strategy, development and performance teams to embed SEO requirements into website implementation before launch.",
     tags: ["SEO Strategy", "Keyword Intelligence", "Looker Studio", "Site Architecture", "Pre-launch SEO"],
   },
   {
