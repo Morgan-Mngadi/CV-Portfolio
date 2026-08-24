@@ -435,7 +435,7 @@ function ArticleAiFindings({ findings }: { findings: ArticleAiFinding[] }) {
               <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{finding.correction}</p>
             </div>
             {finding.link && (
-              <Link href={finding.link.href} className="mt-auto inline-flex items-center gap-1.5 pt-5 font-mono text-[0.68rem] uppercase tracking-widest text-primary hover:underline">
+              <Link href={finding.link.href} className="mt-auto inline-flex self-start items-center gap-1.5 pt-5 font-mono text-[0.68rem] uppercase tracking-widest text-primary hover:underline">
                 {finding.link.label}
                 <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
               </Link>

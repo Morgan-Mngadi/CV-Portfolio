@@ -371,7 +371,7 @@ export default function About() {
               </p>
               <Link
                 href="/blog/looker-studio-dashboards-for-reporting"
-                className="mt-auto inline-flex items-center gap-2 pt-10 font-mono text-xs uppercase tracking-widest text-primary hover:underline"
+                className="mt-auto inline-flex self-start items-center gap-2 pt-10 font-mono text-xs uppercase tracking-widest text-primary hover:underline"
               >
                 Explore the reporting article →
               </Link>
@@ -389,7 +389,7 @@ export default function About() {
               </p>
               <Link
                 href="/projects/commuteza"
-                className="mt-auto inline-flex items-center gap-2 pt-10 font-mono text-xs uppercase tracking-widest text-primary hover:underline"
+                className="mt-auto inline-flex self-start items-center gap-2 pt-10 font-mono text-xs uppercase tracking-widest text-primary hover:underline"
               >
                 Explore the CommuteZA case study <ArrowUpRight className="size-4" aria-hidden="true" />
               </Link>

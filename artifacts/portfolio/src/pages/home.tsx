@@ -891,6 +891,7 @@ export default function Home() {
                     <input
                       name="name"
                       required
+                      placeholder="Your name"
                       className="h-11 border border-border bg-background px-3 text-sm text-foreground shadow-none outline-none transition-colors placeholder:text-muted-foreground focus:border-primary"
                       autoComplete="name"
                     />

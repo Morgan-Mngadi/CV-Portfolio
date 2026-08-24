@@ -16,6 +16,7 @@ import { BackToTop } from "@/components/back-to-top";
 import { CookieConsent } from "@/components/cookie-consent";
 import { FreshDeploymentGuard } from "@/components/fresh-deployment-guard";
 import { SectionNavigation } from "@/components/section-navigation";
+import { TargetCursor } from "@/components/target-cursor";
 
 const queryClient = new QueryClient();
 
@@ -46,6 +47,12 @@ function App({ ssrPath }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
+        <TargetCursor
+          spinDuration={2}
+          hideDefaultCursor
+          parallaxOn
+          cursorColorOnTarget="#10B981"
+        />
         <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")} ssrPath={ssrPath}>
           <FreshDeploymentGuard />
           <ScrollToTop />
