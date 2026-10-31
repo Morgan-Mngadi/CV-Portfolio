@@ -11,6 +11,7 @@ import CaseStudies from "@/pages/case-studies";
 import ReportingAutomation from "@/pages/reporting-automation";
 import SeoOptimizationAgent from "@/pages/seo-optimization-agent";
 import AiUrlMapping from "@/pages/ai-url-mapping";
+import SeasonalSeoStrategy from "@/pages/seasonal-seo-strategy";
 import Blog from "@/pages/blog";
 import BlogArticle from "@/pages/blog-article";
 import AreasOfExpertise from "@/pages/areas-of-expertise";
@@ -35,6 +36,7 @@ function Router() {
       <Route path="/projects/reporting-automation" component={ReportingAutomation} />
       <Route path="/projects/seo-optimization-agent" component={SeoOptimizationAgent} />
       <Route path="/projects/ai-url-mapping" component={AiUrlMapping} />
+      <Route path="/projects/seasonal-seo-strategy" component={SeasonalSeoStrategy} />
       <Route path="/blog/:slug" component={BlogArticle} />
       <Route path="/blog" component={Blog} />
       <Route component={NotFound} />

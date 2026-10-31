@@ -336,7 +336,7 @@ export const seoByPath: Record<string, SeoConfig> = {
             acceptedAnswer: {
               "@type": "Answer",
               text:
-                "Morgan has 3+ years of SEO experience across agency environments, with work spanning technical audits, on-page optimisation, structured data, CMS implementation, analytics, and organic performance reporting.",
+                "Morgan has 3.5+ years of SEO experience across agency environments, with work spanning technical audits, on-page optimisation, structured data, CMS implementation, analytics, and organic performance reporting.",
             },
           },
           {

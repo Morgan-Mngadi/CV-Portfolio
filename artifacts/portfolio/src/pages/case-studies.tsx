@@ -35,6 +35,13 @@ const studies = [
     href: "/projects/ai-url-mapping",
     tags: ["Implemented at Accenture", "AI Automation", "Marketing Engineering"],
   },
+  {
+    eyebrow: "Professional / confidential client work · SEO Strategy / Content Strategy",
+    title: "Anticipating Demand",
+    description: "Using seasonal search research and content planning to help a higher education provider prepare for a major January search demand peak.",
+    href: "/projects/seasonal-seo-strategy",
+    tags: ["SEO Strategy", "Seasonal Demand", "Content Planning"],
+  },
 ];
 
 export default function CaseStudies() {

@@ -147,11 +147,41 @@ const PROFILE_FOCUS = [
   },
 ];
 
+const MARKETING_ENGINEER_CASE_STUDIES = [
+  {
+    number: "01",
+    label: "Reporting automation",
+    title: "Looker Studio reporting systems",
+    detail: "Automated reporting workflows that turn Search Console, GA4, and performance data into clearer monthly decisions.",
+    href: "/projects/reporting-automation",
+    cta: "Explore reporting automation",
+    icon: <BarChart3 className="size-5 text-primary" aria-hidden="true" />,
+  },
+  {
+    number: "02",
+    label: "AI automations",
+    title: "AI URL mapping",
+    detail: "Practical AI-assisted workflows for turning large sets of URLs, intent signals, and content decisions into a repeatable system.",
+    href: "/projects/ai-url-mapping",
+    cta: "Explore the AI workflow",
+    icon: <Zap className="size-5 text-primary" aria-hidden="true" />,
+  },
+  {
+    number: "03",
+    label: "Agents for optimisation",
+    title: "SEO optimisation agent",
+    detail: "An agent-led approach to finding optimisation opportunities and helping teams move from analysis to useful next actions.",
+    href: "/projects/seo-optimization-agent",
+    cta: "Explore the optimisation agent",
+    icon: <TrendingUp className="size-5 text-primary" aria-hidden="true" />,
+  },
+];
+
 const FAQS = [
   {
     question: "How much SEO experience do you have?",
     answer:
-      "I have 3+ years of SEO experience across agency environments, with work spanning technical audits, on-page optimisation, structured data, CMS implementation, analytics, and organic performance reporting.",
+      "I have 3.5+ years of SEO experience across agency environments, with work spanning technical audits, on-page optimisation, structured data, CMS implementation, analytics, and organic performance reporting.",
   },
   {
     question: "What areas of SEO do you focus on?",
@@ -236,7 +266,7 @@ export default function About() {
 
           <motion.div variants={stagger} className="relative z-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border-t border-border bg-background/90 backdrop-blur">
             {[
-              { value: "3+", label: "Years active" },
+              { value: "3.5+", label: "Years experience" },
               { value: "15+", label: "Clients worked with" },
               { value: "R700k+", label: "Monthly organic ecommerce revenue" },
               { value: "200k+", label: "Organic clicks in 72 hrs" },
@@ -314,6 +344,48 @@ export default function About() {
           </div>
         </motion.section>
 
+        {/* ─── MARKETING ENGINEER ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-20 md:py-28"
+        >
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr] lg:gap-16">
+            <motion.h2 variants={fadeUp} className="pt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+              03 / Marketing Engineer
+            </motion.h2>
+            <div>
+              <motion.h3 variants={fadeUp} className="max-w-4xl text-4xl font-medium leading-[0.95] tracking-tight md:text-6xl">
+                Building the systems behind better marketing.
+              </motion.h3>
+              <motion.p variants={fadeUp} className="mt-6 max-w-3xl text-lg leading-relaxed text-muted-foreground">
+                I’m increasingly interested in the marketing engineer role: combining search expertise with analytics, automation, AI, and implementation to make marketing work more useful, measurable, and scalable.
+              </motion.p>
+            </div>
+          </div>
+
+          <motion.div variants={stagger} className="mt-12 grid grid-cols-1 gap-px border border-border bg-border md:grid-cols-3">
+            {MARKETING_ENGINEER_CASE_STUDIES.map((study) => (
+              <Link key={study.number} href={study.href} className="group block h-full cursor-target">
+                <motion.div variants={fadeUp} className="relative flex min-h-[320px] h-full flex-col overflow-hidden bg-card p-7 transition-colors hover:bg-primary/[0.06] md:p-8">
+                  <div className="pointer-events-none absolute left-0 top-0 h-0.5 w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+                  <div className="mb-12 flex items-center justify-between gap-4 font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                    <span>{study.number} / {study.label}</span>
+                    <span className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">{study.icon}</span>
+                  </div>
+                  <h4 className="text-2xl font-medium tracking-tight transition-colors duration-300 group-hover:text-primary">{study.title}</h4>
+                  <p className="mt-4 leading-relaxed text-muted-foreground">{study.detail}</p>
+                  <span className="mt-auto inline-flex self-start items-center gap-2 pt-10 font-mono text-xs uppercase tracking-widest text-primary">
+                    {study.cta} <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" aria-hidden="true" />
+                  </span>
+                </motion.div>
+              </Link>
+            ))}
+          </motion.div>
+        </motion.section>
+
         {/* ─── PROOF OF WORK ─── */}
         <motion.section
           initial="hidden"
@@ -323,7 +395,7 @@ export default function About() {
           className="border-b border-border py-20 md:py-28 lg:py-36"
         >
           <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
-            02 / Proof of Work
+            04 / Proof of Work
           </motion.h2>
 
           <div className="py-16 md:py-24 lg:py-28">

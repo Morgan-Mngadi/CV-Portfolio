@@ -168,6 +168,39 @@ const PRODUCT_SYSTEMS = [
   },
 ];
 
+const FEATURED_CASE_STUDIES = [
+  {
+    number: "01",
+    type: "Product + technical SEO",
+    title: "CommuteZA",
+    description:
+      "A South African commuter routing product built as a working laboratory for search architecture, structured data, redirects, rendering behaviour, and measurement.",
+    outcome: "A live product for testing search and product decisions in the real world.",
+    tags: ["Headless CMS", "Structured Data", "Technical SEO"],
+    href: "/projects/commuteza",
+  },
+  {
+    number: "02",
+    type: "Analytics + automation",
+    title: "Reporting Automation",
+    description:
+      "A Looker Studio reporting system that brings Search Console, GA4, and performance data into a repeatable workflow for faster monthly analysis.",
+    outcome: "Less repetitive reporting. More time for insight, recommendations, and action.",
+    tags: ["Looker Studio", "GA4", "Search Console"],
+    href: "/projects/reporting-automation",
+  },
+  {
+    number: "03",
+    type: "AI + optimisation",
+    title: "SEO Optimisation Agent",
+    description:
+      "An agent-led workflow for turning SEO analysis into practical optimisation opportunities, prioritised recommendations, and useful next actions.",
+    outcome: "A more scalable bridge between marketing questions, data, and implementation.",
+    tags: ["AI Agents", "SEO Analysis", "Automation"],
+    href: "/projects/seo-optimization-agent",
+  },
+];
+
 const CONTACT_REASONS = ["Networking", "Collaboration", "Industry discussion", "Project or product conversation", "CommuteZA"];
 const WEB3FORMS_ACCESS_KEY = "f1c27f4e-67b3-4262-a419-127bda6406d0";
 const RECAPTCHA_SITE_KEY = (import.meta.env.VITE_RECAPTCHA_SITE_KEY ?? "").trim();
@@ -327,7 +360,7 @@ export default function Home() {
           {/* Stat sidebar */}
           <motion.div variants={stagger} className="lg:w-64 py-16 lg:pl-10 flex flex-col justify-between gap-8">
             {[
-              { label: "Years active", value: "3+" },
+              { label: "Years experience", value: "3.5+" },
               { label: "Clients worked with", value: "15+" },
               { label: "Industries served", value: "14+" },
               { label: "Award contributions", value: "2×" },
@@ -677,6 +710,69 @@ export default function Home() {
           </Link>
         </motion.section>
 
+        {/* ─── CASE STUDIES ─── */}
+        <motion.section
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={stagger}
+          className="border-b border-border py-16"
+        >
+          <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16">
+            <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
+              08 / Case Studies
+            </motion.h2>
+            <div>
+              <div>
+                <motion.h2 variants={fadeUp} className="text-4xl md:text-6xl font-medium leading-[0.95] tracking-tight mb-6 max-w-4xl">
+                  Ideas are useful.<br /><span className="text-primary">Working systems are better.</span>
+                </motion.h2>
+                <motion.p variants={fadeUp} className="text-lg text-muted-foreground leading-relaxed max-w-3xl">
+                  These are the projects where I test the marketing-engineer mindset: connect search, data, automation, AI, and implementation, then make the result tangible enough to inspect, measure, and improve.
+                </motion.p>
+              </div>
+            </div>
+          </div>
+
+          <motion.div variants={stagger} className="mt-14 grid grid-cols-1 gap-px border border-border bg-border lg:grid-cols-3">
+            {FEATURED_CASE_STUDIES.map((study) => (
+              <Link key={study.number} href={study.href}>
+                <motion.article
+                  variants={fadeUp}
+                  className="group flex min-h-[470px] h-full flex-col bg-card p-7 transition-colors hover:bg-primary/[0.05] md:p-9"
+                >
+                  <div className="flex items-center justify-between border-b border-border pb-6 font-mono text-[11px] uppercase tracking-widest text-muted-foreground">
+                    <span>{study.number} / {study.type}</span>
+                    <ArrowUpRight className="size-5 text-primary transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                  </div>
+                  <h3 className="mt-10 text-3xl font-medium tracking-tight transition-colors group-hover:text-primary md:text-4xl">{study.title}</h3>
+                  <p className="mt-5 text-base leading-relaxed text-muted-foreground">{study.description}</p>
+                  <div className="mt-8 border-l-2 border-primary pl-4 text-sm leading-relaxed text-foreground/80">
+                    {study.outcome}
+                  </div>
+                  <div className="mt-auto flex flex-wrap gap-2 pt-10">
+                    {study.tags.map((tag) => (
+                      <span key={tag} className="border border-border bg-background px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-wider text-muted-foreground">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </motion.article>
+              </Link>
+            ))}
+          </motion.div>
+
+          <motion.div variants={fadeUp} className="mt-8 flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+            <p className="font-mono text-xs uppercase tracking-widest text-muted-foreground">More experiments, more context, more proof of work.</p>
+            <Link
+              href="/projects"
+              className="inline-flex items-center justify-center gap-2 self-start border border-primary bg-primary px-5 py-3 text-sm font-mono text-primary-foreground transition-colors hover:bg-transparent hover:text-primary sm:self-auto"
+            >
+              Browse all case studies <ArrowUpRight className="w-4 h-4" />
+            </Link>
+          </motion.div>
+        </motion.section>
+
         {/* ─── PRODUCT SYSTEMS ─── */}
         <motion.section
           initial="hidden"
@@ -687,7 +783,7 @@ export default function Home() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
             <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-              08 / Product Systems
+              09 / Product Systems
             </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
@@ -726,7 +822,7 @@ export default function Home() {
         >
           <div className="grid grid-cols-1 lg:grid-cols-[200px_1fr] gap-8 lg:gap-16 mb-12">
             <motion.h2 variants={fadeUp} className="font-mono text-xs uppercase tracking-widest text-muted-foreground pt-1">
-              09 / Areas of Expertise
+              10 / Areas of Expertise
             </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="text-2xl md:text-3xl font-medium leading-tight mb-4 max-w-2xl">
@@ -768,7 +864,7 @@ export default function Home() {
         >
           <div className="mb-12 grid grid-cols-1 gap-8 lg:grid-cols-[200px_1fr] lg:gap-16">
             <motion.h2 variants={fadeUp} className="pt-1 font-mono text-xs uppercase tracking-widest text-muted-foreground">
-              10 / Writing
+              11 / Writing
             </motion.h2>
             <div>
               <motion.h2 variants={fadeUp} className="mb-4 max-w-2xl text-2xl font-medium leading-tight md:text-3xl">
