@@ -7,6 +7,10 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import About from "@/pages/about";
 import CommuteZA from "@/pages/commuteza";
+import CaseStudies from "@/pages/case-studies";
+import ReportingAutomation from "@/pages/reporting-automation";
+import SeoOptimizationAgent from "@/pages/seo-optimization-agent";
+import AiUrlMapping from "@/pages/ai-url-mapping";
 import Blog from "@/pages/blog";
 import BlogArticle from "@/pages/blog-article";
 import AreasOfExpertise from "@/pages/areas-of-expertise";
@@ -26,7 +30,11 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/areas-of-expertise" component={AreasOfExpertise} />
+      <Route path="/projects" component={CaseStudies} />
       <Route path="/projects/commuteza" component={CommuteZA} />
+      <Route path="/projects/reporting-automation" component={ReportingAutomation} />
+      <Route path="/projects/seo-optimization-agent" component={SeoOptimizationAgent} />
+      <Route path="/projects/ai-url-mapping" component={AiUrlMapping} />
       <Route path="/blog/:slug" component={BlogArticle} />
       <Route path="/blog" component={Blog} />
       <Route component={NotFound} />

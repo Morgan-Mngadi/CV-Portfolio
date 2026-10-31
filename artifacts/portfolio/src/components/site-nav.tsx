@@ -7,7 +7,7 @@ import logoSrc from "@assets/5259D053-7FB7-4BC6-92C7-D625ADDC9985_1779213029285.
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
-  { label: "Case Study", href: "/projects/commuteza" },
+  { label: "Case Studies", href: "/projects" },
   { label: "Expertise", href: "/areas-of-expertise" },
   { label: "Blog", href: "/blog" },
 ];
