@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { CirclePause, ExternalLink } from "lucide-react";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
@@ -117,6 +117,14 @@ export default function CommuteZA() {
                 <span className="w-6 h-px bg-primary" />
                 Self-initiated project · January 2026 to present
               </motion.div>
+              <motion.div
+                variants={fadeUp}
+                className="mb-7 inline-flex items-center gap-2 border border-amber-400/50 bg-amber-400/10 px-3 py-2 font-mono text-xs uppercase tracking-widest text-amber-300"
+                role="status"
+              >
+                <CirclePause className="h-4 w-4" aria-hidden="true" />
+                Functionality currently paused
+              </motion.div>
               <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl font-medium tracking-tight leading-[0.9] mb-8">
                 Commute<span className="text-primary">ZA</span>
               </motion.h1>
@@ -161,7 +169,7 @@ export default function CommuteZA() {
             <CaseStudySection id="overview" number="01" title="Overview">
           <motion.h2 variants={fadeUp} className="text-2xl font-medium leading-tight text-foreground">A product born from a personal challenge.</motion.h2>
           <motion.p variants={fadeUp}>CommuteZA is a public transport discovery and journey-planning platform built for South African commuters. It brings technical SEO, product thinking and software development together around a practical, everyday need.</motion.p>
-          <motion.p variants={fadeUp}>The platform has now been live for four months. These early search results show growing demand while the product remains in active development.</motion.p>
+          <motion.p variants={fadeUp}>The platform was live for four months before its functionality was placed on pause. It continues to generate relevant search traffic.</motion.p>
           <motion.div variants={stagger} className="grid grid-cols-1 sm:grid-cols-2 border border-border divide-y sm:divide-y-0 divide-border mt-8">
             {METRICS.map((metric) => (
               <motion.div key={metric.label} variants={fadeUp} className="bg-card min-h-44 p-8 border-b border-border odd:sm:border-r last:border-b-0 [&:nth-last-child(-n+2)]:sm:border-b-0">
@@ -248,7 +256,7 @@ export default function CommuteZA() {
 
         <CaseStudySection id="early-progress" number="12" title="Early Progress">
           <motion.p variants={fadeUp}>After four months live, CommuteZA has generated more than 10,000 Google impressions and 5,000 Bing impressions. The domain is also seeing more than 3,000 impressions from Bing AI Overviews and earned a mention in Microsoft Copilot within about 30 days.</motion.p>
-          <motion.p variants={fadeUp}>These are early signals, not a finished growth story. They show that commuters are actively searching for this information and reinforce the long-term direction of the platform. The current focus remains improving the product rather than maximising traffic.</motion.p>
+          <motion.p variants={fadeUp}>These are early signals, not a finished growth story. They show that commuters are actively searching for this information, while the site's functionality is currently paused.</motion.p>
         </CaseStudySection>
 
         <CaseStudySection id="roadmap" number="13" title="Roadmap">

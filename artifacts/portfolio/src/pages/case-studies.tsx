@@ -1,4 +1,4 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, CirclePause } from "lucide-react";
 import { Link } from "wouter";
 import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
@@ -62,6 +62,12 @@ export default function CaseStudies() {
               {study.image && <div className="border-b lg:border-b-0 lg:border-r border-border p-5 lg:p-8 flex items-center"><img src={study.image} alt="CommuteZA website displayed on a MacBook Air" className="w-full object-contain" /></div>}
               <div className="p-8 lg:p-12 flex flex-col justify-center">
                 <p className="font-mono text-xs uppercase tracking-widest text-primary mb-5">{study.eyebrow}</p>
+                {study.href === "/projects/commuteza" && (
+                  <div className="mb-6 inline-flex w-fit items-center gap-2 border border-amber-400/50 bg-amber-400/10 px-3 py-2 font-mono text-xs uppercase tracking-widest text-amber-300" role="status">
+                    <CirclePause className="h-4 w-4" aria-hidden="true" />
+                    Functionality currently paused
+                  </div>
+                )}
                 <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-6">{study.title}</h2>
                 <p className="text-muted-foreground leading-relaxed mb-8 max-w-xl">{study.description}</p>
                 <div className="flex flex-wrap gap-2 mb-8">{study.tags.map((tag) => <span key={tag} className="border border-primary/60 px-2.5 py-1 font-mono text-[10px] uppercase tracking-widest text-primary">{tag}</span>)}</div>
