@@ -96,8 +96,33 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://morgan-mngadi-portfolio.online/projects</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://morgan-mngadi-portfolio.online/projects/ai-url-mapping</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://morgan-mngadi-portfolio.online/projects/commuteza</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://morgan-mngadi-portfolio.online/projects/reporting-automation</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://morgan-mngadi-portfolio.online/projects/seasonal-seo-strategy</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://morgan-mngadi-portfolio.online/projects/seo-optimization-agent</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
   </url>
 </urlset>

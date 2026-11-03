@@ -597,6 +597,28 @@ export const seoByPath: Record<string, SeoConfig> = {
       },
     ],
   },
+  "/projects/seasonal-seo-strategy": {
+    title: "Seasonal SEO Strategy Case Study | Morgan Mngadi",
+    description:
+      "How seasonal search research and content planning helped prepare a higher education provider for a major January demand peak.",
+    path: "/projects/seasonal-seo-strategy",
+    type: "article",
+    mainEntityId: `${SITE_URL}/projects/seasonal-seo-strategy#case-study`,
+    schema: [
+      personSchema,
+      {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        "@id": `${SITE_URL}/projects/seasonal-seo-strategy#case-study`,
+        name: "Anticipating Demand: A Seasonal SEO Strategy",
+        url: `${SITE_URL}/projects/seasonal-seo-strategy`,
+        creator: { "@id": `${SITE_URL}/#person` },
+        publisher: { "@id": `${SITE_URL}/#person` },
+        genre: "Seasonal SEO and Content Strategy Case Study",
+        about: ["SEO Strategy", "Seasonal Demand", "Content Planning"],
+      },
+    ],
+  },
   "/blog": {
     title: "SEO Perspectives | Morgan Mngadi",
     description:
