@@ -6,6 +6,7 @@ import { Seo } from "@/components/seo";
 import { SiteNav } from "@/components/site-nav";
 import { SiteFooter } from "@/components/site-footer";
 import { AnimatedMetric } from "@/components/animated-metric";
+import { Lanyard } from "@/components/lanyard";
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 0 },
@@ -251,14 +252,30 @@ export default function About() {
 
             <motion.div
               variants={fadeUp}
-              className="relative mx-auto flex h-[360px] w-full max-w-[420px] items-end justify-center overflow-hidden border border-border bg-card/60 md:h-[430px] lg:h-[560px] lg:max-w-none"
+              className="relative mx-auto hidden h-[360px] w-full max-w-[420px] items-end justify-center overflow-hidden md:h-[430px] lg:flex lg:h-[560px] lg:max-w-none"
             >
               <div className="absolute inset-0 bg-[linear-gradient(135deg,transparent_0_44%,hsl(var(--primary)/0.08)_44%_67%,transparent_67%),radial-gradient(circle_at_50%_18%,hsl(var(--primary)/0.10),transparent_42%)]" />
               <div className="absolute inset-x-8 bottom-0 h-px bg-primary/30" />
+              <div className="hidden h-full w-full lg:block">
+                <Lanyard
+                  frontImage="/morgan-portrait.png"
+                  backImage="/become-undeniable.png"
+                  strapImage="/morgan-logo.webp"
+                  cardColor="#050505"
+                  anchor="center"
+                  strapLength={0.55}
+                  strapColor="#050505"
+                  damping={0.45}
+                />
+              </div>
+              <div className="pointer-events-none absolute bottom-4 left-0 right-0 z-20 flex items-center justify-center gap-2 font-mono text-[9px] uppercase tracking-[0.16em] text-muted-foreground">
+                <span className="h-1 w-1 rounded-full border border-primary" />
+                Drag to explore <span className="text-primary/60">·</span> Click to flip
+              </div>
               <img
                 src="/morgan-author.png"
                 alt="Morgan Mngadi"
-                className="relative z-10 w-[min(92vw,390px)] translate-y-5 object-contain object-bottom md:w-[410px] lg:w-[min(36vw,500px)]"
+                className="relative z-10 hidden w-[min(92vw,390px)] translate-y-5 object-contain object-bottom md:w-[410px] lg:w-[min(36vw,500px)]"
                 style={{ filter: "grayscale(12%) brightness(0.96)" }}
               />
             </motion.div>
