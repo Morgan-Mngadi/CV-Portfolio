@@ -2,8 +2,8 @@ import { ARTICLES, articleParagraphText, type Article } from "@/data/articles";
 
 export const SITE_URL = "https://morgan-mngadi-portfolio.online";
 export const SITE_NAME = "Morgan Mngadi";
-export const PERSON_IMAGE = `${SITE_URL}/morgan-author.png`;
-export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/morgan-author.png`;
+export const PERSON_IMAGE = `${SITE_URL}/morgan-portrait.png`;
+export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/morgan-portrait.png`;
 
 export type SeoConfig = {
   title: string;
