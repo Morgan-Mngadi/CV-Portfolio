@@ -773,6 +773,11 @@ const Lanyard = ({
     const canvas = renderer.domElement;
     canvas.className = 'lanyard-canvas';
     canvas.setAttribute('aria-hidden', 'true');
+    // Wait for the card artwork before revealing the canvas. Without this,
+    // the WebGL scene can render a blank card for a frame while the image
+    // texture is still loading during route navigation.
+    canvas.style.opacity = '0';
+    canvas.style.transition = 'opacity 120ms ease-out';
     container.appendChild(canvas);
 
     const anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
@@ -979,6 +984,7 @@ const Lanyard = ({
           images.strap = strap;
           paintFaces();
           repaintStrap();
+          canvas.style.opacity = '1';
         });
       }
       const faceKey = `${layoutKey}|${s.cardColor}|${s.imageFit}`;
